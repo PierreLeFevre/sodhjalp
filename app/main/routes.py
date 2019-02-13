@@ -2,15 +2,24 @@ from flask import session, redirect, url_for, render_template, request
 
 from werkzueg.security import generate_password_hash, \
         check_password_hash
-        
+
 from . import main
 from ..database import mysql
+from .wraps import *
 
 import hashlib
+import datetime
 
 @main.route("/")
 def index():
     return render_template("index.html")
+
+@main.route("/dashboard", methods=["GET"])
+def dashboard():
+
+    user_token = session["token"]
+
+    return render_template("dashboard.html")
 
 @main.route("/login", methods=["POST", "GET"])
 def login():
@@ -43,7 +52,7 @@ def register():
         password = hashlib.new(request.sod_password)
         email = request.sod_email
 
-        date = ""
+        date = datetime.datetime.now().strftime("%y-%m-%d") 
 
         cur = mysql.get_db().cursor()
         result = cur.execute("SELECT * FROM Accounts WHERE username=%s AND password=%s", [username, password])
@@ -53,10 +62,11 @@ def register():
             return redirect(url_for("register.html"))
         
         #Create a account
-        result = cur.execute("INSERT INTO Accounts VALUES (%s, %s, %s)", [username, password, email, date])
-        if (result > 1):
-            return redirect(url_for("dashboard.html"))
-
-        #Error with creating account
-        return redirect(url_for("error.html"))
-
+        result = cur.execute("INSERT INTO Accounts (username, password, email, date)VALUES (%s, %s, %s, %s)", [username, password, email, date])
+        
+        #Error when creating user
+        if (result < 1):
+            return redirect(url_for("error.html"))
+        
+        return redirect(url_for("dashboard.html"))
+ 
