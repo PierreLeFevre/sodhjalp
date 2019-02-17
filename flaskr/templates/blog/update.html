@@ -1,20 +1,24 @@
 {% extends 'base.html' %}
-
-{% block header %}
-  <h1>{% block title %}Edit "{{ post['title'] }}"{% endblock %}</h1>
-{% endblock %}
-
 {% block content %}
-  <form method="post">
-    <label for="title">Title</label>
-    <input name="title" id="title"
-      value="{{ request.form['title'] or post['title'] }}" required>
-    <label for="body">Body</label>
-    <textarea name="body" id="body">{{ request.form['body'] or post['body'] }}</textarea>
-    <input type="submit" value="Save">
-  </form>
-  <hr>
-  <form action="{{ url_for('blog.delete', id=post['id']) }}" method="post">
-    <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
-  </form>
+
+<div class="card shadow-lg p-3 mb-5 bg-white rounded">
+  <h1 class="card-header bg-white">{% block title %}Redigera inlägg{% endblock %}</h1>
+  <div class="card-body">
+    <form method="post">
+      <div class="form-group">
+        <label for="title">Titel</label>
+        <input type="text" class="form-control" name="title" id="title" aria-describedby="emailHelp" placeholder="Titel" value="{{ request.form['title'] or post['title'] }}" required>
+      </div>
+      <div class="form-group">
+        <label for="body">Innehåll</label>
+        <textarea name="body" class="form-control" id="body" rows="3" placeholder="Innehåll">{{ request.form['body'] or post['body'] }}</textarea>
+      </div>
+      <button type="submit" class="btn btn-outline-info">Spara ändringar</button>
+    </form>
+    <form action="{{ url_for('blog.delete', id=post['id']) }}" method="post">
+      <input class="btn btn-outline-danger mt-2" type="submit" value="Radera inlägg" onclick="return confirm('Är du säker?');">
+    </form>
+  </div>
+</div>
+
 {% endblock %}

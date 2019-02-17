@@ -1,24 +1,51 @@
-<!doctype html>
-<title>{% block title %}{% endblock %} - Flaskr</title>
+<!DOCTYPE html>
+<title>{% block title %}{% endblock %} | SodHjälp</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-<nav>
-  <h1>Flaskr</h1>
-  <ul>
-    {% if g.user %}
-      <li><span>{{ g.user['username'] }}</span>
-      <li><a href="{{ url_for('auth.logout') }}">Log Out</a>
-    {% else %}
-      <li><a href="{{ url_for('auth.register') }}">Register</a>
-      <li><a href="{{ url_for('auth.login') }}">Log In</a>
-    {% endif %}
-  </ul>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
+  <a class="navbar-brand" href="/">SodHjälp</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+    <ul class="navbar-nav mr-auto">
+      {% if g.user %}
+        <li class="nav-item"><div class="nav-link disabled">Välkommen, {{ g.user['username'] }}</div></li>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.logout') }}">Logga ut</a></li>
+      {% else %}
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.register') }}">Skapa konto</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.login') }}">Logga in</a></li>
+      {% endif %}
+    </ul>
+
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" placeholder="Sök efter inlägg" aria-label="Sök">
+      <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Sök</button>
+    </form>
+  </div>
 </nav>
-<section class="content">
-  <header>
-    {% block header %}{% endblock %}
-  </header>
-  {% for message in get_flashed_messages() %}
-    <div class="flash">{{ message }}</div>
-  {% endfor %}
-  {% block content %}{% endblock %}
-</section>
+
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="col mx-auto align-self-center">
+      {% for message in get_flashed_messages() %}
+        <div class="alert alert-danger shadow mb-5" role="alert">
+            {{ message }}
+        </div>
+      {% endfor %}
+      {% block content %}{% endblock %}
+    </div>
+  </div>
+</div>

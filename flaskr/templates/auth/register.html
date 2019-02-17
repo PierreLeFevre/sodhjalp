@@ -1,15 +1,24 @@
 {% extends 'base.html' %}
-
-{% block header %}
-  <h1>{% block title %}Register{% endblock %}</h1>
-{% endblock %}
-
 {% block content %}
-  <form method="post">
-    <label for="username">Username</label>
-    <input name="username" id="username" required>
-    <label for="password">Password</label>
-    <input type="password" name="password" id="password" required>
-    <input type="submit" value="Register">
-  </form>
+
+<div class="card shadow-lg p-3 mb-5 bg-white rounded">
+	<h1 class="card-header bg-white">{% block title %}Skapa konto{% endblock %}</h1>
+	<div class="card-body">
+		<form method="post">
+		  <div class="form-group">
+		    <label for="username">Användarnamn</label>
+		    <input type="text" class="form-control" name="username" id="username" aria-describedby="emailHelp" placeholder="Användarnamn">
+		    <small id="emailHelp" class="form-text text-muted">Används för att boka läxhjälp och lägga upp inlägg</small>
+		  </div>
+		  <div class="form-group">
+		    <label for="password">Lösenord</label>
+		    <input type="password" class="form-control" name="password" id="password" placeholder="••••••••••••">
+		  </div>
+		  <button type="submit" class="btn btn-outline-info">Skapa konto</button>
+		</form>
+	</div>
+</div>
+
+
+
 {% endblock %}

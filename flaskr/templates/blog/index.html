@@ -1,43 +1,66 @@
 {% extends 'base.html' %}
 
-{% block header %}
-  <h1>{% block title %}Posts{% endblock %}</h1>
-  {% if g.user %}
-    <a class="action" href="{{ url_for('blog.create') }}">New</a>
-  {% endif %}
-{% endblock %}
-
 {% block content %}
-  {% for post in posts %}
-    <article class="post">
-      <header>
-        <div>
-          <h1>{{ post['title'] }}</h1>
-          <div class="about">by {{ post['username'] }} on {{ post['created'].strftime('%Y-%m-%d') }}</div>
-        </div>
-        {% if g.user['id'] == post['author_id'] %}
-          <a class="action" href="{{ url_for('blog.update', id=post['id']) }}">Edit</a>
+
+  <div class="card shadow-lg p-3 mb-5 bg-white rounded">
+    <h1 class="card-header bg-white">{% block title %}Inlägg{% endblock %}</h1>
+    <div class="card-body">
+        {% if g.user %}
+          <a class="text-info" href="{{ url_for('blog.create') }}">
+          <div class="card shadow border border-info"><div class="card-body">
+            Skapa nytt inlägg
+          </div></div></a>
         {% endif %}
-      </header>
-      <p class="body">{{ post['body'] }}</p>
 
-      {% if g.user %}
-        <a class="action" href="{{ url_for('blog.create_comment', id=post['id']) }}">Give a comment</a>
-      {% endif %}
 
-    </article>
+        {% for post in posts %}
+          <div class="card mt-4">
+            <div class="card-body">
+              <div>
 
-    {% for comment in comments if comment['post_id'] == post['id']%}
-      <div class="about">by {{ comment['username'] }} on {{ comment['created'].strftime('%Y-%m-%d') }}</div>
-      <p class="body">{{ comment['body'] }}</p>
+                <h3 class="card-title">{{ post['title'] }}</h3>
+                <h6 class="card-subtitle mb-2 text-muted">av {{ post['username'] }} den {{ post['created'].strftime('%d-%m-%Y') }}</h6>
+              </div>
+              <p class="card-text mt-3">{{ post['body'] }}</p>
 
-      {% if not loop.last %}
-      <hr>
-      {% endif %}
-    {% endfor %}
+              <div class="btn-group" role="group" aria-label="Basic example">
+                {% if g.user['id'] == post['author_id'] %}
+                  <a href="{{ url_for('blog.update', id=post['id']) }}" class="btn btn-outline-info">
+                    Redigera inlägg
+                  </a>
+                {% endif %}
 
-    {% if not loop.last %}
-      <hr>
-    {% endif %}
-  {% endfor %}
+                {% if g.user %}
+                  <a href="{{ url_for('blog.create_comment', id=post['id']) }}" class="btn btn-outline-info">
+                    Kommentera
+                  </a>
+                {% endif %}    
+
+                <button onclick="$(this).parent().parent().find('.comments-box').toggle();" class="btn btn-outline-info">
+                  Visa/dölj kommentarer
+                </button>
+              </div>
+
+              <!-- IF COMMENT EXISTS -->
+              <div class="dropdown-divider mt-4 mb-4"></div>
+
+              <h3 class="card-title">Kommentarer</h3>
+              <!-- endif -->
+
+              {% for comment in comments if comment['post_id'] == post['id']%}
+                <div class="card shadow-sm mt-4 comments-box" style="display: none;"><div class="card-body">
+                  <h5 class="card-title text-muted">{{ comment['username'] }} den {{ comment['created'].strftime('%d-%m-%Y') }}</h5>
+                  <p class="body">{{ comment['body'] }}</p>
+                </div></div>
+              {% endfor %}
+            </div>
+          </div>
+        {% endfor %}
+
+    </div>
+  </div>
+
+
+
+
 {% endblock %}
