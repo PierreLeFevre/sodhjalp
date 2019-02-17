@@ -114,11 +114,10 @@ def delete(id):
 @login_required
 def create_comment(id):
 
-    post = get_post(id)
+    post = get_post(id, check_author=False)
 
     if request.method == "POST":
         body = request.form["body"]
-        question = post
         error = None
 
         if not body:

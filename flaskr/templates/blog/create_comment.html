@@ -1,30 +1,17 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<div class="card shadow-lg p-3 mb-5 bg-white rounded">
-	<h1 class="card-header bg-white">{% block title %}Kommentera{% endblock %}</h1>
-	<div class="card-body">
-		<form method="post">
-		  <div class="form-group">
-		    <label for="body">Kommentar</label>
-		    <textarea name="body" class="form-control" id="body" rows="3" placeholder="Kommentar">{{ request.form['body'] }}</textarea>
-		  </div>
-		  <button type="submit" class="btn btn-outline-info">Kommentera</button>
-		</form>
+	<div class="card shadow-lg p-3 mb-5 bg-white rounded">
+		<h1 class="card-header bg-white">{% block title %}Kommentera{% endblock %}</h1>
+		<div class="card-body">
+			<form method="post">
+				<div class="form-group">
+					<label for="body">Kommentar</label>
+					<textarea name="body" class="form-control" id="body" rows="3" placeholder="Kommentar">{{ request.form['body'] }}</textarea>
+				</div>
+				<button type="submit" class="btn btn-outline-info">Kommentera</button>
+			</form>
+		</div>
 	</div>
-</div>
 
-<<<<<<< HEAD
-=======
-{% block content %}
-  <form method="post">
-
-
-    <p>Du svarar på {{ post['username']}}'s fråga: "{{ post['body'] }}"</p>
-
-    <label for="body">Svar på frågan</label>
-    <textarea name="body" id="body">{{ request.form['body'] }}</textarea>
-    <input type="submit" value="Save">
-  </form>
->>>>>>> a1c786adc55af3a2a55edd58f2ea38446689c8b1
 {% endblock %}
