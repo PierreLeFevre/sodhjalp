@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <title>{% block title %}{% endblock %} | SodHjälp</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<<<<<<< HEAD
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <script
   src="https://code.jquery.com/jquery-3.3.1.min.js"
@@ -34,6 +35,19 @@
       <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Sök</button>
     </form>
   </div>
+=======
+<nav>
+  <h1>Läxhjälp</h1>
+  <ul>
+    {% if g.user %}
+      <li><span>{{ g.user['username'] }}</span>
+      <li><a href="{{ url_for('auth.logout') }}">Log Out</a>
+    {% else %}
+      <li><a href="{{ url_for('auth.register') }}">Register</a>
+      <li><a href="{{ url_for('auth.login') }}">Log In</a>
+    {% endif %}
+  </ul>
+>>>>>>> a1c786adc55af3a2a55edd58f2ea38446689c8b1
 </nav>
 
 

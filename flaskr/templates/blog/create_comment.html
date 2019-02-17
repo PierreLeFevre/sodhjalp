@@ -14,4 +14,17 @@
 	</div>
 </div>
 
+<<<<<<< HEAD
+=======
+{% block content %}
+  <form method="post">
+
+
+    <p>Du svarar på {{ post['username']}}'s fråga: "{{ post['body'] }}"</p>
+
+    <label for="body">Svar på frågan</label>
+    <textarea name="body" id="body">{{ request.form['body'] }}</textarea>
+    <input type="submit" value="Save">
+  </form>
+>>>>>>> a1c786adc55af3a2a55edd58f2ea38446689c8b1
 {% endblock %}
