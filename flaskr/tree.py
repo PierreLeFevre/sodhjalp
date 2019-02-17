@@ -9,56 +9,11 @@ from flaskr.db import get_db
 
 bp = Blueprint("blog", __name__)
 
-@bp.route("/test")
-def test():
-    db = get_db()
-    comments = db.execute(
-        'SELECT c.id, body, created, author_id, username'
-        ' FROM comment c JOIN user u ON c.author_id = u.id'
-        ' ORDER BY created DESC'
-    ).fetchall()
-
-    return str(comments[0]['post_id'])
-
 @bp.route('/')
 def index():
-    db = get_db()
-    posts = db.execute(
-        'SELECT p.id, title, body, created, author_id, username'
-        ' FROM post p JOIN user u ON p.author_id = u.id'
-        ' ORDER BY created DESC'
-    ).fetchall()
-
-    comments = db.execute(
-        'SELECT c.id, body, post_id, created, author_id, username'
-        ' FROM comment c JOIN user u ON c.author_id = u.id'
-        ' ORDER BY created DESC'
-    ).fetchall()
+    posts, comments = get_posts_with_comments()
 
     return render_template('blog/index.html', posts=posts, comments=comments)
-
-@bp.route("/<int:id>/create_comment", methods=("GET", "POST"))
-@login_required
-def create_comment(id):
-    if request.method == "POST":
-        body = request.form["body"]
-        error = None
-
-        if not body:
-            error = "Body is required"
-
-        if error is not None:
-            flash(error)
-        else:
-            db = get_db()
-            db.execute(
-                'INSERT INTO comment (body, author_id, post_id)'
-                ' VALUES (?, ?, ?)',
-                (body, g.user['id'], id)
-            )
-            db.commit()
-            return redirect(url_for('blog.index'))
-    return render_template('blog/create_comment.html')
 
 @bp.route('/create', methods=('GET', 'POST'))
 @login_required
@@ -101,6 +56,24 @@ def get_post(id, check_author=True):
 
     return post
 
+def get_posts_with_comments():
+    db = get_db()
+    posts = db.execute(
+        'SELECT p.id, title, body, created, author_id, username'
+        ' FROM post p JOIN user u ON p.author_id = u.id'
+        ' ORDER BY created DESC'
+    ).fetchall()
+
+    comments = db.execute(
+        'SELECT c.id, body, post_id, created, author_id, username'
+        ' FROM comment c JOIN user u ON c.author_id = u.id'
+        ' ORDER BY created DESC'
+    ).fetchall()
+    
+
+    return posts, comments
+
+
 @bp.route('/<int:id>/update', methods=('GET', 'POST'))
 @login_required
 def update(id):
@@ -136,3 +109,31 @@ def delete(id):
     db.execute('DELETE FROM post WHERE id = ?', (id,))
     db.commit()
     return redirect(url_for('blog.index'))
+
+@bp.route("/<int:id>/create_comment", methods=("GET", "POST"))
+@login_required
+def create_comment(id):
+
+    post = get_post(id)
+
+    if request.method == "POST":
+        body = request.form["body"]
+        question = post
+        error = None
+
+        if not body:
+            error = "Body is required"
+
+        if error is not None:
+            flash(error)
+        else:
+            db = get_db()
+            db.execute(
+                'INSERT INTO comment (body, author_id, post_id)'
+                ' VALUES (?, ?, ?)',
+                (body, g.user['id'], id)
+            )
+            db.commit()
+            return redirect(url_for('blog.index'))
+
+    return render_template('blog/create_comment.html', post=post)

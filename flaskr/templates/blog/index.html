@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1>{% block title %}Posts{% endblock %}</h1>
+  <h1>{% block title %}Frågor{% endblock %}</h1>
   {% if g.user %}
     <a class="action" href="{{ url_for('blog.create') }}">New</a>
   {% endif %}
@@ -18,16 +18,19 @@
         {% if g.user['id'] == post['author_id'] %}
           <a class="action" href="{{ url_for('blog.update', id=post['id']) }}">Edit</a>
         {% endif %}
+
       </header>
       <p class="body">{{ post['body'] }}</p>
 
       {% if g.user %}
-        <a class="action" href="{{ url_for('blog.create_comment', id=post['id']) }}">Give a comment</a>
+        <a class="action" href="{{ url_for('blog.create_comment', id=post['id']) }}">Svara på frågan</a>
+        <br>
       {% endif %}
 
     </article>
 
     {% for comment in comments if comment['post_id'] == post['id']%}
+      <br>
       <div class="about">by {{ comment['username'] }} on {{ comment['created'].strftime('%Y-%m-%d') }}</div>
       <p class="body">{{ comment['body'] }}</p>
 

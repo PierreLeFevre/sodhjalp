@@ -6,7 +6,11 @@
 
 {% block content %}
   <form method="post">
-    <label for="body">Body</label>
+
+
+    <p>Du svarar på {{ post['username']}}'s fråga: "{{ post['body'] }}"</p>
+
+    <label for="body">Svar på frågan</label>
     <textarea name="body" id="body">{{ request.form['body'] }}</textarea>
     <input type="submit" value="Save">
   </form>
