@@ -1,6 +1,6 @@
 # sodhjalp
 
-Execute following code to run the "server":
+Execute following code on your favorit terminal to run the "server":
 
 * cd /path/to/sodhjalp/
 
