@@ -8,6 +8,6 @@ Execute following code on your favorit terminal to run the "server":
 
 * set FLASK_ENV=development (Run this command everytime you want to have the server on debug mode)
 
-* flask init-db (Run this command if you want to reset the database, run this command if you're first starting the server.)
+* flask init-db (Run this server to reset the database or run this if you're for the first time running the server.)
 
 * flask run
