@@ -1,7 +1,7 @@
 import functools
 
 from flask import (
-    g, session, redirect, render_template, url_for, request
+    g, session, redirect, render_template, url_for, request, flash
 )
 
 from werkzeug.security import (
@@ -30,6 +30,8 @@ def register():
 
         if not username:
             error = "Username is required."
+        elif len(username) > 8:
+            error = "Username length has to be maximum 8 characters."
         elif not password:
             error = 'Password is required.'
         elif db.execute(
