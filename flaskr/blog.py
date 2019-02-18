@@ -15,25 +15,19 @@ def utility_processor():
 
         db = get_db()
         comments = db.execute(
-            'SELECT * FROM comment'
-            ' WHERE post_id=?', (id,)
+            'SELECT c.body, c.created, u.username, u.id, c.author_id'
+            ' FROM comment c JOIN user u ON c.author_id=u.id'
+            ' WHERE c.post_id=?', (id,)
         ).fetchall()
-
-        if len(comments) < 1:
-            return None
 
         return comments
     return dict(get_all_comments=get_all_comments)
 
-@bp.route("/test")
-def tttt():
-    return render_template("blog/test.html")
-
 @bp.route('/')
 def index():
-    posts, comments = get_posts_with_comments()
+    posts = get_all_posts()
 
-    return render_template('blog/index.html', posts=posts, comments=comments)
+    return render_template('blog/index.html', posts=posts)
 
 @bp.route('/create', methods=('GET', 'POST'))
 @login_required
@@ -41,19 +35,24 @@ def create():
     if request.method == 'POST':
         title = request.form['title']
         body = request.form['body']
+        topic = request.form['class']
         error = None
 
         if not title:
             error = 'Title is required.'
-
+        elif topic == "Välj...":
+            error = "Topic is required."
+        elif not body:
+            error = "Question is required"
+        
         if error is not None:
             flash(error)
         else:
             db = get_db()
             db.execute(
-                'INSERT INTO post (title, body, author_id)'
-                ' VALUES (?, ?, ?)',
-                (title, body, g.user['id'])
+                'INSERT INTO post (title, body, author_id, topic)'
+                ' VALUES (?, ?, ?, ?)',
+                (title, body, g.user['id'], topic)
             )
             db.commit()
             return redirect(url_for('blog.index'))
@@ -62,7 +61,7 @@ def create():
 
 def get_post(id, check_author=True):
     post = get_db().execute(
-        'SELECT p.id, title, body, created, author_id, username'
+        'SELECT p.id, p.topic, title, body, created, author_id, username'
         ' FROM post p JOIN user u ON p.author_id = u.id'
         ' WHERE p.id = ?',
         (id,)
@@ -71,27 +70,23 @@ def get_post(id, check_author=True):
     if post is None:
         abort(404, "Post id {0} doesn't exist.".format(id))
 
+    if g.user['is_teacher'] == 1:
+        return post
+        
     if check_author and post['author_id'] != g.user['id']:
         abort(403)
 
     return post
 
-def get_posts_with_comments():
+def get_all_posts():
     db = get_db()
     posts = db.execute(
-        'SELECT p.id, title, body, created, author_id, username'
+        'SELECT p.id, p.topic, title, body, created, author_id, username'
         ' FROM post p JOIN user u ON p.author_id = u.id'
         ' ORDER BY created DESC'
     ).fetchall()
 
-    comments = db.execute(
-        'SELECT c.id, body, post_id, created, author_id, username'
-        ' FROM comment c JOIN user u ON c.author_id = u.id'
-        ' ORDER BY created DESC'
-    ).fetchall()
-    
-
-    return posts, comments
+    return posts
 
 
 @bp.route('/<int:id>/update', methods=('GET', 'POST'))

@@ -5,11 +5,15 @@ DROP TABLE IF EXISTS comment;
 CREATE TABLE user (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   username TEXT UNIQUE NOT NULL,
-  password TEXT NOT NULL
+  password TEXT NOT NULL,
+  email TEXT DEFAULT NULL,
+  personal_id TEXT DEFAULT NULL,
+  is_teacher BIT DEFAULT 0 
 );
 
 CREATE TABLE post (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
+  topic TEXT NOT NULL,
   author_id INTEGER NOT NULL,
   created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   title TEXT NOT NULL,
@@ -26,5 +30,3 @@ CREATE TABLE comment (
   body TEXT NOT NULL,
   FOREIGN KEY (author_id) REFERENCES user (id)
 );
-
-post --> alla comment den tillhör.

@@ -4,6 +4,10 @@ import click
 from flask import current_app, g
 from flask.cli import with_appcontext
 
+from werkzeug.security import (
+    check_password_hash, generate_password_hash
+)
+
 def get_db():
         if "db" not in g:
                 g.db = sqlite3.connect(
@@ -26,12 +30,30 @@ def init_db():
         with current_app.open_resource("schema.sql") as f :
                 db.executescript(f.read().decode('utf8'))
 
+def create_robin_account():
+        db = get_db()
+
+        db.execute(
+                'INSERT INTO user (username, password, is_teacher)'
+                ' VALUES (?, ?, ?)', ("Robin", generate_password_hash("ntig123!"), 1)
+        )
+
+        db.commit()
+
 @click.command("init-db")
 @with_appcontext
 def init_db_command():
         init_db()
         click.echo("Initialized the database.")
 
+@click.command("create-robin")
+@with_appcontext
+def init_db_command_robin():
+        create_robin_account()
+        click.echo("Robins accounts has been created.")
+
+
 def init_app(app):
         app.teardown_appcontext(close_db)
         app.cli.add_command(init_db_command)
+        app.cli.add_command(init_db_command_robin)
