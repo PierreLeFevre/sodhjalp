@@ -14,6 +14,8 @@
 
         {% for post in posts %}
           <div class="card mt-4">
+
+            <img src="..." class="card-img-top" alt="...">
             <div class="card-body">
               <div>
 
@@ -34,19 +36,15 @@
                     Kommentera
                   </a>
                 {% endif %}    
+                
+                {% if get_all_comments(post['id']) != None %}
+                  <button onclick="showHideComments(this)" class="btn btn-outline-info">Visa kommentarer</button>
 
-                <button onclick="$(this).parent().parent().find('.comments-box').toggle();" class="btn btn-outline-info">
-                  Visa/dölj kommentarer
-                </button>
+                {% endif %}
               </div>
 
-              <!-- IF COMMENT EXISTS -->
-              <div class="dropdown-divider mt-4 mb-4"></div>
 
-              <h3 class="card-title">Kommentarer</h3>
-              <!-- endif -->
-
-              {% for comment in comments if comment['post_id'] == post['id']%}
+              {% for comment in comments if comment['post_id'] == post['id'] %}
                 <div class="card shadow-sm mt-4 comments-box" style="display: none;"><div class="card-body">
                   <h5 class="card-title text-muted">{{ comment['username'] }} den {{ comment['created'].strftime('%d-%m-%Y') }}</h5>
                   <p class="body">{{ comment['body'] }}</p>

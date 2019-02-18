@@ -5,15 +5,46 @@
 	<h1 class="card-header bg-white">{% block title %}Skapa inlägg{% endblock %}</h1>
 	<div class="card-body">
 		<form method="post">
-		  <div class="form-group">
-		    <label for="title">Titel</label>
-		    <input type="text" class="form-control" name="title" id="title" aria-describedby="emailHelp" placeholder="Titel">
-		  </div>
-		  <div class="form-group">
-		    <label for="body">Innehåll</label>
-		    <textarea name="body" class="form-control" id="body" rows="3" placeholder="Innehåll"></textarea>
-		  </div>
-		  <button type="submit" class="btn btn-outline-info">Skapa inlägg</button>
+			<div class="form-group">
+				<label for="title">Ämne</label>
+				<select class="custom-select" id="class" name="class">
+					<option selected>Välj...</option>
+					<option value="matematik">Matematik</option>
+					<option value="kemi">Kemi</option>
+					<option value="biologi">Biologi</option>
+					<option value="programmering">Programmering</option>
+					<option value="historia">Historia</option>
+					<option value="webbutveckling">Webbutveckling</option>
+					<option value="svenska">Svenska</option>
+					<option value="engelska">Engelska</option>
+					<option value="teknik">Teknik</option>
+					<option value="datorteknik">Dator- och nätverksteknik</option>
+					<option value="fysik">Fysik</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="title">Titel</label>
+				<input type="text" class="form-control" name="title" id="title" aria-describedby="emailHelp" placeholder="Titel">
+			</div>
+			<div class="form-group">
+				<label for="body">Innehåll</label>
+				<textarea name="body" class="form-control" id="body" rows="3" placeholder="Innehåll"></textarea>
+			</div>
+			<div class="form-group">
+			  <label for="title">Ladda upp bild</label>
+			  <div class="custom-file">
+			    <input type="file" class="custom-file-input" id="upload-picture" aria-describedby="upload-picture">
+			    <label class="custom-file-label" for="upload-picture">Välj bild</label>
+			  </div>
+			</div>
+			<div class="form-group">
+			  <label for="title">Ladda upp filer</label>
+			  <div class="custom-file">
+			    <input type="file" class="custom-file-input" id="upload-file" aria-describedby="upload-file">
+			    <label class="custom-file-label" for="upload-file">Välj fil</label>
+			  </div>
+			</div>
+			<button type="submit" class="btn btn-outline-info">Skapa inlägg</button>
 		</form>
 	</div>
 </div>

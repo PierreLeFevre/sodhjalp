@@ -9,6 +9,26 @@ from flaskr.db import get_db
 
 bp = Blueprint("blog", __name__)
 
+@bp.context_processor
+def utility_processor():
+    def get_all_comments(id):
+
+        db = get_db()
+        comments = db.execute(
+            'SELECT * FROM comment'
+            ' WHERE post_id=?', (id,)
+        ).fetchall()
+
+        if len(comments) < 1:
+            return None
+
+        return comments
+    return dict(get_all_comments=get_all_comments)
+
+@bp.route("/test")
+def tttt():
+    return render_template("blog/test.html")
+
 @bp.route('/')
 def index():
     posts, comments = get_posts_with_comments()

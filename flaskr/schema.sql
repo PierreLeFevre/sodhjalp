@@ -26,3 +26,5 @@ CREATE TABLE comment (
   body TEXT NOT NULL,
   FOREIGN KEY (author_id) REFERENCES user (id)
 );
+
+post --> alla comment den tillhör.
