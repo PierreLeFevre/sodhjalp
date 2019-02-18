@@ -36,7 +36,7 @@
                   </a>
                 {% endif %}    
                 
-                {% if get_all_comments(post['id']) != None %}
+                {% if get_all_comments(post['id'])|length > 0  %}
                   <button onclick="showHideComments(this)" class="btn btn-outline-info">Visa kommentarer</button>
                 {% endif %}
               </div>
