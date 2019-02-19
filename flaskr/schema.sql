@@ -8,7 +8,8 @@ CREATE TABLE user (
   password TEXT NOT NULL,
   email TEXT DEFAULT NULL,
   personalID TEXT DEFAULT NULL,
-  is_teacher BIT DEFAULT 0
+  is_teacher BIT DEFAULT 0,
+  is_admin BIT DEFAULT 0
 );
 
 CREATE TABLE post (

@@ -1,5 +1,7 @@
 from flask import g
 
+from werkzeug.exceptions import abort
+
 from flaskr.db import get_db
 
 def get_post(id, check_author=True):
@@ -14,9 +16,6 @@ def get_post(id, check_author=True):
         abort(404, "Post id {0} doesn't exist.".format(id))
 
     if check_author and post['author_id'] != g.user['id']:
-        abort(403)
-
-    if g.user['is_teacher'] == 0:
         abort(403)
 
     return post

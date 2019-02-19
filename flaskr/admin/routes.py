@@ -13,8 +13,7 @@ from .utils import (
 
 from . import bp
 
-#@be_admin
-@bp.route("/bajamaja")
+@bp.route("/")
 @login_required
 def index():
     users = get_all_users()

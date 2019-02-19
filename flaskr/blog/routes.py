@@ -32,6 +32,7 @@ def create():
         title = request.form['title']
         body = request.form['body']
         topic = request.form['class']
+        imageFile = request.files.get('image', '')
 
         error = None
 
