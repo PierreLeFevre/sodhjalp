@@ -12,3 +12,15 @@ def get_all_users():
 
     return users
 
+def get_user(id):
+
+    db = get_db()
+    user = db.execute(
+        'SELECT * FROM user'
+        ' WHERE id=?',
+        (id,)
+    ).fetchone()
+
+    return user
+
+

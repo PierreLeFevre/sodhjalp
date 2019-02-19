@@ -18,7 +18,6 @@ from . import bp
 @bp.route("/")
 def index():
     posts = get_all_posts()
-    print(posts[0]['body'])
     return render_template('blog/index.html', posts=posts)
 
 @bp.route("/search/<string:key>")

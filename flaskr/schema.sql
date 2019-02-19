@@ -20,6 +20,8 @@ CREATE TABLE post (
   title TEXT NOT NULL,
   body TEXT NOT NULL,
   picture BLOB,
+  answerd BIT DEFAULT 0,
+  reports INTEGER DEFAULT 0,
   FOREIGN KEY (author_id) REFERENCES user (id)
 );
 
