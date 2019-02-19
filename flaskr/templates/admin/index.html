@@ -1,28 +1,31 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Username</th>
-            <th scope="col">Password</th>
-            <th scope="col"></th>
-        </tr>
-        </thead>
-        <tbody>
-            {% for user in users %}
-
+    <div class="card shadow-lg p-3 mb-5 bg-white rounded">
+        <h1 class="card-header bg-white">{% block title %}Inlägg{% endblock %}</h1>
+        <div class="card-body">
+            <table class="table">
+                <thead>
                 <tr>
-                    <th scope="row">{{ user['id'] }}</th>
-                    <td> {{ user['username'] }} </td>
-                    <td> {{ user['password'] }} </td>
-                    <td><button class="btn btn-outline-info">Edit</button></td>
+                    <th scope="col">ID</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Password</th>
+                    <th scope="col"></th>
                 </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
 
-            {% endfor %}
-        </tbody>
-    </table>
+                        <tr>
+                            <th scope="row">{{ user['id'] }}</th>
+                            <td> {{ user['username'] }} </td>
+                            <td> {{ user['password'] }} </td>
+                            <td><button class="btn btn-outline-info">Edit</button></td>
+                        </tr>
 
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 {% endblock %}
