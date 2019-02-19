@@ -21,7 +21,7 @@
                 <h3 class="card-title">{{ post['title'] }}</h3>
                 <h6 class="card-subtitle mb-2 text-muted">av {{ post['username'] }} den {{ post['created'].strftime('%d-%m-%Y') }}</h6>
               </div>
-              <p class="card-text mt-3">{{ post['body'] }}</p>
+              <p class="card-text mt-3">{{ post['body'] | replace("\n","<br>") | safe }}</p>
 
               <div class="btn-group" role="group" aria-label="Basic example">
                 {% if g.user['id'] == post['author_id'] or g.user['is_teacher'] == 1 %}

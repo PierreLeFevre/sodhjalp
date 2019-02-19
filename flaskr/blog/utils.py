@@ -20,6 +20,9 @@ def get_post(id, check_author=True):
 
     return post
 
+def generate_path(image):
+    pass
+
 def get_all_posts():
     db = get_db()
     posts = db.execute(
