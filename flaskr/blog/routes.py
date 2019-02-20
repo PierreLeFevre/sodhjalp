@@ -10,7 +10,8 @@ from flaskr.db import get_db
 from .utils import (
     get_post,
     get_all_posts,
-    search_posts
+    search_posts,
+    get_comment
 )
 
 from . import bp
@@ -87,6 +88,41 @@ def update(id):
             db.commit()
             return redirect(url_for('blog.index'))
     return render_template('blog/update.html', post=post)
+
+@bp.route("/<int:id>/update_comment", methods=('GET', 'POST'))
+@login_required
+def update_comment(id):
+
+    comment = get_comment(id)
+
+    if request.method == 'POST':
+        topic = request.form['title']
+        title = request.form['title']
+        body = request.form['body']
+        
+
+        error = None
+
+        if not title:
+            error = "Title is required."
+        elif topic == 'Välj...':
+            error = "Topic is required."
+        elif not body:
+            error = "Topic is required."
+
+        if error is not None:
+            flash(error)
+        else:
+            db = get_db()
+            db.execute(
+                'UPDATE comment SET title = ?, body = ?, topic = ?'
+                ' WHERE id = ?',
+                (title, body, topic, id)
+            )
+            db.commit()
+            return redirect(url_for('blog.index'))
+    return render_template('blog/update.html', comment=comment)
+
 
 @bp.route('/<int:id>/delete', methods=('POST',))
 @login_required

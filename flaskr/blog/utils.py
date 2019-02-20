@@ -20,6 +20,21 @@ def get_post(id, check_author=True):
 
     return post
 
+def get_comment(id, check_author=True):
+    comment = get_db().execute(
+        'SELECT * FROM comment'
+        ' WHERE id=?',
+        (id,)
+    ).fetchone()
+
+    if post is None:
+        abort(404, "Post id {0} doesn't exist.".format(id))
+
+    if check_author and post['author_id'] != g.user['id'] and g.user['is_teacher'] == 0:
+        abort(403)
+
+    return comment
+
 
 def generate_path(image):
     pass
