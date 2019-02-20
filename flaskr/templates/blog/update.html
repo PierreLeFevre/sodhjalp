@@ -1,7 +1,13 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<div class="card shadow-lg p-3 mb-5 bg-white rounded">
+<div class="card shadow-lg p-3 mb-5 rounded border-0">
+  <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/">SodHjälp</a></li>
+      <li class="breadcrumb-item text-capitalize"><a href="/search/{{ post['topic'] }}">{{ post['topic']}}</a></li>
+      <li class="breadcrumb-item"><a href="/#post_{{post['id']}}">{{ post['title'] }}</a></li>
+      <li class="breadcrumb-item active">Redigera inlägg</li>
+    </ol>
   <h1 class="card-header bg-white">{% block title %}Redigera inlägg{% endblock %}</h1>
   <div class="card-body">
     <form method="post">
@@ -13,10 +19,10 @@
         <label for="body">Innehåll</label>
         <textarea name="body" class="form-control" id="body" rows="3" placeholder="Innehåll">{{ request.form['body'] or post['body'] }}</textarea>
       </div>
-      <button type="submit" class="btn btn-outline-info">Spara ändringar</button>
+      <button type="submit" class="btn btn-primary">Spara ändringar</button>
     </form>
     <form action="{{ url_for('blog.delete', id=post['id']) }}" method="post">
-      <input class="btn btn-outline-danger mt-2" type="submit" value="Radera inlägg" onclick="return confirm('Är du säker?');">
+      <input class="btn btn-danger mt-2" type="submit" value="Radera inlägg" onclick="return confirm('Är du säker?');">
     </form>
   </div>
 </div>

@@ -1,7 +1,13 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<div class="card shadow-lg p-3 mb-5 bg-white rounded">
+<div class="card shadow-lg p-3 mb-5 rounded border-0">
+
+	<ol class="breadcrumb">
+	  <li class="breadcrumb-item"><a href="/">SodHjälp</a></li>
+	  <li class="breadcrumb-item active">Skapa inlägg</li>
+	</ol>
+
 	<h1 class="card-header bg-white">{% block title %}Skapa inlägg{% endblock %}</h1>
 	<div class="card-body">
 		<form method="post">
@@ -44,7 +50,7 @@
 			    <label class="custom-file-label" for="upload-file">Välj fil</label>
 			  </div>
 			</div>
-			<button type="submit" class="btn btn-outline-info">Skapa inlägg</button>
+			<button type="submit" class="btn btn-primary">Skapa inlägg</button>
 		</form>
 	</div>
 </div>
