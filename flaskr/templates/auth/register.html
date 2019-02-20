@@ -5,7 +5,7 @@
 
 	<ol class="breadcrumb">
 	  <li class="breadcrumb-item"><a href="/">SodHjälp</a></li>
-	  <li class="breadcrumb-item active">Logga in</li>
+	  <li class="breadcrumb-item active">Skapa konto</li>
 	</ol>
 
 	<h1 class="card-header bg-white">{% block title %}Skapa konto{% endblock %}</h1>
@@ -13,8 +13,17 @@
 		<form method="post">
 		  <div class="form-group">
 		    <label for="username">Användarnamn</label>
-		    <input type="text" class="form-control" name="username" id="username" aria-describedby="emailHelp" placeholder="Användarnamn">
-		    <small id="emailHelp" class="form-text text-muted">Används för att boka läxhjälp och lägga upp inlägg</small>
+		    <input type="text" class="form-control" name="username" id="username" placeholder="Användarnamn">
+		  </div>
+		  <div class="form-group">
+		    <label for="personalID">Personnummer</label>
+		    <input type="text" class="form-control" name="personalID" id="personalID" aria-describedby="personalIDHelp" placeholder="ÅÅMMDDXXXX">
+		    <small id="personalIDHelp" class="form-text text-muted">Ditt personnummer krypteras på våra servrar, och går inte att se av någon från SodHjälp. <a href="#">Läs mer om GDPR här</a>.</small>
+		  </div>
+		  <div class="form-group">
+		    <label for="email">Epost-adress</label>
+		    <input type="text" class="form-control" name="email" id="email" aria-describedby="emailHelp" placeholder="förnamn.efternamn@elev.ntig.se">
+		    <small id="emailHelp" class="form-text text-muted">Används för att boka läxhjälp, lägga upp inlägg och verifiera ditt konto.</small>
 		  </div>
 		  <div class="form-group">
 		    <label for="password">Lösenord</label>

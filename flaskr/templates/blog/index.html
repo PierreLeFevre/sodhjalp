@@ -10,6 +10,11 @@
           <div class="card shadow border border-primary"><div class="card-body">
             Skapa nytt inlägg
           </div></div></a>
+        {% else %}
+          <a class="text-primary" href="/auth/register">
+          <div class="card shadow border border-primary"><div class="card-body">
+            Skapa ett konto nu för att skapa och kommentera på inlägg!
+          </div></div></a>
         {% endif %}
 
         {% for post in posts %}
