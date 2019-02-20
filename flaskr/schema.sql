@@ -7,7 +7,7 @@ CREATE TABLE user (
   username TEXT UNIQUE NOT NULL,
   password TEXT NOT NULL,
   email TEXT DEFAULT NULL,
-  personalID TEXT DEFAULT NULL,
+  personal_id TEXT DEFAULT NULL,
   is_teacher BIT DEFAULT 0,
   is_admin BIT DEFAULT 0
 );

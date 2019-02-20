@@ -34,7 +34,7 @@
       <li class="nav-item"><a class="nav-link" href="http://sodmat.ga">Skolmat</a></li>
     </ul>
 
-    <form class="form-inline my-2 my-lg-0" method="POST" action="{{url_for('blog.specific_posts', key=search)}}">
+    <form class="form-inline my-2 my-lg-0" method="POST" action="{{ url_for('blog.specific_posts', key="None") }}">
       <input class="form-control mr-sm-2" type="text" placeholder="Sök efter inlägg" name="search" id="search" aria-label="Sök">
       <button class="btn btn-success my-2 my-sm-0" type="submit">Sök</button>
     </form>
@@ -51,29 +51,31 @@
 
           <div class="list-group text-info">
             <a class="list-group-item border border-primary disabled active" href="{{url_for('blog.specific_posts', key=matematik)}}">Ämnen</a>
-            <a class="text-primary list-group-item" href="{{url_for('blog.specific_posts', key=matematik)}}">Matematik</a>
-            <a class="text-primary list-group-item" href="{{url_for('blog.specific_posts', key=kemi)}}">Kemi</a>
-            <a class="text-primary list-group-item" href="{{url_for('blog.specific_posts', key=biologi)}}">Biologi</a>
-            <a class="text-primary list-group-item" href="{{url_for('blog.specific_posts', key=programmering)}}">Programmering</a>
-            <a class="text-primary list-group-item" href="{{url_for('blog.specific_posts', key=fysik)}}">Fysik</a>
-            <a class="text-primary list-group-item" href="{{url_for('blog.specific_posts', key=historia)}}">Historia</a>
-            <a class="text-primary list-group-item" href="{{url_for('blog.specific_posts', key=webbutveckling)}}">Webbutveckling</a>
-            <a class="text-primary list-group-item" href="{{url_for('blog.specific_posts', key=svenska)}}">Svenska</a>
-            <a class="text-primary list-group-item" href="{{url_for('blog.specific_posts', key=engelska)}}">Engelska</a>
-            <a class="text-primary list-group-item" href="{{url_for('blog.specific_posts', key=teknik)}}">Teknik</a>
-            <a class="text-primary list-group-item" href="{{url_for('blog.specific_posts', key=datorteknik)}}">Dator- och nätverksteknik</a>
+            <a class="text-primary list-group-item" href="{{ url_for('blog.specific_posts', key="matematik") }}">Matematik</a>
+            <a class="text-primary list-group-item" href="{{url_for('blog.specific_posts', key="kemi")}}">Kemi</a>
+            <a class="text-primary list-group-item" href="{{url_for('blog.specific_posts', key="biologi")}}">Biologi</a>
+            <a class="text-primary list-group-item" href="{{url_for('blog.specific_posts', key="programmering")}}">Programmering</a>
+            <a class="text-primary list-group-item" href="{{url_for('blog.specific_posts', key="fysik")}}">Fysik</a>
+            <a class="text-primary list-group-item" href="{{url_for('blog.specific_posts', key="historia")}}">Historia</a>
+            <a class="text-primary list-group-item" href="{{url_for('blog.specific_posts', key="webbutveckling")}}">Webbutveckling</a>
+            <a class="text-primary list-group-item" href="{{url_for('blog.specific_posts', key="svenska")}}">Svenska</a>
+            <a class="text-primary list-group-item" href="{{url_for('blog.specific_posts', key="engelska")}}">Engelska</a>
+            <a class="text-primary list-group-item" href="{{url_for('blog.specific_posts', key="teknik")}}">Teknik</a>
+            <a class="text-primary list-group-item" href="{{url_for('blog.specific_posts', key="datorteknik")}}">Dator- och nätverksteknik</a>
           </div>
         </div>
       </div>
     </div>
  
     <div class="col-8 align-self-center">
-      {% for message in get_flashed_messages() %}
+      {% for message in get_flashed_messages() if get_flashed_messages() != None %}
         <div class="alert alert-danger shadow-lg mb-5" role="alert">
             {{ message }}
         </div>
       {% endfor %}
-      {% block content %}{% endblock %}
+      {% block content %}
+      
+      {% endblock %}
     </div>
 
     <div class="col-2">

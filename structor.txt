@@ -18,3 +18,6 @@ flaskr/
 ├── venv/
 ├── setup.py
 └── MANIFEST.in
+
+
+<img src="http://www.novasoftware.se/ImgGen/schedulegenerator.aspx?format=png&schoolid=80080/sv-se&id=0012312617&period=&week=8&mode=0&day=4&width=300&height=600" class="img-fluid" alt="Schedule" id="schedule">
