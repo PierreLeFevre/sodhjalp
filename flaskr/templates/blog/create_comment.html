@@ -39,11 +39,11 @@
 		      <div class="card bg-white shadow-sm"><div class="card-body">
 		     	<form method="post">
 					<div class="form-group"> 
-						{% if g['is_teacher'] %}
+						{% if g.user['is_teacher'] %}
 							<label for="body">Kommentera som <span class="badge badge-pill badge-success text-capitalize">{{ g.user['username'] }}</span></label>
-				        {% else %}
+						{% else %}
 							<label for="body">Kommentera som <span class="badge badge-pill badge-primary text-capitalize">{{ g.user['username'] }}</span></label>
-				        {% endif %}
+						{% endif %}
 
 						<textarea name="body" class="form-control" id="body" rows="3" placeholder="Kommentar">{{ request.form['body'] }}</textarea>
 					</div>
