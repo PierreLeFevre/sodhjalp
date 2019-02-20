@@ -1,16 +1,63 @@
 {% extends 'base.html' %}
+{% block title %}Kommentera{% endblock %}
 {% block content %}
 
+
+
 	<div class="card shadow-lg p-3 mb-5 bg-white rounded">
-		<h1 class="card-header bg-white">{% block title %}Kommentera{% endblock %}</h1>
-		<div class="card-body">
-			<form method="post">
-				<div class="form-group">
-					<label for="body">Kommentar</label>
-					<textarea name="body" class="form-control" id="body" rows="3" placeholder="Kommentar">{{ request.form['body'] }}</textarea>
-				</div>
-				<button type="submit" class="btn btn-outline-info">Kommentera</button>
-			</form>
+
+		<div class="card mt-4 bg-light border border-light">
+
+		    <div class="card-body">
+		      <div>
+
+		        <h3 class="card-title">{{ post['title'] }}</h3>
+
+		        {% if get_user(post['author_id'])['is_teacher'] %}
+		          <h6 class="card-subtitle mb-2 text-muted">
+		            <span class="badge badge-pill badge-success text-capitalize">{{ post['username'] }}</span>
+		            <span class="badge badge-pill badge-primary text-capitalize">{{ post['created'].strftime('%d/%m %Y') }}</span>
+		            <span class="badge badge-pill badge-primary text-capitalize">{{ post['topic']}}</span>
+		          </h6>
+		        {% else %}
+		          <h6 class="card-subtitle mb-2 text-muted">
+		            <span class="badge badge-pill badge-primary text-capitalize">{{ post['username'] }}</span>
+		            <span class="badge badge-pill badge-primary text-capitalize">{{ post['created'].strftime('%d/%m %Y') }}</span>
+		            <span class="badge badge-pill badge-primary text-capitalize">{{ post['topic']}}</span>
+		          </h6>
+		        {% endif %}
+		      </div>
+		      <p class="card-text mt-3 rounded bg-white p-4 shadow-sm border border-secondary" style="white-space: pre-line">{{post['body']}}</p>
+
+		      <div class="card bg-white shadow-sm"><div class="card-body">
+		     	<form method="post">
+					<div class="form-group"> 
+						{% if g['is_teacher'] %}
+							<label for="body">Kommentera som <span class="badge badge-pill badge-success text-capitalize">{{ g.user['username'] }}</span></label>
+				        {% else %}
+							<label for="body">Kommentera som <span class="badge badge-pill badge-primary text-capitalize">{{ g.user['username'] }}</span></label>
+				        {% endif %}
+
+						<textarea name="body" class="form-control" id="body" rows="3" placeholder="Kommentar">{{ request.form['body'] }}</textarea>
+					</div>
+					<button type="submit" class="btn btn-primary">Kommentera</button>
+				</form>
+				</div></div>
+		      {% for comment in get_all_comments(post['id']) if get_all_comments(post['id']) != None %}
+
+		        {% if get_user(comment['author_id'])['is_teacher'] %}
+		          <div class="card shadow-sm mt-4 comments-box"><div class="card-body">
+		            <h5 class="card-title text-muted"><span class="badge badge-pill badge-success text-capitalize">{{ comment['username'] }}</span> den {{ comment['created'].strftime('%d-%m-%Y') }}</h5>
+		            <p class="body">{{ comment['body'] }}</p>
+		          </div></div>
+		        {% else %}
+		          <div class="card shadow-sm mt-4 comments-box"><div class="card-body">
+		            <h5 class="card-title text-muted"><span class="badge badge-pill badge-primary text-capitalize">{{ comment['username'] }}</span> den {{ comment['created'].strftime('%d-%m-%Y') }}</h5>
+		            <p class="body">{{ comment['body'] }}</p>
+		          </div></div>
+		        {% endif %}
+		      {% endfor %}
+		    </div>
 		</div>
 	</div>
 
