@@ -1,7 +1,7 @@
 import functools
 
 from flask import (
-    redirect, url_for, g
+    redirect, url_for, g, flash
 )
 
 def login_required(view):

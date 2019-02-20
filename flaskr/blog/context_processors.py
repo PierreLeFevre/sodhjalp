@@ -15,3 +15,13 @@ def utility_processor():
 
         return comments
     return dict(get_all_comments=get_all_comments)
+
+@bp.context_processor
+def utility_processor_user():
+	def get_user(id):
+	    user = get_db().execute(
+	        'SELECT * FROM user WHERE id = ?', (id,)
+	        ).fetchone()
+	    
+	    return user
+	return dict(get_user = get_user)

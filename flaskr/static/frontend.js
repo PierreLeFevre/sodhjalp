@@ -3,7 +3,7 @@ $(window).on("load", function(){
 });
 
 function showHideComments(element){
-	var toggle = $(element).parent().parent().find('.comments-box').toggle();
+	var toggle = $(element).parent().parent().find('.comments-box').fadeToggle('fast');
 	
 	var element = $(element);
 	var text = element.text();

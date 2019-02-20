@@ -20,7 +20,7 @@ def index():
     posts = get_all_posts()
     return render_template('blog/index.html', posts=posts)
 
-@bp.route("/search/<string:key>")
+@bp.route("/search/<string:key>", methods=('POST',))
 def specific_posts(key):
     posts = search_posts(key)
     return render_template('blog/index.html', posts=posts)

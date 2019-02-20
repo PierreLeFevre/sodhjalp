@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <title>{% block title %}{% endblock %} | SodHjälp</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+<!-- BASE BOOTSTRAP <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">-->
+
 <script
   src="https://code.jquery.com/jquery-3.3.1.min.js"
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -12,7 +14,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
   <a class="navbar-brand" href="/">SodHjälp</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -22,7 +24,7 @@
 
     <ul class="navbar-nav mr-auto">
       {% if g.user %}
-        <li class="nav-item"><div class="nav-link disabled">Välkommen, {{ g.user['username'] }}</div></li>
+        <li class="nav-item"><div class="nav-link disabled text-white">Välkommen, <span class="text-capitalize">{{ g.user['username'] }}</span></div></li>
         <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.logout') }}">Logga ut</a></li>
       {% else %}
         <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.register') }}">Skapa konto</a></li>
@@ -32,23 +34,58 @@
       <li class="nav-item"><a class="nav-link" href="http://sodmat.ga">Skolmat</a></li>
     </ul>
 
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Sök efter inlägg" aria-label="Sök">
-      <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Sök</button>
+    <form class="form-inline my-2 my-lg-0" method="POST" action="{{url_for('blog.specific_posts', key=search)}}">
+      <input class="form-control mr-sm-2" type="text" placeholder="Sök efter inlägg" name="search" id="search" aria-label="Sök">
+      <button class="btn btn-success my-2 my-sm-0" type="submit">Sök</button>
     </form>
   </div>
 </nav>
 
 
-<div class="container mt-5">
+<div class="container-fluid mt-5">
   <div class="row">
-    <div class="col mx-auto align-self-center">
+
+    <div class="col-2">
+      <div class="card shadow border-0">
+        <div class="card-body">
+
+          <div class="list-group text-info">
+            <a class="list-group-item border border-primary disabled active" href="{{url_for('blog.specific_posts', key=matematik)}}">Ämnen</a>
+            <a class="text-primary list-group-item " href="{{url_for('blog.specific_posts', key=matematik)}}">Matematik</a>
+            <a class="text-primary list-group-item " href="{{url_for('blog.specific_posts', key=matematik)}}">Matematik</a>
+            <a class="text-primary list-group-item " href="{{url_for('blog.specific_posts', key=matematik)}}">Matematik</a>
+            <a class="text-primary list-group-item " href="{{url_for('blog.specific_posts', key=matematik)}}">Matematik</a>
+            <a class="text-primary list-group-item " href="{{url_for('blog.specific_posts', key=fysik)}}">Fysik</a>
+            <a class="text-primary list-group-item " href="{{url_for('blog.specific_posts', key=matematik)}}">Matematik</a>
+            <a class="text-primary list-group-item " href="{{url_for('blog.specific_posts', key=matematik)}}">Matematik</a>
+            <a class="text-primary list-group-item " href="{{url_for('blog.specific_posts', key=matematik)}}">Matematik</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-8 align-self-center">
       {% for message in get_flashed_messages() %}
-        <div class="alert alert-danger shadow mb-5" role="alert">
+        <div class="alert alert-danger shadow-lg mb-5" role="alert">
             {{ message }}
         </div>
       {% endfor %}
       {% block content %}{% endblock %}
     </div>
+
+    <div class="col-2">
+      <div class="card shadow border-0">
+        <div class="card-body">
+          <ul class="list-group">
+            <li class="list-group-item">Cras justo odio</li>
+            <li class="list-group-item">Dapibus ac facilisis in</li>
+            <li class="list-group-item">Morbi leo risus</li>
+            <li class="list-group-item">Porta ac consectetur ac</li>
+            <li class="list-group-item">Vestibulum at eros</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
