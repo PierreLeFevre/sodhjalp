@@ -11,7 +11,10 @@ def create_app(host, post, test_config=None):
         DATABASE=os.path.join(app.instance_path, "flaskr.sqlite"),
     )
 
-    app.config['SERVER_HOST'] = host + ":" + port
+    print(host)
+    print(" ++++ " + str(port))
+
+    #app.config['SERVER_HOST'] = host + ":" + port
 
     if test_config is None:
         app.config.from_pyfile("config.py", silent=True)
