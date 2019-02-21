@@ -1,6 +1,7 @@
 import os
 import re
 
+from flask.ext.heroku import Heroku
 from jinja2 import evalcontextfilter, Markup, escape
 from flask import Flask
 
@@ -10,6 +11,7 @@ def create_app(test_config=None):
         SECRET_KEY="dev",
         DATABASE=os.path.join(app.instance_path, "flaskr.sqlite"),
     )
+    heroku = Heroku()
 
     if test_config is None:
         app.config.from_pyfile("config.py", silent=True)
@@ -33,6 +35,8 @@ def create_app(test_config=None):
 
     from .admin import bp as admin_bp
     app.register_blueprint(admin_bp)
+
+    heroku.init_app(app)
 
     return app
 
