@@ -1,1 +1,1 @@
-gunicorn -w 4 flaskr.wsgi:app
+gunicorn -w 4 flaskr:create_app()
