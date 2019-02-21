@@ -10,7 +10,6 @@ def create_app(test_config=None):
         SECRET_KEY="dev",
         DATABASE=os.path.join(app.instance_path, "flaskr.sqlite"),
     )
-    app.config['SERVER_NAME'] = "0.0.0.0"
 
     if test_config is None:
         app.config.from_pyfile("config.py", silent=True)
