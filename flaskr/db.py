@@ -40,6 +40,24 @@ def create_robin_account():
 
         db.commit()
 
+def create_admin():
+    db = get_db()
+    db.execute(
+        'INSERT INTO user (username, password, is_teacher, is_admin)'
+        ' VALUES (?, ?, ?, ?)',
+        ("Admin", generate_password_hash("ntig123!"), 1, 1)
+    )
+
+    db.commit()
+
+
+@click.command('create-admin')
+@with_appcontext
+def init_db_admin():
+    create_admin()
+    click.echo('Admin account has been created.')
+
+
 @click.command("init-db")
 @with_appcontext
 def init_db_command():
@@ -57,3 +75,4 @@ def init_app(app):
         app.teardown_appcontext(close_db)
         app.cli.add_command(init_db_command)
         app.cli.add_command(init_db_command_robin)
+        app.cli.add_command(init_db_admin)

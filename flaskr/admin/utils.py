@@ -12,7 +12,7 @@ def get_all_users():
 
     return users
 
-def get_user(id):
+def get_user_data(id):
 
     db = get_db()
     user = db.execute(

@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="card shadow-lg p-3 mb-5 rounded border-0">
+
+      <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/">SodHjälp</a></li>
+          <li class="breadcrumb-item"><a href="/admin/beta">Admin</a></li>
+          <li class="breadcrumb-item active">Redigera användare</li>
+      </ol>
+
+      <h1 class="card-header bg-white">{% block title %}Redigera användare{% endblock %}</h1>
+      <div class="card-body">
+
+        <form method="POST">
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" class="form-control" name="username" id="username" aria-describedby="emailHelp" placeholder="Username" value="{{ user['username']}}" required>
+          </div>
+
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="text" class="form-control" name="password" id="password" aria-describedby="emailHelp" placeholder="Password" value="{{ user['password']}}" required>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="text" class="form-control" name="email" id="email" aria-describedby="emailHelp" placeholder="Email" value="{{ user['email']}}" required>
+          </div>
+
+          <div class="form-group">
+            <label for="personal_id">PersonalID</label>
+            <input type="text" class="form-control" name="personal_id" id="personal_id" aria-describedby="emailHelp" placeholder="PersonalID" value="{{ user['personal_id']}}" required>
+          </div>
+
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" name="is_teacher" id="is_teacher">
+            <label class="form-check-label" for="is_teacher">
+              Is teacher
+            </label>
+          </div>
+          
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" name="is_admin" id="is_admin">
+            <label class="form-check-label" for="is_admin">
+              Is admin
+            </label>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Spara ändringar</button>
+        </form>
+      </div>
+    </div>
+{% endblock %}

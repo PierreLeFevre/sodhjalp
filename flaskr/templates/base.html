@@ -33,6 +33,10 @@
       {% endif %}
       <li class="nav-item"><a class="nav-link" href="http://sodschema.ga">Schema</a></li>
       <li class="nav-item"><a class="nav-link" href="http://sodmat.ga">Skolmat</a></li>
+      {% if g.user['is_admin'] %}
+        <li class="nav-item"><a class="nav-link" href="{{url_for('admin.index')}}">Admin</a></li>
+      {% endif %}
+
     </ul>
 
     <form class="form-inline my-2 my-lg-0" method="POST" action="{{ url_for('blog.specific_posts', key="None") }}">
@@ -80,7 +84,7 @@
     <div class="col-md-2">
       <div class="card shadow border-0 sticky-top">
         <div class="card-body mx-auto">
-          <img src="http://www.novasoftware.se/ImgGen/schedulegenerator.aspx?format=png&schoolid=80080/sv-se&id=0012312617&period=&week=8&mode=0&day=4&width=300&height=600" class="img-fluid" alt="Schedule" id="schedule">
+          <img src="http://www.novasoftware.se/ImgGen/schedulegenerator.aspx?format=png&schoolid=80080/sv-se&id=0012312617&period=&week=8&mode=0&day=8&width=300&height=600" class="img-fluid" alt="Schedule" id="schedule">
         </div>
       </div>
     </div>
