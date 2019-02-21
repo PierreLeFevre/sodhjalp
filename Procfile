@@ -1,1 +1,1 @@
-web: gunicorn flaskr:flaskr
+web: python setup.py -p $PORT
