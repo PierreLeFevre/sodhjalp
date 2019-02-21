@@ -1,7 +1,6 @@
 import os
 import re
 
-from flask.ext.heroku import Heroku
 from jinja2 import evalcontextfilter, Markup, escape
 from flask import Flask
 
