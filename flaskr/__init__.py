@@ -11,11 +11,7 @@ def create_app(host, port, test_config=None):
         DATABASE=os.path.join(app.instance_path, "flaskr.sqlite"),
     )
 
-    print(host)
-    print("\n" + str(port))
-
-    app.config['SERVER_NAME'] = host['SERVER_NAME'] + ":" + host['SERVER_PORT']
-
+    app.config['SERVER_NAME'] = "0.0.0.0:" + host.get("SERVER_PORT")
     if test_config is None:
         app.config.from_pyfile("config.py", silent=True)
     else:
