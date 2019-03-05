@@ -17,3 +17,11 @@ function showHideComments(element){
 		element.text("Dölj kommentarer");
 	}
 }
+
+$(window).on("load", function(){
+	var url_for_search = $("#search").parent().attr("action");
+
+	$("#search").on("input", function(){
+		$(this).parent().attr("action", (url_for_search + $(this).val()));
+	});
+});

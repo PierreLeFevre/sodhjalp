@@ -1,7 +1,6 @@
 import os
 import re
 
-from jinja2 import evalcontextfilter, Markup, escape
 from flask import Flask
 
 def create_app(test_config=None):

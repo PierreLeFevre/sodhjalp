@@ -26,6 +26,7 @@
       {% if g.user %}
         <li class="nav-item"><div class="nav-link disabled text-white">Välkommen, <span class="text-capitalize">{{ g.user['username'] }}</span></div></li>
         <li class="nav-item"><a class="nav-link" href="{{ url_for('blog.create') }}">Skapa inlägg</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.settings') }}">Inställningar</a></li>
         <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.logout') }}">Logga ut</a></li>
       {% else %}
         <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.register') }}">Skapa konto</a></li>
@@ -39,10 +40,11 @@
 
     </ul>
 
-    <form class="form-inline my-2 my-lg-0" method="POST" action="{{ url_for('blog.specific_posts', key="None") }}">
+    <form class="form-inline my-2 my-lg-0" method="POST" action="{{ url_for('blog.specific_posts', key='')}}">
       <input class="form-control mr-sm-2" type="text" placeholder="Sök efter inlägg" name="search" id="search" aria-label="Sök">
       <button class="btn btn-success my-2 my-sm-0" type="submit">Sök</button>
     </form>
+
   </div>
 </nav>
 
@@ -71,7 +73,7 @@
       </div>
     </div>
  
-    <div class="col-8">
+    <div class="col-lg-8">
       {% for message in get_flashed_messages() if get_flashed_messages() != None %}
         <div class="alert alert-danger shadow-lg mb-5" role="alert">
             {{ message }}
@@ -81,13 +83,15 @@
       {% endblock %}
     </div>
 
-    <div class="col-md-2">
-      <div class="card shadow border-0 sticky-top">
-        <div class="card-body mx-auto">
-          <img src="http://www.novasoftware.se/ImgGen/schedulegenerator.aspx?format=png&schoolid=80080/sv-se&id=0012312617&period=&week=8&mode=0&day=8&width=300&height=600" class="img-fluid" alt="Schedule" id="schedule">
+    {% if g.user and g.user['personal_id'] %}
+      <div class="col-md-2">
+        <div class="card shadow border-0 sticky-top">
+          <div class="card-body mx-auto">
+            <img src="{{ get_schedule_url() }}" class="img-fluid" alt="Schedule" id="schedule">
+          </div>
         </div>
       </div>
-    </div>
+    {% endif %}
 
   </div>
 </div>

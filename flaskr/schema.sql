@@ -9,7 +9,8 @@ CREATE TABLE user (
   email TEXT DEFAULT NULL,
   personal_id TEXT DEFAULT NULL,
   is_teacher BIT DEFAULT 0,
-  is_admin BIT DEFAULT 0
+  is_admin BIT DEFAULT 0,
+  token TEXT DEFAULT NULL
 );
 
 CREATE TABLE post (

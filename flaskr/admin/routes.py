@@ -39,11 +39,13 @@ def update(id):
 
 		error = None
 
+		print(password)
+
 		if not username:
 			error = "Username is required"
-		elif not password:
+		elif not password and len(password) > 0:
 			error = "Password is required"
-		elif len(password) < 8:
+		elif len(password) < 8 and len(password) > 0:
 			error = "Password length needs to be greater than 8 characters"
 		elif not email:
 			error = "Email is required"
@@ -54,10 +56,18 @@ def update(id):
 			flash(error)
 		else:
 			db = get_db()
-			db.execute(
-				'UPDATE user SET username = ?, password = ?, email = ?, personal_id = ? WHERE id=?',
-				(username, generate_password_hash(password), email, personal_id, id)
-			)
+
+			if (len(password) > 0):
+
+				db.execute(
+					'UPDATE user SET username = ?, email = ?, personal_id = ? WHERE id=?',
+					(username, email, personal_id, id)
+				)
+			else:
+				db.execute(
+					'UPDATE user SET username = ?, password = ?, email = ?, personal_id = ? WHERE id=?',
+					(username, generate_password_hash(password), email, personal_id, id)
+				)
 
 			db.commit()
 			return redirect(url_for('admin.index'))

@@ -8,6 +8,14 @@ from werkzeug.security import (
     check_password_hash, generate_password_hash
 )
 
+from ..admin.utils import (
+    get_all_users
+)
+
+from .utils import (
+    login_required
+)
+
 from flaskr.db import get_db
 
 from . import bp 
@@ -17,12 +25,52 @@ def logout():
     session.clear()
     return redirect(url_for('index'))
 
+@login_required
+@bp.route("/settings", methods=('GET', 'POST'))
+def settings():
+
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        re_password = request.form['re_password']
+        email = request.form['email']
+    
+        error = None
+
+        if username is None:
+            error = "Username is required"
+        elif len(password) < 8 and len(password) > 0:
+            error = "Password length needs to be greater than 8 characters"
+        elif password != re_password:
+            error = "Passwords does not match"
+
+        if error is not None:
+            flash(error)
+        else:
+            db = get_db()
+                
+            if len(password) < 1:
+                db.execute(
+                    'UPDATE user SET username = ?, email = ?'
+                    ' WHERE id = ?', (username, email, g.user['id'])
+                )
+            else:
+                db.execute(
+                    'UPDATE user SET username = ?, password = ?, email = ?'
+                    ' WHERE id = ?', (username, generate_password_hash(password), email, g.user['id'])
+                )
+            db.commit()
+            return redirect(url_for('blog.index'))
+    return render_template('auth/settings.html')
+
 @bp.route("/register", methods=('GET', 'POST'))
 def register():
 
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
+        email = request.form['email']
+        personal_id = request.form['personalID']
 
         db = get_db()
 
@@ -41,9 +89,9 @@ def register():
 
         if error is None:
             db.execute(
-                'INSERT INTO user (username, password)'
-                ' VALUES (?, ?)',
-                (username, generate_password_hash(password))
+                'INSERT INTO user (username, password, email, personal_id)'
+                ' VALUES (?, ?, ?, ?)',
+                (username, generate_password_hash(password), email, personal_id)
             )
             db.commit() 
             return redirect(url_for('auth.login'))
@@ -56,7 +104,7 @@ def register():
 def login():
     if request.method == 'POST':
 
-        username = request.form['username']
+        username = request.form['username'].lower()
         password = request.form['password']
 
         db = get_db()
@@ -64,7 +112,7 @@ def login():
         error = None
 
         user = db.execute(
-            'SELECT * FROM user WHERE username=?', (username,)
+            'SELECT * FROM user WHERE LOWER(username)=?', (username,)
         ).fetchone()
 
         if user is None:

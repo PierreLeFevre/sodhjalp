@@ -69,8 +69,16 @@
                     {% else %}
                       <h5 class="card-title text-muted"><span class="badge badge-pill badge-primary text-capitalize">{{ comment['username'] }}</span> den {{ comment['created'].strftime('%d-%m-%Y') }}</h5>
                     {% endif %}
+                    
+
+
 
                     <p class="body" style="white-space: pre-line">{{ comment['body'] }}</p>
+                    
+                    {% if g.user['id'] == comment['author_id'] or g.user['is_admin'] %}
+                      <a href="{{ url_for('blog.update_comment', id=comment['id']) }}" ><span class="badge badge-pill badge-success text-capitalize">Redigera</span></a>
+                    {% endif %}
+                  
                   </div></div>
               {% endfor %}
             </div>

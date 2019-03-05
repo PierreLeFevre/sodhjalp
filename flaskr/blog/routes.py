@@ -23,13 +23,24 @@ def index():
 
 @bp.route("/search/<string:key>", methods=('GET', 'POST'))
 def specific_posts(key = None):
+    error = None
 
     if request.method == 'POST':
         posts = search_posts(request.form['search'])
-        return render_template('blog/index.html', posts=posts)
+        
+        if len(posts) < 1:
+            error = "Din sökning om {0} gav inga resultat.".format(request.form['search'])
+
+        if error is not None:
+            flash(error)
+        else:
+            return render_template('blog/index.html', posts=posts)
 
     posts = search_posts(key)
     return render_template('blog/index.html', posts=posts)
+
+
+
 
 @bp.route("/create", methods=('GET', 'POST'))
 @login_required
@@ -38,8 +49,6 @@ def create():
         title = request.form['title']
         body = request.form['body']
         topic = request.form['class']
-        imageFile = request.files.get('image', '')
-
         error = None
 
         if not title:
@@ -96,32 +105,24 @@ def update_comment(id):
     comment = get_comment(id)
 
     if request.method == 'POST':
-        topic = request.form['title']
-        title = request.form['title']
         body = request.form['body']
-        
-
         error = None
 
-        if not title:
-            error = "Title is required."
-        elif topic == 'Välj...':
-            error = "Topic is required."
-        elif not body:
-            error = "Topic is required."
+        if not body:
+            error = "Body is required."
 
         if error is not None:
             flash(error)
         else:
             db = get_db()
             db.execute(
-                'UPDATE comment SET title = ?, body = ?, topic = ?'
+                'UPDATE comment SET body = ?'
                 ' WHERE id = ?',
-                (title, body, topic, id)
+                (body, id)
             )
             db.commit()
             return redirect(url_for('blog.index'))
-    return render_template('blog/update.html', comment=comment)
+    return render_template('blog/update_comment.html', comment=comment)
 
 
 @bp.route('/<int:id>/delete', methods=('POST',))
@@ -130,6 +131,15 @@ def delete(id):
     get_post(id) 
     db = get_db()
     db.execute('DELETE FROM post WHERE id = ?', (id,))
+    db.commit()
+    return redirect(url_for('blog.index'))
+
+@bp.route("/<int:id>/delete_comment", methods=('POST',))
+@login_required
+def delete_comment(id):
+    get_comment(id)
+    db = get_db()
+    db.execute('DELETE FROM comment WHERE id = ?', (id,))
     db.commit()
     return redirect(url_for('blog.index'))
 
