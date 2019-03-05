@@ -48,6 +48,8 @@
 						<textarea name="body" class="form-control" id="body" rows="3" placeholder="Kommentar">{{ request.form['body'] }}</textarea>
 					</div>
 					<button type="submit" class="btn btn-primary">Kommentera</button>
+				    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+
 				</form>
 				</div></div>
 		      {% for comment in get_all_comments(post['id']) if get_all_comments(post['id']) != None %}

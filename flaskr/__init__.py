@@ -1,7 +1,8 @@
 import os
 import re
 
-from flask import Flask
+from flask import Flask, request
+from flask_wtf.csrf import CSRFProtect
 
 def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True, template_folder='templates')
@@ -9,6 +10,8 @@ def create_app(test_config=None):
         SECRET_KEY="dev",
         DATABASE=os.path.join(app.instance_path, "flaskr.sqlite"),
     )
+
+    CSRFProtect(app)
 
     if test_config is None:
         app.config.from_pyfile("config.py", silent=True)

@@ -17,6 +17,19 @@ from .utils import (
 )
 
 from . import bp
+import datetime
+
+@bp.context_processor
+def utility_processor_schema():
+    def get_schedule_url():
+        id = str(g.user['personal_id'])
+        week = str(datetime.datetime.now().isocalendar()[1])
+        day = str(2**datetime.datetime.now().weekday())
+        url = 'http://www.novasoftware.se/ImgGen/schedulegenerator.aspx?format=png&schoolid=80080/sv-se&id=' + id + '&period=&week=' + week + '&mode=0&day=' + day + '&width=300&height=600'
+
+        return url
+    return dict(get_schedule_url=get_schedule_url)
+
 
 @bp.route("/")
 @login_required

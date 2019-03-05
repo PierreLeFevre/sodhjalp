@@ -38,6 +38,7 @@
             <label for="personal_id">Personnummer</label>
             <input type="text" class="form-control" name="personal_id" id="personal_id" aria-describedby="emailHelp" placeholder="Personnummer" value="{{ g.user['personal_id']}}" required>
           </div>
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
 
           <button type="submit" class="btn btn-primary">Spara ändringar</button>
         </form>
