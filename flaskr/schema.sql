@@ -22,7 +22,7 @@ CREATE TABLE post (
   body TEXT NOT NULL,
   picture BLOB,
   answerd BIT DEFAULT 0,
-  reports INTEGER DEFAULT 0,
+  points INTEGER DEFAULT 0,
   FOREIGN KEY (author_id) REFERENCES user (id)
 );
 
@@ -32,5 +32,7 @@ CREATE TABLE comment (
   author_id INTEGER NOT NULL,
   created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   body TEXT NOT NULL,
+  answerd BIT DEFAULT 0,
+  points INTEGER DEFAULT 0,
   FOREIGN KEY (author_id) REFERENCES user (id)
 );

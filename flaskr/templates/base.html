@@ -42,17 +42,20 @@
 
     <form class="form-inline my-2 my-lg-0" method="POST" action="{{ url_for('blog.specific_posts', key='')}}">
       <input class="form-control mr-sm-2" type="text" placeholder="Sök efter inlägg" name="search" id="search" aria-label="Sök">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
       <button class="btn btn-success my-2 my-sm-0" type="submit">Sök</button>
     </form>
 
   </div>
 </nav>
 
+<script type="text/javascript"></script>
+
 
 <div class="container-fluid mt-5">
   <div class="row align-items-start">
 
-    <div class="col-md-2">
+    <div class="col-lg-4 col-xl-2">
       <div class="card shadow border-0 sticky-top">
         <div class="card-body">
           <div class="list-group text-info">
@@ -72,8 +75,13 @@
         </div>
       </div>
     </div>
- 
-    <div class="col-lg-8">
+    
+    {% if g.user and g.user['personal_id'] %}
+      <div class="col-lg-6 col-xl-8">
+    {% else %}  
+      <div class="col-lg-8 col-xl-10">
+    {% endif %}
+
       {% for message in get_flashed_messages() if get_flashed_messages() != None %}
         <div class="alert alert-danger shadow-lg mb-5" role="alert">
             {{ message }}
@@ -84,7 +92,7 @@
     </div>
 
     {% if g.user and g.user['personal_id'] %}
-      <div class="col-md-2">
+      <div class="col-lg-2 col-xl-2">
         <div class="card shadow border-0 sticky-top">
           <div class="card-body mx-auto">
             <img src="{{ get_schedule_url() }}" class="img-fluid" alt="Schedule" id="schedule">

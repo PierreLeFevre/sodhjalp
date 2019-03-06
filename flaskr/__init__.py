@@ -1,8 +1,8 @@
 import os
 import re
 
-from flask import Flask, request
-from flask_wtf.csrf import CSRFProtect
+from flask import Flask, request, render_template
+from flask_wtf.csrf import CSRFProtect, CSRFError
 
 def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True, template_folder='templates')
@@ -35,6 +35,14 @@ def create_app(test_config=None):
 
     from .admin import bp as admin_bp
     app.register_blueprint(admin_bp)
+
+    @app.errorhandler(404)
+    def page_not_found(e):
+        return render_template('error/404.html'), 404
+
+    @app.errorhandler(CSRFError)
+    def CSRFhandler(e):
+        return render_template('error/csrf.html')
 
     return app
 

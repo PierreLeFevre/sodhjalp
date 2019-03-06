@@ -39,6 +39,8 @@ def settings():
 
         if username is None:
             error = "Username is required"
+        elif len(username) < 8:
+            error = "Username length needs to be less than 8 characters"
         elif len(password) < 8 and len(password) > 0:
             error = "Password length needs to be greater than 8 characters"
         elif password != re_password:
