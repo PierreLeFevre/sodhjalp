@@ -23,6 +23,7 @@ def index():
 
 @bp.route("/search/<string:key>", methods=('GET', 'POST'))
 def specific_posts(key = None):
+
     error = None
 
     if request.method == 'POST':
@@ -39,7 +40,34 @@ def specific_posts(key = None):
     posts = search_posts(key)
     return render_template('blog/index.html', posts=posts)
 
+@bp.route("/feedback", methods=('GET', 'POST'))
+@login_required
+def feedback():
 
+    if request.method == 'POST':
+        title = request.form['body']
+        body = request.form['body']
+
+        error = None
+
+        if not title:
+            error = 'Title is required'
+        elif not body:
+            error = 'Body is required'
+
+        if error is not None:
+            flash(error)
+        else:
+            db = get_db()
+            db.execute(
+                'INSERT INTO feedback (user_id, title, body)'
+                ' VALUES (?, ?, ?)',
+                (g.user['id'], title, body)
+            )
+            db.commit()
+
+            return redirect(url_for('blog.index'))
+    return render_template('blog(feedback.html')
 
 @bp.route("/create", methods=('GET', 'POST'))
 @login_required
