@@ -45,7 +45,7 @@ def specific_posts(key = None):
 def feedback():
 
     if request.method == 'POST':
-        title = request.form['body']
+        title = request.form['title']
         body = request.form['body']
 
         error = None
@@ -56,7 +56,7 @@ def feedback():
             error = 'Body is required'
 
         if error is not None:
-            flash(error)
+            flash(error, "danger")
         else:
             db = get_db()
             db.execute(
@@ -65,9 +65,10 @@ def feedback():
                 (g.user['id'], title, body)
             )
             db.commit()
+            flash("TANK YOU FUR YUOR FEDBAK", "success")
 
             return redirect(url_for('blog.index'))
-    return render_template('blog(feedback.html')
+    return render_template('blog/feedback.html')
 
 @bp.route("/create", methods=('GET', 'POST'))
 @login_required
@@ -86,7 +87,7 @@ def create():
             error = "Question is required"
 
         if error is not None:
-            flash(error)
+            flash(error, "danger")
         else:
             db = get_db()
             db.execute(
@@ -113,7 +114,7 @@ def update(id):
             error = 'Title is required.'
 
         if error is not None:
-            flash(error)
+            flash(error, "danger")
         else:
             db = get_db()
             db.execute(
@@ -139,7 +140,7 @@ def update_comment(id):
             error = "Body is required."
 
         if error is not None:
-            flash(error)
+            flash(error, "danger")
         else:
             db = get_db()
             db.execute(
@@ -184,7 +185,7 @@ def create_comment(id):
             error = "Body is required"
 
         if error is not None:
-            flash(error)
+            flash(error, "danger")
         else:
             db = get_db()
             db.execute(
