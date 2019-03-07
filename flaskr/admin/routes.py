@@ -64,7 +64,7 @@ def update(id):
 			error = "personalID is required"
 
 		if error is not None:
-			flash(error)
+			flash(error, "danger")
 		else:
 			db = get_db()
 

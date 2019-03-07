@@ -54,7 +54,7 @@ def settings():
             error = "Username already exist"
 
         if error is not None:
-            flash(error)
+            flash(error, "danger")
         else:
             db = get_db()
                 
@@ -105,7 +105,7 @@ def register():
             db.commit() 
             return redirect(url_for('auth.login'))
 
-        flash(error)
+        flash(error, "danger")
     
     return render_template("auth/register.html")
 
@@ -134,6 +134,6 @@ def login():
             session['user_id'] = user['id']
             return redirect(url_for('index'))
         
-        flash(error)
+        flash(error, "danger")
 
     return render_template("auth/login.html")
