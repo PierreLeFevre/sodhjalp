@@ -83,13 +83,14 @@
       <div class="col-lg-8 col-xl-10">
     {% endif %}
 
-      {% for message in get_flashed_messages() if get_flashed_messages() != None %}
-        <div class="alert alert-danger shadow-lg mb-5" role="alert">
-            {{ message }}
-        </div>
-      {% endfor %}
-      {% block content %}
-      {% endblock %}
+    {% for message in get_flashed_messages() if get_flashed_messages() != None %}
+      <div class="alert alert-danger shadow-lg mb-5" role="alert">
+          {{ message }}
+      </div>
+    {% endfor %}
+    
+    {% block content %}
+    {% endblock %}
     </div>
 
     {% if g.user and g.user['personal_id'] %}
