@@ -41,7 +41,6 @@ def specific_posts(key = None):
 
 
 
-
 @bp.route("/create", methods=('GET', 'POST'))
 @login_required
 def create():
