@@ -36,3 +36,10 @@ CREATE TABLE comment (
   points INTEGER DEFAULT 0,
   FOREIGN KEY (author_id) REFERENCES user (id)
 );
+
+CREATE TABLE comment_vote (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id INTEGER NOT NULL,
+  comment_id INTEGER NOT NULL,
+  vote BIT NOT NULL
+);
