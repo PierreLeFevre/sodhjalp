@@ -52,8 +52,6 @@ def update(id):
 
 		error = None
 
-		print(password)
-
 		if not username:
 			error = "Username is required"
 		elif not password and len(password) > 0:

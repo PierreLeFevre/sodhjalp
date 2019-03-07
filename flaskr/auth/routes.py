@@ -39,12 +39,19 @@ def settings():
 
         if username is None:
             error = "Username is required"
-        elif len(username) < 8:
+        elif len(username) > 8:
             error = "Username length needs to be less than 8 characters"
         elif len(password) < 8 and len(password) > 0:
             error = "Password length needs to be greater than 8 characters"
         elif password != re_password:
             error = "Passwords does not match"
+
+        check_dub = get_db().execute(
+            'SELECT * FROM user WHERE LOWER(username)=LOWER(?)', (username,) 
+        ).fetchone()
+
+        if check_dub is not None:
+            error = "Username already exist"
 
         if error is not None:
             flash(error)
