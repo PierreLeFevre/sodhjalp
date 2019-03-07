@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="card shadow-lg p-3 mb-5 rounded border-0">
+  <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/">SodHjälp</a></li>
+      <li class="breadcrumb-item active">Skicka feedback</li>
+    </ol>
+  <h1 class="card-header bg-white">{% block title %}Skicka feedback{% endblock %}</h1>
+  <div class="card-body">
+    <form method="post">
+      <div class="form-group">
+        <label for="title">Titel</label>
+        <input type="text" class="form-control" name="title" id="title" aria-describedby="emailHelp" placeholder="Titel" value="{{ request.form['title'] or post['title'] }}" required>
+      </div>
+      <div class="form-group">
+        <label for="body">Meddelande</label>
+        <textarea name="body" class="form-control" id="body" rows="3" placeholder="Meddelande"></textarea>
+      </div>
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+      <button type="submit" class="btn btn-primary">Skicka feedback</button>
+
+    </form>
+  </div>
+</div>
+
+{% endblock %}
