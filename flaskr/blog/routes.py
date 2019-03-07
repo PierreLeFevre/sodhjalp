@@ -67,7 +67,7 @@ def feedback():
             db.commit()
 
             return redirect(url_for('blog.index'))
-    return render_template('blog(feedback.html')
+    return render_template('blog/feedback.html')
 
 @bp.route("/create", methods=('GET', 'POST'))
 @login_required
