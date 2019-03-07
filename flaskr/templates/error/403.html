@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="card shadow-lg p-3 mb-5 rounded border-0">
+
+	<ol class="breadcrumb">
+	  <li class="breadcrumb-item"><a href="/">SodHjälp</a></li>
+	  <li class="breadcrumb-item active">Error 404</li>
+	</ol>
+
+	<h1 class="card-header bg-white">{% block title %}Error 404{% endblock %}</h1>
+    <h6 class="card-subtitle mb-2 text-muted">Sidan kunde inte hittas</h6>
+    <span class="small">era papor luktar smultronsoppa</span>
+</div>
+
+
+
+{% endblock %}

@@ -64,20 +64,29 @@
 
                   <div class="card shadow-sm mt-4 comments-box" style="display: none;"><div class="card-body">
 
-                    {% if get_user(comment['author_id'])['is_teacher'] %}
-                      <h5 class="card-title text-muted"><span class="badge badge-pill badge-success text-capitalize">{{ comment['username'] }}</span> den {{ comment['created'].strftime('%d-%m-%Y') }}</h5>
-                    {% else %}
-                      <h5 class="card-title text-muted"><span class="badge badge-pill badge-primary text-capitalize">{{ comment['username'] }}</span> den {{ comment['created'].strftime('%d-%m-%Y') }}</h5>
-                    {% endif %}
-                    
+                      <h5 class="card-title text-muted">
 
+                        <div class="dropdown">
 
+                          {% if get_user(comment['author_id'])['is_teacher'] %}
+                            <span class="badge badge-pill badge-success text-capitalize dropdown-toggle" href="#" role="button" id="userDropdown{{comment['id']}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ comment['username'] }}</span> den {{ comment['created'].strftime('%d-%m-%Y') }}
+                          {% else %}
+                            <span class="badge badge-pill badge-primary text-capitalize dropdown-toggle" href="#" role="button" id="userDropdown{{comment['id']}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ comment['username'] }}</span> den {{ comment['created'].strftime('%d-%m-%Y') }}
+                          {% endif %}
+
+                          <div class="dropdown-menu" aria-labelledby="userDropdown{{comment['id']}}">
+                            <a class="dropdown-item" href="#">Rapportera</a>
+                            <a class="dropdown-item" href="#">Välj som lösning</a>
+
+                            {% if g.user['id'] == comment['author_id'] or g.user['is_admin'] %}
+                              <a class="dropdown-item" href="{{ url_for('blog.update_comment', id=comment['id']) }}" >Redigera inlägg</a>
+                            {% endif %}
+                          </div>
+                        </div>
+
+                      </h5>
 
                     <p class="body" style="white-space: pre-line">{{ comment['body'] }}</p>
-                    
-                    {% if g.user['id'] == comment['author_id'] or g.user['is_admin'] %}
-                      <a href="{{ url_for('blog.update_comment', id=comment['id']) }}" ><span class="badge badge-pill badge-success text-capitalize">Redigera</span></a>
-                    {% endif %}
                   
                   </div></div>
               {% endfor %}

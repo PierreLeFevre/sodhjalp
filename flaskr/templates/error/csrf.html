@@ -1,0 +1,18 @@
+{% extends 'error/error_base.html' %}
+{% block content %}
+
+<div class="jumbotron jumbotron-fluid shadow">
+	<div class="container">
+		<ol class="breadcrumb shadow">
+			<li class="breadcrumb-item"><a href="/">SodHjälp</a></li>
+			<li class="breadcrumb-item active">CSRF Error</li>
+		</ol>
+		<h1 class="display-4">{% block title %}CSRF Error{% endblock %}</h1>
+		<p class="lead">CSRF Token kunde inte hittas.</p>
+    	<span class="small">Kontakta en administratör om detta händer då det oftast tyder på intrångsförsök</span>
+	</div>
+</div>
+
+
+
+{% endblock %}
