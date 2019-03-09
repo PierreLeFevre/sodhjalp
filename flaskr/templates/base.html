@@ -10,6 +10,7 @@
   crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <script type="text/javascript" src="{{ url_for('static', filename='frontend.js') }}"></script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -24,19 +25,19 @@
 
     <ul class="navbar-nav mr-auto">
       {% if g.user %}
-        <li class="nav-item"><div class="nav-link disabled text-white">Välkommen, <span class="text-capitalize">{{ g.user['username'] }}</span></div></li>
-        <li class="nav-item"><a class="nav-link" href="{{ url_for('blog.create') }}">Skapa inlägg</a></li>
-        <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.settings') }}">Inställningar</a></li>
-        <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.logout') }}">Logga ut</a></li>
-        <li class="nav-item"><a class="nav-link" href="{{ url_for('blog.feedback') }}">Rapportera buggar/Lämna feedback</a></li>
+        <li class="nav-item"><div class="nav-link disabled text-white"><i class="fas fa-user"></i>&nbsp;&nbsp;Välkommen, <span class="text-capitalize">{{ g.user['username'] }}</span></div></li>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('blog.create') }}"><i class="fas fa-plus"></i>&nbsp;&nbsp;Skapa inlägg</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.settings') }}"><i class="fas fa-cog"></i>&nbsp;&nbsp;Inställningar</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.logout') }}"><i class="fas fa-sign-out-alt"></i>&nbsp;&nbsp;Logga ut</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('blog.feedback') }}"><i class="fas fa-bug"></i>&nbsp;&nbsp;Rapportera buggar</a></li>
       {% else %}
-        <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.register') }}">Skapa konto</a></li>
-        <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.login') }}">Logga in</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.register') }}"><i class="fas fa-user-plus"></i>&nbsp;&nbsp;Skapa konto</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.login') }}"><i class="fas fa-sign-in-alt"></i>&nbsp;&nbsp;Logga in</a></li>
       {% endif %}
-      <li class="nav-item"><a class="nav-link" href="http://sodschema.ga">Schema</a></li>
-      <li class="nav-item"><a class="nav-link" href="http://sodmat.ga">Skolmat</a></li>
+      <li class="nav-item"><a class="nav-link" href="http://sodschema.ga"><i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;Schema</a></li>
+      <li class="nav-item"><a class="nav-link" href="http://sodmat.ga"><i class="fas fa-utensils"></i>&nbsp;&nbsp;Skolmat</a></li>
       {% if g.user['is_admin'] %}
-        <li class="nav-item"><a class="nav-link" href="{{url_for('admin.index')}}">Admin</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{url_for('admin.index')}}"><i class="fas fa-tools"></i>&nbsp;&nbsp;Admin</a></li>
       {% endif %}
 
     </ul>
@@ -44,7 +45,7 @@
     <form class="form-inline my-2 my-lg-0" method="POST" action="{{ url_for('blog.specific_posts', key='')}}">
       <input class="form-control mr-sm-2" type="text" placeholder="Sök efter inlägg" name="search" id="search" aria-label="Sök">
       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-      <button class="btn btn-success my-2 my-sm-0" type="submit">Sök</button>
+      <button class="btn btn-success my-2 my-sm-0" type="submit"><i class="fas fa-search"></i>&nbsp;&nbsp;Sök</button>
     </form>
 
   </div>
@@ -60,7 +61,7 @@
       <div class="card shadow border-0 sticky-top mb-5">
         <div class="card-body">
           <div class="list-group text-info">
-            <a class="list-group-item border border-primary active" href="/">Ämnen</a>
+            <a class="list-group-item border border-primary active" href="/"><i class="fas fa-chalkboard"></i>&nbsp;&nbsp;Ämnen</a>
             <a class="text-primary list-group-item" href="{{ url_for('blog.specific_posts', key="matematik") }}">Matematik</a>
             <a class="text-primary list-group-item" href="{{url_for('blog.specific_posts', key="kemi")}}">Kemi</a>
             <a class="text-primary list-group-item" href="{{url_for('blog.specific_posts', key="biologi")}}">Biologi</a>
@@ -106,7 +107,7 @@
 
     {% if g.user and g.user['personal_id'] %}
       <div class="col-lg-2 col-xl-2 order-12 order-xl-12">
-        <div class="card shadow border-0 sticky-top">
+        <div class="card shadow border-0 sticky-top mb-5">
           <div class="card-body mx-auto">
             <img src="{{ get_schedule_url() }}" class="img-fluid" alt="Schedule" id="schedule">
           </div>

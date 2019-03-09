@@ -24,4 +24,8 @@ $(window).on("load", function(){
 	$("#search").on("input", function(){
 		$(this).parent().attr("action", (url_for_search + $(this).val()));
 	});
+
+	$(".post-clickable-pills").on("click", function(){
+		window.location.replace("/search/" + $(this).text());
+	});
 });

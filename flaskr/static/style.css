@@ -1,3 +1,7 @@
 *{
 	transition: box-shadow .2s ease-in-out;
 }
+
+.post-clickable-pills{
+	cursor: pointer;
+}

@@ -20,12 +20,12 @@
         <textarea name="body" class="form-control" id="body" rows="3" placeholder="Innehåll">{{ request.form['body'] or post['body'] }}</textarea>
       </div>
       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-      <button type="submit" class="btn btn-primary">Spara ändringar</button>
+      <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i>&nbsp;&nbsp;Spara ändringar</button>
 
     </form>
     <form action="{{ url_for('blog.delete', id=post['id']) }}" method="post">
       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-      <input class="btn btn-danger mt-2" type="submit" value="Radera inlägg" onclick="return confirm('Är du säker?');">
+      <button class="btn btn-danger mt-2" type="submit" onclick="return confirm('Är du säker?');"><i class="fas fa-trash"></i>&nbsp;&nbsp;Radera inlägg</button>
     </form>
   </div>
 </div>
