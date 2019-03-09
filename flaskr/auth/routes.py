@@ -50,7 +50,7 @@ def settings():
             'SELECT * FROM user WHERE LOWER(username)=LOWER(?)', (username,) 
         ).fetchone()
 
-        if check_dub is not None:
+        if check_dub is not None and g.user['username'].lower() != username.lower():
             error = "Username already exist"
 
         if error is not None:
