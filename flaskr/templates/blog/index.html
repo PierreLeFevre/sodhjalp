@@ -27,15 +27,15 @@
 
                 {% if get_user(post['author_id'])['is_teacher'] %}
                   <h6 class="card-subtitle mb-2 text-muted">
-                    <span class="badge badge-pill badge-success text-capitalize">{{ post['username'] }}</span>
+                    <a class="badge badge-pill badge-success text-capitalize" href="{{url_for('blog.specific_posts', key="post['username']")}}">post['username']</a>
                     <span class="badge badge-pill badge-primary text-capitalize">{{ post['created'].strftime('%d/%m %Y') }}</span>
-                    <span class="badge badge-pill badge-primary text-capitalize">{{ post['topic']}}</span>
+                    <a class="badge badge-pill badge-primary text-capitalize" href="{{url_for('blog.specific_posts', key=" post['topic']")}}">post['topic']</a>
                   </h6>
                 {% else %}
                   <h6 class="card-subtitle mb-2 text-muted">
-                    <span class="badge badge-pill badge-primary text-capitalize">{{ post['username'] }}</span>
+                    <a class="badge badge-pill badge-primary text-capitalize" href="{{url_for('blog.specific_posts', key="post['username']")}}">post['username']</a>
                     <span class="badge badge-pill badge-primary text-capitalize">{{ post['created'].strftime('%d/%m %Y') }}</span>
-                    <span class="badge badge-pill badge-primary text-capitalize">{{ post['topic']}}</span>
+                    <a class="badge badge-pill badge-primary text-capitalize" href="{{url_for('blog.specific_posts', key=" post['topic']")}}">post['topic']</a>
                   </h6>
                 {% endif %}
               </div>
@@ -79,7 +79,7 @@
                             <a class="dropdown-item" href="#">Välj som lösning</a>
 
                             {% if g.user['id'] == comment['author_id'] or g.user['is_admin'] %}
-                              <a class="dropdown-item" href="{{ url_for('blog.update_comment', id=comment['id']) }}" >Redigera inlägg</a>
+                              <a class="dropdown-item" href="{{ url_for('blog.update_comment', id=comment['id']) }}" >Redigera kommentar</a>
                             {% endif %}
                           </div>
                         </div>

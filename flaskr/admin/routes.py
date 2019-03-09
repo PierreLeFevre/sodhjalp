@@ -13,11 +13,25 @@ from werkzeug.security import (
 
 from .utils import (
     get_all_users,
-    get_user_data
+    get_user_data,
+    get_all_feedbacks
 )
 
 from . import bp
 import datetime
+
+@bp.context_processor
+def utility_processor_feedbacks():
+	def get_feedback_user(id):
+		user = get_db().execute(
+			'SELECT * FROM user'
+			' WHERE id=?',
+			(id,)
+		).fetchone()
+
+		return user
+	return dict(get_feedback_user=get_feedback_user)
+
 
 @bp.context_processor
 def utility_processor_schema():
@@ -36,7 +50,8 @@ def utility_processor_schema():
 @be_admin
 def index():
     users = get_all_users()
-    return render_template('admin/index.html', users=users)
+    feedbacks = get_all_feedbacks()
+    return render_template('admin/index.html', users=users, feedbacks=feedbacks)
 
 @bp.route("/<int:id>/update", methods=('GET', 'POST'))
 @be_admin

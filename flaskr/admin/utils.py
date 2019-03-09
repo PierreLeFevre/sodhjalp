@@ -12,6 +12,14 @@ def get_all_users():
 
     return users
 
+def get_all_feedbacks():
+    db  = get_db()
+    feedbacks = db.execute(
+        'SELECT * FROM feedback'
+    ).fetchall()
+
+    return feedbacks
+
 def get_user_data(id):
 
     db = get_db()
