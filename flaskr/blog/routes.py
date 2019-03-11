@@ -26,19 +26,16 @@ def specific_posts(key = None):
 
     error = None
 
-    if request.method == 'POST':
-        posts = search_posts(request.form['search'])
-        
-        if len(posts) < 1:
-            error = "Din sökning om {0} gav inga resultat.".format(request.form['search'])
+    posts = search_posts(request.form['search'])
+    
+    if len(posts) < 1:
+        error = "Din sökning om {0} gav inga resultat.".format(request.form['search'])
 
-        if error is not None:
-            flash(error, "info")
-        else:
-            return render_template('blog/index.html', posts=posts)
+    if error is not None:
+        flash(error, "info")
+    else:
+        return render_template('blog/index.html', posts=posts)
 
-    posts = search_posts(key)
-    return render_template('blog/index.html', posts=posts)
 
 @bp.route("/feedback", methods=('GET', 'POST'))
 @login_required
