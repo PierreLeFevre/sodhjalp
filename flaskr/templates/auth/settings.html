@@ -28,15 +28,14 @@
             <input type="password" class="form-control" name="re_password" id="re_password" aria-describedby="emailHelp" placeholder="Verifiera nytt lösenord">
           </div>
 
-
           <div class="form-group">
             <label for="email">Email</label>
-            <input type="text" class="form-control" name="email" id="email" aria-describedby="emailHelp" placeholder="Email" value="{{ g.user['email']}}" required>
+            <input type="text" class="form-control" name="email" id="email" aria-describedby="emailHelp" placeholder="{{ g.user['email']}}">
           </div>
 
           <div class="form-group">
             <label for="personal_id">Personnummer</label>
-            <input type="text" class="form-control" name="personal_id" id="personal_id" aria-describedby="emailHelp" placeholder="Personnummer" value="{{ g.user['personal_id']}}" required>
+            <input type="text" class="form-control" name="personal_id" id="personal_id" aria-describedby="emailHelp" placeholder="{{ g.user['personal_id']}}">
           </div>
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
 
