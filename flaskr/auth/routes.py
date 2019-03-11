@@ -61,14 +61,24 @@ def settings():
                 
             if len(password) < 1:
                 db.execute(
-                    'UPDATE user SET username = ?, email = ?, personal_id = ?'
-                    ' WHERE id = ?', (username, email, personal_id, g.user['id'])
+                    'UPDATE user SET username = ?, personal_id = ?'
+                    ' WHERE id = ?', (username, personal_id, g.user['id'])
                 )
             else:
                 db.execute(
-                    'UPDATE user SET username = ?, password = ?, email = ?, personal_id = ?'
-                    ' WHERE id = ?', (username, generate_password_hash(password), email, personal_id, g.user['id'])
+                    'UPDATE user SET username = ?, password = ?, personal_id = ?'
+                    ' WHERE id = ?', (username, generate_password_hash(password), personal_id, g.user['id'])
                 )
+
+            if len(email) > 1:
+                db.execute(
+                    'UPDATE user SET email = ?'
+                    ' WHERE id = ?', (email, g.user['id'])
+                )
+
+            
+
+
             db.commit()
             return redirect(url_for('blog.index'))
     return render_template('auth/settings.html')
