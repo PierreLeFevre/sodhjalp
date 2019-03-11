@@ -54,6 +54,10 @@ def feedback():
             error = 'Title is required'
         elif not body:
             error = 'Body is required'
+        elif not len(body) < 500:
+            error = "Length of body needs to be less than 500 characters"
+        elif not len(title) < 100:
+            error = "Length of title needs to be less than 100 characters"
 
         if error is not None:
             flash(error, "danger")
@@ -84,7 +88,11 @@ def create():
         elif topic == 'Välj...':
             error = 'Topic is required'
         elif not body:
-            error = "Question is required"
+            error = "Question is required" 
+        elif not len(body) < 500:
+            error = "Keep it short and sweet, maximum length is 500 characters on the body"
+        elif not len(title) < 50:
+            error = "Keep it short and sweet, maximum length is 50 characters on the title"
 
         if error is not None:
             flash(error, "danger")
@@ -112,6 +120,8 @@ def update(id):
 
         if not title:
             error = 'Title is required.'
+        elif not len(body) < 500:
+            error = "Body length needs to be less than 500 characters"
 
         if error is not None:
             flash(error, "danger")
@@ -138,6 +148,8 @@ def update_comment(id):
 
         if not body:
             error = "Body is required."
+        elif not len(body) < 500:
+            error = "Body length needs to be less than 500 characters"
 
         if error is not None:
             flash(error, "danger")
@@ -183,6 +195,8 @@ def create_comment(id):
 
         if not body:
             error = "Body is required"
+        elif not len(body) < 500:
+            error = "Body length needs to be maximum 500 characters"
 
         if error is not None:
             flash(error, "danger")
