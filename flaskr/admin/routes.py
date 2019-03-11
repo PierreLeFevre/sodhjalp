@@ -81,10 +81,6 @@ def update(id):
 
 		if not username:
 			error = "Username is required"
-		elif not email:
-			error = "Email is required"
-		elif not personal_id:
-			error = "personalID is required"
 
 		if error is not None:
 			flash(error, "danger")
