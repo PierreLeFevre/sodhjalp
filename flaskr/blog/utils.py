@@ -59,7 +59,8 @@ def search_posts(key):
     posts = db.execute(
         'SELECT p.id, p.topic, title, body, created, author_id, username'
         ' FROM post p JOIN user u ON p.author_id=u.id'
-        ' WHERE instr(LOWER(p.topic), ?) OR instr(LOWER(title), ?) OR instr(LOWER(body), ?) OR instr(LOWER(created), ?) OR instr(LOWER(username), ?)', (key, key, key, key, key)
+        ' WHERE instr(LOWER(p.topic), ?) OR instr(LOWER(title), ?) OR instr(LOWER(body), ?) OR instr(LOWER(created), ?) OR instr(LOWER(username), ?)'
+        ' ORDER BY created DESC', (key, key, key, key, key)
     ).fetchall()
 
     return posts
