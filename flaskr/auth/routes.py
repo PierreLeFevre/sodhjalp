@@ -79,8 +79,7 @@ def register():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        email = request.form['email']
-        personal_id = request.form['personalID']
+        re_password = request.form['re_password']
 
         db = get_db()
 
@@ -92,6 +91,8 @@ def register():
             error = "Username length has to be maximum 8 characters."
         elif not password:
             error = 'Password is required.'
+        elif not password == re_password:
+            error = "Password does not match"
         elif db.execute(
             'SELECT id FROM user WHERE username=?', (username,)
         ).fetchone() is not None:
