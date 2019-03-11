@@ -38,12 +38,6 @@ def specific_posts(key = None):
             return render_template('blog/index.html', posts=posts)
 
     posts = search_posts(key)
-
-    if len(posts) < 1:
-        error = "Din sökning om {0} gav inga resultat.".format(request.form['search'])
-
-    if error is not None:
-        flash(error, "info")
     return render_template('blog/index.html', posts=posts)
 
 @bp.route("/feedback", methods=('GET', 'POST'))
