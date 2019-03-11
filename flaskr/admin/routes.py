@@ -61,18 +61,26 @@ def update(id):
 
 	if request.method == 'POST':
 		username = request.form['username']
-		password = request.form['password']
 		email = request.form['email']
 		personal_id = request.form['personal_id']
+
+		is_admin = request.form.get('is_admin')
+		is_teacher = request.form.get('is_teacher')
+
+		if is_teacher is not None:
+			is_teacher = 1
+		else:
+			is_teacher = 0
+
+		if is_admin is not None:
+			is_admin = 1
+		else:
+			is_admin = 0
 
 		error = None
 
 		if not username:
 			error = "Username is required"
-		elif not password and len(password) > 0:
-			error = "Password is required"
-		elif len(password) < 8 and len(password) > 0:
-			error = "Password length needs to be greater than 8 characters"
 		elif not email:
 			error = "Email is required"
 		elif not personal_id:
@@ -83,17 +91,10 @@ def update(id):
 		else:
 			db = get_db()
 
-			if (len(password) > 0):
-
-				db.execute(
-					'UPDATE user SET username = ?, email = ?, personal_id = ? WHERE id=?',
-					(username, email, personal_id, id)
-				)
-			else:
-				db.execute(
-					'UPDATE user SET username = ?, password = ?, email = ?, personal_id = ? WHERE id=?',
-					(username, generate_password_hash(password), email, personal_id, id)
-				)
+			db.execute(
+				'UPDATE user SET username = ?, email = ?, personal_id = ?, is_admin = ?, is_teacher = ? WHERE id=?',
+				(username, email, personal_id, id, is_admin, is_teacher)
+			)
 
 			db.commit()
 			return redirect(url_for('admin.index'))
