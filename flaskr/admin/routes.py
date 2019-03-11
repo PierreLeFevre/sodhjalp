@@ -53,6 +53,37 @@ def index():
     feedbacks = get_all_feedbacks()
     return render_template('admin/index.html', users=users, feedbacks=feedbacks)
 
+@bp.route("/<int:id>/update_password", methods=('GET', 'POST'))
+@be_admin
+@login_required
+def update_password(id):
+	user = get_user_data(id)
+
+	if request.method == "POST":
+		password = request.form['password']
+		re_password = request.form['re_password']
+
+		error = None
+
+		if not password:
+			error = "Password is required"
+		elif not re_password:
+			error = "Please type password again"
+		elif password != re_password:
+			error = "Passwords does not match"
+
+		if error is not None:
+			flash(error, 'danger')
+		else:
+			db = get_db()
+			db.execute(
+				'UPDATE user SET password = ?'
+				' WHERE id = ?', (id,)
+			)
+			db.commit()
+			return redirect(url_for('admin.index'))
+	return render_template('admin/update_password.html', user=user)
+
 @bp.route("/<int:id>/update", methods=('GET', 'POST'))
 @be_admin
 @login_required
