@@ -78,7 +78,7 @@ def update_password(id):
 			db = get_db()
 			db.execute(
 				'UPDATE user SET password = ?'
-				' WHERE id = ?', (id,)
+				' WHERE id = ?', (generate_password_hash(password), id)
 			)
 			db.commit()
 			return redirect(url_for('admin.index'))
