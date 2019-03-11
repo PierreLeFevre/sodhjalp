@@ -33,7 +33,7 @@ def specific_posts(key = None):
             error = "Din sökning om {0} gav inga resultat.".format(request.form['search'])
 
         if error is not None:
-            flash(error)
+            flash(error, "info")
         else:
             return render_template('blog/index.html', posts=posts)
 
