@@ -93,7 +93,7 @@ def update(id):
 
 			db.execute(
 				'UPDATE user SET username = ?, email = ?, personal_id = ?, is_admin = ?, is_teacher = ? WHERE id=?',
-				(username, email, personal_id, id, is_admin, is_teacher)
+				(username, email, personal_id, is_admin, is_teacher, id)
 			)
 
 			db.commit()
