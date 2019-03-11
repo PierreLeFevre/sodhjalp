@@ -115,7 +115,7 @@ def register():
         else:
             db.execute(
                 'INSERT INTO user (username, password)'
-                ' VALUES (?, ?, ?, ?)',
+                ' VALUES (?, ?)',
                 (username, generate_password_hash(password))
             )
             db.commit() 
