@@ -211,3 +211,7 @@ def create_comment(id):
             return redirect(url_for('blog.index'))
 
     return render_template('blog/create_comment.html', post=post)
+
+@bp.route("/google3d59e7cfe1f46259.html")
+def google():
+    return render_template('google3d59e7cfe1f46259.html')
