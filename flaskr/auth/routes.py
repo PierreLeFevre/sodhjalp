@@ -101,7 +101,9 @@ def register():
             error = "Username length has to be maximum 8 characters."
         elif not password:
             error = 'Password is required.'
-        elif not password == re_password:
+        elif not re_password:
+            error = "Please re type your password"
+        elif password != re_password:
             error = "Password does not match"
         elif db.execute(
             'SELECT id FROM user WHERE username=?', (username,)
