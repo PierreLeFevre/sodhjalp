@@ -34,6 +34,7 @@ def settings():
         password = request.form['password']
         re_password = request.form['re_password']
         email = request.form['email']
+        personal_id = request.form['personal_id']
     
         error = None
 
@@ -60,13 +61,13 @@ def settings():
                 
             if len(password) < 1:
                 db.execute(
-                    'UPDATE user SET username = ?, email = ?'
-                    ' WHERE id = ?', (username, email, g.user['id'])
+                    'UPDATE user SET username = ?, email = ?, personal_id = ?'
+                    ' WHERE id = ?', (username, email, personal_id, g.user['id'])
                 )
             else:
                 db.execute(
-                    'UPDATE user SET username = ?, password = ?, email = ?'
-                    ' WHERE id = ?', (username, generate_password_hash(password), email, g.user['id'])
+                    'UPDATE user SET username = ?, password = ?, email = ?, personal_id = ?'
+                    ' WHERE id = ?', (username, generate_password_hash(password), email, personal_id, g.user['id'])
                 )
             db.commit()
             return redirect(url_for('blog.index'))
