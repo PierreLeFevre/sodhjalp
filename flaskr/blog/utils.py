@@ -8,7 +8,8 @@ def get_post(id, check_author=True):
     post = get_db().execute(
         'SELECT p.id, p.topic, title, body, created, author_id, username'
         ' FROM post p JOIN user u ON p.author_id = u.id'
-        ' WHERE p.id = ?',
+        ' WHERE p.id = ?'
+        ' ORDER BY created',
         (id,)
     ).fetchone()
 
@@ -23,7 +24,8 @@ def get_post(id, check_author=True):
 def get_comment(id, check_author=True):
     comment = get_db().execute(
         'SELECT author_id, id, body FROM comment'
-        ' WHERE id=?',
+        ' WHERE id=?'
+        ' ORDER BY created',
         (id,)
     ).fetchone()
 

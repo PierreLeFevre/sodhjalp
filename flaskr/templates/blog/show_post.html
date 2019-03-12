@@ -37,7 +37,7 @@
 		      <p class="card-text mt-3 rounded bg-white p-4 shadow-sm border border-secondary" style="white-space: pre-line">{{post['body']}}</p>
 
 		      <div class="card bg-white shadow-sm"><div class="card-body">
-		     	<form method="post">
+		     	<form method="post" action="{{ url_for('blog.create_comment', id=post['id']) }}">
 					<div class="form-group"> 
 						{% if g.user['is_teacher'] %}
 							<label for="body">Kommentera som <span class="badge badge-pill badge-success text-capitalize"><i class="fas fa-user"></i>&nbsp;&nbsp;{{ g.user['username'] }}</span></label>

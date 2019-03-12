@@ -187,6 +187,12 @@ def delete_comment(id):
     db.commit()
     return redirect(url_for('blog.index'))
 
+@bp.route("/<int:id>/post", methods=("GET", "POST"))
+def show_post(id):
+
+    post = get_post(id, check_author=False)
+    return render_template('blog/show_post.html', post=post)
+
 @bp.route("/<int:id>/create_comment", methods=("GET", "POST"))
 @login_required
 def create_comment(id):
@@ -212,9 +218,9 @@ def create_comment(id):
                 (body, g.user['id'], id)
             )
             db.commit()
-            return redirect(url_for('blog.index'))
+            return redirect(url_for('blog.show_post', id=id))
 
-    return render_template('blog/create_comment.html', post=post)
+    return render_template('blog/show_post.html', post=post)
 
 @bp.route("/google3d59e7cfe1f46259.html")
 def google():
