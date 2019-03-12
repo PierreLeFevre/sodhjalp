@@ -45,8 +45,8 @@ def specific_posts(key = None):
 def feedback():
 
     if request.method == 'POST':
-        title = request.form['title']
-        body = request.form['body']
+        title = request.form['title'].lstrip()
+        body = request.form['body'].lstrip()
 
         error = None
 
@@ -78,8 +78,8 @@ def feedback():
 @login_required
 def create():
     if request.method == 'POST':
-        title = request.form['title']
-        body = request.form['body']
+        title = request.form['title'].lstrip()
+        body = request.form['body'].lstrip()
         topic = request.form['class']
         error = None
 
@@ -114,8 +114,8 @@ def update(id):
     post = get_post(id)
 
     if request.method == 'POST':
-        title = request.form['title']
-        body = request.form['body']
+        title = request.form['title'].lstrip()
+        body = request.form['body'].lstrip()
         error = None
 
         if not title:
@@ -143,7 +143,7 @@ def update_comment(id):
     comment = get_comment(id)
 
     if request.method == 'POST':
-        body = request.form['body']
+        body = request.form['body'].lstrip()
         error = None
 
         if not body:
@@ -200,7 +200,7 @@ def create_comment(id):
     post = get_post(id, check_author=False)
 
     if request.method == "POST":
-        body = request.form["body"]
+        body = request.form["body"].lstrip()
         error = None
 
         if not body:
