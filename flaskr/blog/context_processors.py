@@ -7,6 +7,17 @@ from flask import g
 
 @bp.context_processor
 def utility_processor():
+    def spam_detector(id):
+        db = get_db()
+        time = db.execute(
+            'SELECT created FROM post or comment'
+            ' WHERE author_id=?',
+            (g.user['id'])
+        )
+    return dict(spam_detector=spam_detector)
+
+@bp.context_processor
+def utility_processor():
     def get_all_comments(id):
 
         db = get_db()
