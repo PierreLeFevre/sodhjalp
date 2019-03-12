@@ -24,7 +24,7 @@ def utility_processor_user():
 	def get_user(id):
 	    user = get_db().execute(
 	        'SELECT * FROM user WHERE id = ?', (id,)
-	        ).fetchone()
+	    ).fetchone()
 	    
 	    return user
 	return dict(get_user = get_user)
