@@ -49,7 +49,7 @@ def utility_processor():
         return comments
     return dict(get_all_comments=get_all_comments)
 
-@bp.context_processor
+#@bp.context_processor
 def utility_processor_posts():
     def get_posts_order(n):
         posts = get_db().execute(
