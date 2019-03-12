@@ -28,4 +28,22 @@ $(window).on("load", function(){
 	$(".post-clickable-pills").on("click", function(){
 		window.location.replace("/search/" + $(this).text());
 	});
+
+	$(".shadow-hover").on("mouseover", function(){
+		console.log("mouse in");
+		if ($(this).hasClass("shadow")){
+			$(this).removeClass("shadow").addClass("shadow-lg");
+		} else {
+			$(this).addClass("shadow");			
+		}
+	});
+
+	$(".shadow-hover").on("mouseout", function(){
+		console.log("mouse out");
+		if ($(this).hasClass("shadow-lg")){
+			$(this).removeClass("shadow-lg").addClass("shadow");
+		} else {
+			$(this).removeClass("shadow");			
+		}
+	});
 });
