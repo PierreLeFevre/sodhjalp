@@ -9,65 +9,65 @@
         <h1 class="card-header bg-white">{% block title %}Admin{% endblock %}</h1>
         <div class="card-body">
 
-            <div class="card">
-                <h1 class="card-header bg-white">Users</h1>
-                <div class="card-body">
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Username</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Personal ID</th>
-                            <th scope="col"></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                            {% for user in users %}
+            <div class="card mb-4 border-0 shadow">
+                <h3 class="card-header rounded-0 border-0 bg-white">Users</h3>
+                <div class="accordion rounded-0" id="accordionUser">
+                {% for user in users %}
+                    <div class="card rounded-0 border-0">
+                      <div class="card-header border-0" id="userHeading{{ user['id'] }}">
+                        <h4 class="mb-0">
+                          <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#userCollapse{{ user['id'] }}" aria-expanded="true" aria-controls="userCollapse{{ user['id'] }}">
+                            [{{ user['id'] }}]&nbsp;{{ user['username'] }}
+                          </button>
+                        </h4>
+                      </div>
 
-                                <tr>
-                                    <th scope="row">{{ user['id'] }}</th>
-                                    <td> {{ user['username'] }} </td>
-                                    <td> {{ user['email']}} </td>
-                                    <td> {{ user['personal_id'] }} </td>
+                      <div id="userCollapse{{ user['id'] }}" class="collapse" aria-labelledby="userHeading{{ user['id'] }}" data-parent="#accordionUser">
 
-                                    <td><a class="btn btn-primary" href="{{url_for('admin.update', id= user['id'])}}">Edit</a></td>
-                                    <td><a class="btn btn-primary" href="{{url_for('admin.update_password', id= user['id'])}}">Edit pass</a></td>
-                                </tr>
+                        <div class="card-body">
+                          <div class="form-group row">
+                            <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
+                            <div class="col-sm-10">
+                              <input type="text" readonly class="form-control-plaintext" id="{{ user['email']}}" value="{{ user['email']}}">
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <label for="staticEmail" class="col-sm-2 col-form-label">PersonalID</label>
+                            <div class="col-sm-10">
+                              <input type="text" readonly class="form-control-plaintext" id="{{ user['personal_id'] }}" value="{{ user['personal_id'] }}">
+                            </div>
+                          </div>
+                          <a class="btn btn-primary" href="{{url_for('admin.update', id= user['id'])}}">Edit</a>
+                          <a class="btn btn-primary" href="{{url_for('admin.update_password', id= user['id'])}}">Edit pass</a>
+                        </div>
 
-                            {% endfor %}
-                        </tbody>
-                    </table>
+                      </div>
+                    </div>
+                  {% endfor %}
                 </div>
             </div>
-            <!-- Fix feedback ui (plz)
-            <div class="card">
-                <h1 class="card-header bg-white">Feedback</h1>
-                <div class="card-body">
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th scope="col">Title</th>
-                            <th scope="col">Body</th>
-                            <th scope="col">Username</th>
-                            <th scope="col">Created at</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                            {% for feedback in feedbacks %}
 
-                                <tr>
-                                    <th scope="row">{{ feedback['title'] }}</th>
-                                    <td> {{ feedback['body'] }} </td>
-                                    <td> {{ get_feedback_user(feedback['user_id'])['username'] }}</td>
-                                    <td> {{ feedback['created'] }} </td>
-                                </tr>
+            <div class="card border-0 shadow">
+                <h3 class="card-header rounded-0 border-0 bg-white">Feedback</h3>
+                <div class="accordion rounded-0" id="accordionFeedback">
+                  {% for feedback in feedbacks %}
+                    <div class="rounded-0 border-0 card">
+                      <div class="card-header border-0" id="feedbackHeading{{ feedback['id'] }}">
+                        <h4 class="mb-0">
+                          <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#feedbackCollapse{{ feedback['id'] }}" aria-expanded="true" aria-controls="feedbackCollapse{{ feedback['id'] }}">
+                            {{ get_feedback_user(feedback['user_id'])['username'] }} at {{ feedback['created'] }}
+                          </button>
+                        </h4>
+                      </div>
 
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-                -->
+                      <div id="feedbackCollapse{{ feedback['id'] }}" class="collapse" aria-labelledby="feedbackHeading{{ feedback['id'] }}" data-parent="#accordionFeedback">
+                        <div class="card-body">
+                          <h4 class="card-title">{{ feedback['title'] }}</h4>
+                          <p>{{ feedback['body'] }}</p>
+                        </div>
+                      </div>
+                    </div>
+                  {% endfor %}
             </div>
         </div>
     </div>
