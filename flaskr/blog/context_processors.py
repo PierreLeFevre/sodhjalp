@@ -6,15 +6,34 @@ from flaskr.db import get_db
 from flask import g
 
 @bp.context_processor
-def utility_processor():
+def utility_processor_spam():
     def spam_detector(id):
         db = get_db()
         time = db.execute(
             'SELECT created FROM post or comment'
             ' WHERE author_id=?',
             (g.user['id'])
-        )
+        ).fetchone()
+
+        if time < datetime.datetime.now():
+            pass
+
+
     return dict(spam_detector=spam_detector)
+
+@bp.context_processor
+def utility_processor_get_comments_order():
+    def get_comments_with_order(id, amount):
+        db = get_db()
+        comments = db.execute(
+            'SELECT c.body, c.created, u.username, c.id, c.author_id'
+            ' FROM comment c JOIN user u ON c.author_id=u.id'
+            ' WHERE c.post_id=?'
+            ' LIMIT ?', (id, amount)
+        ).fetchall()
+
+        return comments
+    return dict(get_comments_amount=get_comments_amount)
 
 @bp.context_processor
 def utility_processor():
