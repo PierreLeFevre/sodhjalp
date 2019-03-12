@@ -3,8 +3,8 @@
 {% block title %}Inlägg{% endblock %}
 {% block content %}
 
-  <div class="card shadow-lg p-3 mb-5 rounded border-0">
-    <div class="card-body">
+  <div class="card mb-5 rounded border-0">
+    <div class="card-body pt-0">
         {% if g.user %}
           <a class="text-primary" href="{{ url_for('blog.create') }}">
           <div class="card shadow border border-primary"><div class="card-body">
@@ -19,81 +19,32 @@
         {% endif %}
 
         {% for post in posts if posts != None %}
-          <div class="card mt-4 bg-light border border-light" id="post_{{post['id']}}">
+          <div class="card mt-4 shadow-lg rounded" id="post_{{post['id']}}">
 
-            <div class="card-body">
+            <div class="card-header bg-white border border-0 rounded">
+              <h3 class="card-title">{{ post['title'] }}</h3>
               <div>
-
-                <h3 class="card-title">{{ post['title'] }}</h3>
-
                 {% if get_user(post['author_id'])['is_teacher'] %}
-                  <h6 class="card-subtitle mb-2 text-muted">
-                    <span class="badge badge-pill badge-success text-capitalize post-clickable-pills"><i class="fas fa-user"></i>&nbsp;&nbsp;{{ post['username'] }}</span>
-                    <span class="badge badge-pill badge-primary text-capitalize"><i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;{{ post['created'].strftime('%d/%m %Y') }}</span>
-                    <span class="badge badge-pill badge-primary text-capitalize post-clickable-pills"><i class="fas fa-chalkboard"></i>&nbsp;&nbsp;{{ post['topic']}}</span>
-                  </h6>
+                  <p class="lead card-subtitle text-muted">
+                    <span class="badge badge-success text-capitalize"><i class="fas fa-user"></i>&nbsp;&nbsp;{{ post['username'] }}</span>
+                    <span class="badge badge-primary text-capitalize"><i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;{{ post['created'].strftime('%d/%m %Y') }}</span>
+                    <span class="badge badge-primary text-capitalize"><i class="fas fa-chalkboard"></i>&nbsp;&nbsp;{{ post['topic']}}</span>
+                  </p>
                 {% else %}
-                  <h6 class="card-subtitle mb-2 text-muted">
-                    <span class="badge badge-pill badge-primary text-capitalize post-clickable-pills"><i class="fas fa-user"></i>&nbsp;&nbsp;{{ post['username'] }}</span>
-                    <span class="badge badge-pill badge-primary text-capitalize"><i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;{{ post['created'].strftime('%d/%m %Y') }}</span>
-                    <span class="badge badge-pill badge-primary text-capitalize post-clickable-pills"><i class="fas fa-chalkboard"></i>&nbsp;&nbsp;{{ post['topic']}}</span>
-                  </h6>
+                  <p class="lead card-subtitle text-muted">
+                    <span class="badge badge-primary text-capitalize"><i class="fas fa-user"></i>&nbsp;&nbsp;{{ post['username'] }}</span>
+                    <span class="badge badge-primary text-capitalize"><i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;{{ post['created'].strftime('%d/%m %Y') }}</span>
+                    <span class="badge badge-primary text-capitalize"><i class="fas fa-chalkboard"></i>&nbsp;&nbsp;{{ post['topic']}}</span>
+                  </p>
                 {% endif %}
               </div>
-              <p class="card-text mt-3 rounded bg-white p-4 shadow-sm border border-secondary" style="white-space: pre-line">{{post['body']}}</p>
-
-              <div>
-                {% if g.user['id'] == post['author_id'] or g.user['is_teacher'] == 1 or g.user['is_admin'] == 1 %}
-                  <a href="{{ url_for('blog.update', id=post['id']) }}" class="btn btn-primary">
-                    <i class="fas fa-edit"></i>&nbsp;&nbsp;
-                    Redigera inlägg
-                  </a>
-                {% endif %}
-
-                {% if g.user %}
-                  <a href="{{ url_for('blog.create_comment', id=post['id']) }}" class="btn btn-primary">
-                    <i class="fas fa-comment"></i>&nbsp;&nbsp;
-                    Kommentera
-                  </a>
-                {% endif %}    
-                
-                {% if get_all_comments(post['id'])|length > 0  %}
-                  <button onclick="showHideComments(this)" class="btn btn-primary"><i class="fas fa-comments"></i>&nbsp;&nbsp;Visa kommentarer</button>
-                {% endif %}
-              </div>
-
-
-              {% for comment in get_all_comments(post['id']) if get_all_comments(post['id']) != None %}
-
-                  <div class="card shadow-sm mt-4 comments-box" style="display: none;"><div class="card-body">
-
-                      <h5 class="card-title text-muted">
-
-                        <div class="dropdown">
-
-                          {% if get_user(comment['author_id'])['is_teacher'] %}
-                            <span class="badge badge-pill badge-success text-capitalize dropdown-toggle" href="#" role="button" id="userDropdown{{comment['id']}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user"></i>&nbsp;&nbsp;{{ comment['username'] }}</span> den {{ comment['created'].strftime('%d-%m-%Y') }}
-                          {% else %}
-                            <span class="badge badge-pill badge-primary text-capitalize dropdown-toggle" href="#" role="button" id="userDropdown{{comment['id']}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user"></i>&nbsp;&nbsp;{{ comment['username'] }}</span> den {{ comment['created'].strftime('%d-%m-%Y') }}
-                          {% endif %}
-
-                          <div class="dropdown-menu" aria-labelledby="userDropdown{{comment['id']}}">
-                            <a class="dropdown-item" href="#"><i class="fas fa-flag"></i>&nbsp;&nbsp;Rapportera</a>
-                            <a class="dropdown-item" href="#"><i class="fas fa-clipboard-check"></i>&nbsp;&nbsp;Välj som lösning</a>
-
-                            {% if g.user['id'] == comment['author_id'] or g.user['is_admin'] %}
-                              <a class="dropdown-item" href="{{ url_for('blog.update_comment', id=comment['id']) }}" ><i class="fas fa-edit"></i>&nbsp;&nbsp;Redigera kommentar</a>
-                            {% endif %}
-                          </div>
-                        </div>
-
-                      </h5>
-
-                    <p class="body" style="white-space: pre-line">{{ comment['body'] }}</p>
-                  
-                  </div></div>
-              {% endfor %}
             </div>
+
+            <div class="card-body pl-4 pr-4 pb-4">
+              <p style="white-space: pre-line">{{post['body']}}</p>
+              <a href="{{ url_for('blog.create_comment', id=post['id']) }}" class="stretched-link text-primary">Se inlägg</a>
+            </div>
+
           </div>
         {% endfor %}
 
