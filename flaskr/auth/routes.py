@@ -106,9 +106,9 @@ def register():
         elif password != re_password:
             error = "Password does not match"
         elif db.execute(
-            'SELECT * FROM user WHERE username=?', (username,)
+            'SELECT * FROM user WHERE LOWER(username)=?', (username,)
         ).fetchone() is not None:
-            error = "User {} is already registed.".format(username)
+            error = "User {} is already registed.".format(username.lower())
 
         if error is not None:
             flash(error, "danger")
