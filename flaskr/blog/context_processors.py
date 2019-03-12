@@ -23,7 +23,7 @@ def utility_processor_spam():
 
 @bp.context_processor
 def utility_processor_get_comments_order():
-    def get_comments_with_order(id, amount):
+    def get_comments_amount(id, amount):
         db = get_db()
         comments = db.execute(
             'SELECT c.body, c.created, u.username, c.id, c.author_id'
