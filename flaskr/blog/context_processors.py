@@ -20,6 +20,14 @@ def utility_processor():
     return dict(get_all_comments=get_all_comments)
 
 @bp.context_processor
+def utility_processor_posts():
+    def get_posts_order(n):
+        posts = get_db().execute(
+            'SELECT * post'
+            ' ORDER BY created DESC'
+        ).fetchall()
+
+@bp.context_processor
 def utility_processor_user():
 	def get_user(id):
 	    user = get_db().execute(
@@ -35,7 +43,7 @@ def utility_processor_schema():
         id = str(g.user['personal_id'])
         week = str(datetime.datetime.now().isocalendar()[1])
         day = str(2**datetime.datetime.now().weekday())
-        url = 'http://www.novasoftware.se/ImgGen/schedulegenerator.aspx?format=png&schoolid=80080/sv-se&id=' + id + '&period=&week=' + week + '&mode=0&day=' + day + '&width=300&height=600'
+        url = 'http://www.novasoftware.se/ImgGen/schedulegenerator.aspx?format=png&schoolid=80080/sv-se&id=' + id + '&period=&week=' + week + '&mode=0&day=' + day + '&width=300&height=450'
 
         return url
     return dict(get_schedule_url=get_schedule_url)
