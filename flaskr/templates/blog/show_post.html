@@ -48,23 +48,26 @@
         <div class="card-body pl-4 pr-4 pb-4">
 	     	<p style="white-space: pre-line">{{post['body']}}</p>
         </div>
+        
+        {% if g.user %}
+	        <div class="card shadow-hover m-3 border-0"><div class="card-body">
+			 	<form method="post" action="{{ url_for('blog.create_comment', id=post['id']) }}">
+					<div class="form-group"> 
+						{% if g.user['is_teacher'] %}
+							<label for="body">Kommentera som <span class="badge  badge-success text-capitalize"><i class="fas fa-user"></i>&nbsp;&nbsp;{{ g.user['username'] }}</span></label>
+						{% else %}
+							<label for="body">Kommentera som <span class="badge  badge-primary text-capitalize"><i class="fas fa-user"></i>&nbsp;&nbsp;{{ g.user['username'] }}</span></label>
+						{% endif %}
 
-        <div class="card shadow-hover m-3 border-0"><div class="card-body">
-		 	<form method="post" action="{{ url_for('blog.create_comment', id=post['id']) }}">
-				<div class="form-group"> 
-					{% if g.user['is_teacher'] %}
-						<label for="body">Kommentera som <span class="badge  badge-success text-capitalize"><i class="fas fa-user"></i>&nbsp;&nbsp;{{ g.user['username'] }}</span></label>
-					{% else %}
-						<label for="body">Kommentera som <span class="badge  badge-primary text-capitalize"><i class="fas fa-user"></i>&nbsp;&nbsp;{{ g.user['username'] }}</span></label>
-					{% endif %}
+						<textarea name="body" class="form-control" id="body" rows="3" placeholder="Kommentar">{{ request.form['body'] }}</textarea>
+					</div>
+					<button type="submit" class="btn btn-primary"><i class="fas fa-comment"></i>&nbsp;&nbsp;Kommentera</button>
+				    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
 
-					<textarea name="body" class="form-control" id="body" rows="3" placeholder="Kommentar">{{ request.form['body'] }}</textarea>
-				</div>
-				<button type="submit" class="btn btn-primary"><i class="fas fa-comment"></i>&nbsp;&nbsp;Kommentera</button>
-			    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+				</form>
+			</div></div>
+		{% endif %}
 
-			</form>
-		</div></div>
 		{% for comment in get_all_comments(post['id']) if get_all_comments(post['id']) != None %}
 
 		{% if get_user(comment['author_id'])['is_teacher'] %}
