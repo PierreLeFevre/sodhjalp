@@ -4,77 +4,83 @@
 
 
 
-	<div class="card shadow-lg p-3 mb-5 rounded border-0">
-		<ol class="breadcrumb">
+	<div class="card p-3 mb-5 rounded border-0">
+		<ol class="breadcrumb shadow-hover bg-white">
 		  <li class="breadcrumb-item"><a href="/">SodHjälp</a></li>
 		  <li class="breadcrumb-item text-capitalize"><a href="/search/{{ post['topic'] }}">{{ post['topic']}}</a></li>
 		  <li class="breadcrumb-item"><a href="/#post_{{post['id']}}">{{ post['title'] }}</a></li>
 		  <li class="breadcrumb-item active">Kommentera</li>
 		</ol>
 
-		<div class="card mt-4 bg-light border border-light">
+      <div class="card mt-4 p-2 shadow-hover shadow rounded border-0">
 
-		    <div class="card-body">
-		      <div>
-
-
-		        <h3 class="card-title">{{ post['title'] }}</h3>
-
-		        {% if get_user(post['author_id'])['is_teacher'] %}
-		          <h6 class="card-subtitle mb-2 text-muted">
-		            <span class="badge  badge-success text-capitalize"><i class="fas fa-user"></i>&nbsp;&nbsp;{{ post['username'] }}</span>
-		            <span class="badge  badge-primary text-capitalize"><i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;{{ post['created'].strftime('%d/%m %Y') }}</span>
-		            <span class="badge  badge-primary text-capitalize"><i class="fas fa-chalkboard"></i>&nbsp;&nbsp;{{ post['topic']}}</span>
-		          </h6>
-		        {% else %}
-		          <h6 class="card-subtitle mb-2 text-muted">
-		            <span class="badge  badge-primary text-capitalize"><i class="fas fa-user"></i>&nbsp;&nbsp;{{ post['username'] }}</span>
-		            <span class="badge  badge-primary text-capitalize"><i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;{{ post['created'].strftime('%d/%m %Y') }}</span>
-		            <span class="badge  badge-primary text-capitalize"><i class="fas fa-chalkboard"></i>&nbsp;&nbsp;{{ post['topic']}}</span>
-		          </h6>
+        <div class="card-header bg-white border-0 rounded">
+          <h3 class="card-title">{{ post['title'] }}</h3>
+          <div>
+            {% if get_user(post['author_id'])['is_teacher'] %}
+              <p class="lead card-subtitle text-muted">
+                <span class="badge badge-success text-capitalize"><i class="fas fa-user"></i>&nbsp;&nbsp;{{ post['username'] }}</span>
+                <span class="badge badge-primary text-capitalize"><i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;{{ post['created'].strftime('%d/%m %Y') }}</span>
+                <span class="badge badge-primary text-capitalize"><i class="fas fa-chalkboard"></i>&nbsp;&nbsp;{{ post['topic']}}</span>
+		        {% if g.user['id'] == post['author_id'] or g.user['is_teacher'] == 1 or g.user['is_admin'] == 1 %}
+		          <a href="{{ url_for('blog.update', id=post['id']) }}" class="badge badge-danger text-capitalize">
+		            <i class="fas fa-edit"></i>&nbsp;&nbsp;
+		            Redigera inlägg
+		          </a>
 		        {% endif %}
-		      </div>
-		      <p class="card-text mt-3 rounded bg-white p-4 shadow-sm border border-secondary" style="white-space: pre-line">{{post['body']}}</p>
-
-            {% if g.user['id'] == post['author_id'] or g.user['is_teacher'] == 1 or g.user['is_admin'] == 1 %}
-              <a href="{{ url_for('blog.update', id=post['id']) }}" class="btn btn-primary mb-3">
-                <i class="fas fa-edit"></i>&nbsp;&nbsp;
-                Redigera inlägg
-              </a>
+              </p>
+            {% else %}
+              <p class="lead card-subtitle text-muted">
+                <span class="badge badge-primary text-capitalize"><i class="fas fa-user"></i>&nbsp;&nbsp;{{ post['username'] }}</span>
+                <span class="badge badge-primary text-capitalize"><i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;{{ post['created'].strftime('%d/%m %Y') }}</span>
+                <span class="badge badge-primary text-capitalize"><i class="fas fa-chalkboard"></i>&nbsp;&nbsp;{{ post['topic']}}</span>
+		        {% if g.user['id'] == post['author_id'] or g.user['is_teacher'] == 1 or g.user['is_admin'] == 1 %}
+		          <a href="{{ url_for('blog.update', id=post['id']) }}" class="badge badge-danger text-capitalize">
+		            <i class="fas fa-edit"></i>&nbsp;&nbsp;
+		            Redigera inlägg
+		          </a>
+		        {% endif %}
+              </p>
             {% endif %}
+          </div>
+        </div>
 
-		      <div class="card bg-white shadow-sm"><div class="card-body">
-		     	<form method="post" action="{{ url_for('blog.create_comment', id=post['id']) }}">
-					<div class="form-group"> 
-						{% if g.user['is_teacher'] %}
-							<label for="body">Kommentera som <span class="badge  badge-success text-capitalize"><i class="fas fa-user"></i>&nbsp;&nbsp;{{ g.user['username'] }}</span></label>
-						{% else %}
-							<label for="body">Kommentera som <span class="badge  badge-primary text-capitalize"><i class="fas fa-user"></i>&nbsp;&nbsp;{{ g.user['username'] }}</span></label>
-						{% endif %}
+        <div class="card-body pl-4 pr-4 pb-4">
+	     	<p style="white-space: pre-line">{{post['body']}}</p>
+        </div>
 
-						<textarea name="body" class="form-control" id="body" rows="3" placeholder="Kommentar">{{ request.form['body'] }}</textarea>
-					</div>
-					<button type="submit" class="btn btn-primary"><i class="fas fa-comment"></i>&nbsp;&nbsp;Kommentera</button>
-				    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+        <div class="card shadow-hover m-3 border-0"><div class="card-body">
+		 	<form method="post" action="{{ url_for('blog.create_comment', id=post['id']) }}">
+				<div class="form-group"> 
+					{% if g.user['is_teacher'] %}
+						<label for="body">Kommentera som <span class="badge  badge-success text-capitalize"><i class="fas fa-user"></i>&nbsp;&nbsp;{{ g.user['username'] }}</span></label>
+					{% else %}
+						<label for="body">Kommentera som <span class="badge  badge-primary text-capitalize"><i class="fas fa-user"></i>&nbsp;&nbsp;{{ g.user['username'] }}</span></label>
+					{% endif %}
 
-				</form>
-				</div></div>
-		      {% for comment in get_all_comments(post['id']) if get_all_comments(post['id']) != None %}
+					<textarea name="body" class="form-control" id="body" rows="3" placeholder="Kommentar">{{ request.form['body'] }}</textarea>
+				</div>
+				<button type="submit" class="btn btn-primary"><i class="fas fa-comment"></i>&nbsp;&nbsp;Kommentera</button>
+			    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
 
-		        {% if get_user(comment['author_id'])['is_teacher'] %}
-		          <div class="card shadow-sm mt-4 comments-box"><div class="card-body">
-		            <h5 class="card-title text-muted"><span class="badge  badge-success text-capitalize"><i class="fas fa-user"></i>&nbsp;&nbsp;{{ comment['username'] }}</span> den {{ comment['created'].strftime('%d-%m-%Y') }}</h5>
-		            <p class="body">{{ comment['body'] }}</p>
-		          </div></div>
-		        {% else %}
-		          <div class="card shadow-sm mt-4 comments-box"><div class="card-body">
-		            <h5 class="card-title text-muted"><span class="badge  badge-primary text-capitalize"><i class="fas fa-user"></i>&nbsp;&nbsp;{{ comment['username'] }}</span> den {{ comment['created'].strftime('%d-%m-%Y') }}</h5>
-		            <p class="body">{{ comment['body'] }}</p>
-		          </div></div>
-		        {% endif %}
-		      {% endfor %}
-		    </div>
-		</div>
+			</form>
+		</div></div>
+		{% for comment in get_all_comments(post['id']) if get_all_comments(post['id']) != None %}
+
+		{% if get_user(comment['author_id'])['is_teacher'] %}
+		  <div class="card shadow-hover m-2 border-0 comments-box"><div class="card-body">
+		    <h5 class="card-title text-muted"><span class="badge  badge-success text-capitalize"><i class="fas fa-user"></i>&nbsp;&nbsp;{{ comment['username'] }}</span> den {{ comment['created'].strftime('%d-%m-%Y') }}</h5>
+		    <p class="body">{{ comment['body'] }}</p>
+		  </div></div>
+		{% else %}
+		  <div class="card shadow-hover m-2 border-0 comments-box"><div class="card-body">
+		    <h5 class="card-title text-muted"><span class="badge  badge-primary text-capitalize"><i class="fas fa-user"></i>&nbsp;&nbsp;{{ comment['username'] }}</span> den {{ comment['created'].strftime('%d-%m-%Y') }}</h5>
+		    <p class="body">{{ comment['body'] }}</p>
+		  </div></div>
+		{% endif %}
+		{% endfor %}
+
+      </div>
 	</div>
 
 {% endblock %}
