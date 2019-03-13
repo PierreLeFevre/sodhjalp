@@ -4,7 +4,7 @@ import datetime
 
 from werkzeug.exceptions import abort
 
-from flaskr.db import 
+from flaskr.db import get_db
 
 def get_post(id, check_author=True):
     post = get_db().execute(
