@@ -97,7 +97,7 @@ def register():
 
         if not username:
             error = "Username is required."
-        elif len(username) > 8:
+        elif len(username) > 15:
             error = "Username length has to be maximum 8 characters."
         elif not password:
             error = 'Password is required.'

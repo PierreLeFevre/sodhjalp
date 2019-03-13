@@ -12,6 +12,8 @@ def get_all_users():
 
     return users
 
+
+
 def get_all_feedbacks():
     db  = get_db()
     feedbacks = db.execute(

@@ -2,6 +2,9 @@ from flask import (
     flash, g, redirect, render_template, request, url_for
 )
 
+import datetime
+import time as t
+
 from werkzeug.exceptions import abort
 
 from flaskr.auth.utils import login_required
@@ -16,6 +19,23 @@ from .utils import (
 
 from . import bp
 
+#@bp.route("/test/test")
+def test():
+    db = get_db()
+    time = db.execute(
+        'SELECT * FROM post'
+        ' WHERE author_id=?',
+        (g.user['id'],)
+    ).fetchone()
+
+    date, time = str(time['created']).split(" ")
+
+    #Checking if its the same date.
+    if (str(date) == str(datetime.date.today())):
+        
+        return str((t.strftime("%H:%M:%S")) - int(time))
+
+    return str(datetime.date.today())
 @bp.route("/")
 def index():
     posts = get_all_posts()
