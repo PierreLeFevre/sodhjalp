@@ -81,7 +81,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow shadow-hover">
   <a class="navbar-brand" href="/">SodHjälp</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -100,8 +100,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.register') }}"><i class="fas fa-user-plus"></i>&nbsp;&nbsp;Skapa konto</a></li>
         <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.login') }}"><i class="fas fa-sign-in-alt"></i>&nbsp;&nbsp;Logga in</a></li>
       {% endif %}
-      <li class="nav-item"><a class="nav-link" href="http://sodschema.ga"><i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;Schema</a></li>
-      <li class="nav-item"><a class="nav-link" href="http://sodmat.ga"><i class="fas fa-utensils"></i>&nbsp;&nbsp;Skolmat</a></li>
+
+      {% if g.user and g.user['personal_id'] and g.user['personal_id']!= "None" %}
+        <li class="nav-item"><a class="nav-link" href="http://sodschema.ga"><i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;Schema</a></li>
+        <li class="nav-item"><a class="nav-link" href="http://sodmat.ga"><i class="fas fa-utensils"></i>&nbsp;&nbsp;Skolmat</a></li>
+      {% endif %}
+
       {% if g.user['is_admin'] %}
         <li class="nav-item"><a class="nav-link" href="{{url_for('admin.index')}}"><i class="fas fa-tools"></i>&nbsp;&nbsp;Admin</a></li>
       {% endif %}
@@ -124,7 +128,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="row align-items-start">
 
     <div class="col-lg-4 col-xl-2 order-6 order-xl-1">
-      <div class="card shadow border-0 ml-3 mr-3 mb-5 rounded p-0">
+      <div class="card shadow shadow-hover border-0 ml-3 mr-3 mb-5 rounded p-0">
         <div class="list-group border-0 text-info">
           <a class="list-group-item border border-primary text-primary" href="/"><i class="fas fa-chalkboard"></i>&nbsp;&nbsp;Ämnen</a>
           <a class="text-primary border-left-0 border-right-0 border-bottom-0 border-top border-primary list-group-item" href="{{ url_for('blog.specific_posts', key="matematik") }}">Matematik</a>
@@ -137,7 +141,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <a class="text-primary border-0 list-group-item" href="{{url_for('blog.specific_posts', key="svenska")}}">Svenska</a>
           <a class="text-primary border-0 list-group-item" href="{{url_for('blog.specific_posts', key="engelska")}}">Engelska</a>
           <a class="text-primary border-0 list-group-item" href="{{url_for('blog.specific_posts', key="teknik")}}">Teknik</a>
-          <a class="text-primary borader-0 list-group-item" href="{{url_for('blog.specific_posts', key="datorteknik")}}">Dator- och nätverksteknik</a>
+          <a class="text-primary border-0 list-group-item" href="{{url_for('blog.specific_posts', key="datorteknik")}}">Dator- och nätverksteknik</a>
         </div>
       </div>
     </div>
@@ -175,39 +179,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
         <!-- ad cards
         <div class="card mb-3">
-          <img src="https://images.pexels.com/photos/1033374/pexels-photo-1033374.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" class="card-img-top img-fluid" alt="...">
+          <img src="https://images.pexels.com/photos/1033374/pexels-photo-1033374.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" class="card-img-top img-fluid" alt="news/ad image">
           <div class="card-body">
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          </div>
-        </div>
-        <div class="card mb-3">
-          <img src="https://images.pexels.com/photos/1169754/pexels-photo-1169754.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" class="card-img-top img-fluid" alt="...">
-          <div class="card-body">
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          </div>
-        </div>
-        <div class="card mb-3">
-          <img src="https://images.pexels.com/photos/1048033/pexels-photo-1048033.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" class="card-img-top img-fluid" alt="...">
-          <div class="card-body">
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          </div>
-        </div>
-        <div class="card mb-3">
-          <img src="https://images.pexels.com/photos/1763075/pexels-photo-1763075.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" class="card-img-top img-fluid" alt="...">
-          <div class="card-body">
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          </div>
-        </div>
-        <div class="card mb-3">
-          <img src="https://images.pexels.com/photos/1033374/pexels-photo-1033374.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" class="card-img-top img-fluid" alt="...">
-          <div class="card-body">
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          </div>
-        </div>
-        <div class="card mb-3">
-          <img src="https://images.pexels.com/photos/1154198/pexels-photo-1154198.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" class="card-img-top img-fluid" alt="...">
-          <div class="card-body">
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <p class="card-text">[Sponsored content]</p>
           </div>
         </div>
       -->
