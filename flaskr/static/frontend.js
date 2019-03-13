@@ -30,7 +30,6 @@ $(window).on("load", function(){
 	});
 
 	$(".shadow-hover").on("mouseover", function(){
-		console.log("mouse in");
 		if ($(this).hasClass("shadow")){
 			$(this).removeClass("shadow").addClass("shadow-lg");
 		} else {
@@ -39,7 +38,6 @@ $(window).on("load", function(){
 	});
 
 	$(".shadow-hover").on("mouseout", function(){
-		console.log("mouse out");
 		if ($(this).hasClass("shadow-lg")){
 			$(this).removeClass("shadow-lg").addClass("shadow");
 		} else {
