@@ -22,10 +22,6 @@ import datetime
 
 @bp.context_processor
 def utility_processor_feedbacks():
-	pass
-
-@bp.context_processor
-def utility_processor_feedbacks():
 	def get_feedback_user(id):
 		user = get_db().execute(
 			'SELECT * FROM user'

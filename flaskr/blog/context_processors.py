@@ -5,19 +5,32 @@ from . import bp
 from flaskr.db import get_db
 from flask import g
 
+def convertTime(time):
+    pass
+
+def spam(time):
+    time = datetime.datetime.now().strftime('%H:%M:%S')
+    
+    h = time[:2]
+    m = time[3:5]
+    s = time[6:8]
+
+
+
+
+
+
 @bp.context_processor
 def utility_processor_spam():
     def spam_detector(id):
         db = get_db()
         time = db.execute(
-            'SELECT created FROM post or comment'
+            'SELECT created as "datetime [timestamp]" FROM post and comment'
             ' WHERE author_id=?',
             (g.user['id'])
         ).fetchone()
 
-        if time < datetime.datetime.now():
-            pass
-
+        return time
 
     return dict(spam_detector=spam_detector)
 
