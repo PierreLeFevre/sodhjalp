@@ -47,7 +47,7 @@ def get_comment(id, check_author=True):
     if comment is None:
         abort(404, "Comment id {0} doesn't exist.".format(id))
 
-    if check_author and comment['author_id'] != g.user['id'] and g.user['is_teacher'] == 0:
+    if check_author and (comment['author_id'] != g.user['id'] or g.user['is_teacher'] == 0):
         abort(403)
 
     return comment
