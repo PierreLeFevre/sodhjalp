@@ -54,7 +54,7 @@ def news():
             db = get_db()
             db.execute(
                 'INSERT INTO news (title, body, pic, author_id)'
-                ' VALUES (?, ?, ?)',
+                ' VALUES (?, ?, ?, ?)',
                 (title, body, pic, g.user['id'])
             )
 
@@ -86,6 +86,7 @@ def test():
 @bp.route("/")
 def index():
     posts = get_all_posts()
+    news = get_news()
     return render_template('blog/index.html', posts=posts)
 
 @bp.route("/search/<string:key>", methods=('GET', 'POST'))
