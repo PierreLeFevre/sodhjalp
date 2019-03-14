@@ -67,7 +67,7 @@
 				</form>
 			</div></div>
 		{% endif %}
-
+		
 		{% for comment in get_all_comments(post['id']) if get_all_comments(post['id']) != None %}
 
 		{% if get_user(comment['author_id'])['is_teacher'] %}

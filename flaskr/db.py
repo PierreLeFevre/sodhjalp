@@ -50,6 +50,17 @@ def create_admin():
 
     db.commit()
 
+def create_news():
+    db = get_db()
+
+    with current_app.open_resource('news.sql') as f: 
+        db.executescript(f.read().decode('utf8'))
+
+@click.command('create-news')
+@with_appcontext
+def init_news():
+    create_news()
+    click.echo('News table has been created')
 
 @click.command('create-admin')
 @with_appcontext
@@ -76,3 +87,4 @@ def init_app(app):
         app.cli.add_command(init_db_command)
         app.cli.add_command(init_db_command_robin)
         app.cli.add_command(init_db_admin)
+        app.cli.add_command(init_news)
