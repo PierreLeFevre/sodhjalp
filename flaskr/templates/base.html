@@ -131,7 +131,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="row align-items-start">
 
     <div class="col-lg-4 col-xl-2 order-6 order-xl-1">
-      <div class="card shadow shadow-hover border-0 ml-3 mr-3 mb-5 rounded p-0">
+      <div class="card shadow-sm border-0 ml-3 mr-3 mb-5 rounded p-0">
         <div class="list-group border-0 text-info">
           <a class="list-group-item border border-primary text-primary" href="/"><i class="fas fa-chalkboard"></i>&nbsp;&nbsp;Ämnen</a>
           <a class="text-primary border-left-0 border-right-0 border-bottom-0 border-top border-primary list-group-item" href="{{ url_for('blog.specific_posts', key="matematik") }}">Matematik</a>
@@ -193,6 +193,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               <div class="card-body">
                 <h4 class="card-title">{{n['title']}}</h4>
                 <p class="card-text" style="white-space: pre-line">{{n['body']}}</p>
+                {% if g.user['is_admin'] %}<a class="btn btn-danger news-remove-button" href="{{url_for('blog.remove_news', id=n['id'])}}">Ta bort</a>{% endif %}
               </div>
             </div>
           {% endfor %}

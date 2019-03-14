@@ -41,7 +41,7 @@ $(window).on("load", function(){
 		if ($(this).hasClass("shadow-lg")){
 			$(this).removeClass("shadow-lg").addClass("shadow");
 		} else {
-			$(this).removeClass("shadow");			
+			$(this).removeClass("shadow").addClass("shadow-lg");			
 		}
 	});
 });

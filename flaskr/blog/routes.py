@@ -24,6 +24,17 @@ from .utils import (
 
 from . import bp
 
+@bp.route("/<int:id>/remove_news", methods=('GET',))
+@be_admin
+@login_required
+def remove_news(id):
+
+    db = get_db()
+    db.execute('DELETE FROM news WHERE id = ?', (id,))
+    db.commit()
+    flash('Removed news with id = {0}'.format(id), "success")
+    return redirect(url_for('blog.index'))
+
 @bp.route("/create_news", methods=('GET', 'POST'))
 @login_required
 @be_admin

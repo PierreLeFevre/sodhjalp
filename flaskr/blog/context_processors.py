@@ -3,7 +3,7 @@ import datetime
 from . import bp
 
 from flaskr.db import get_db
-from flask import g
+from flask import g, flash, redirect, url_for
 
 @bp.context_processor
 def utility_processor_spam():
@@ -56,9 +56,9 @@ def utility_processor_remove_news():
             db = get_db()
             db.execute('DELETE FROM news WHERE id = ?', (id,))
             db.commit()
-            flash('Removed news with id = {0}'.format(id))
+            flash('Removed news with id = {0}'.format(id), "success")
             return redirect(url_for('blog.index'))
-        flash('Failed to remove news with id = {0}'.format(id))
+        flash('Failed to remove news with id = {0}'.format(id), "danger")
     return dict(remove_news=remove_news)
 
 #@bp.context_processor
