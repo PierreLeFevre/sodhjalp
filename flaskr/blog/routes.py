@@ -58,7 +58,7 @@ def news():
                 (title, body, pic, g.user['id'])
             )
 
-            db.execute()
+            db.commit()
             flash("News has been created", "success")
             return redirect(url_for('blog.index'))
 
@@ -87,7 +87,7 @@ def test():
 def index():
     posts = get_all_posts()
     news = get_news()
-    return render_template('blog/index.html', posts=posts)
+    return render_template('blog/index.html', posts=posts, news=news    )
 
 @bp.route("/search/<string:key>", methods=('GET', 'POST'))
 def specific_posts(key = None):
