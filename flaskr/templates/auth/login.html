@@ -1,13 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
 
+<ol class="breadcrumb bg-white shadow-hover">
+  <li class="breadcrumb-item"><a href="/">SodHjälp</a></li>
+  <li class="breadcrumb-item active">Logga in</li>
+</ol>
+
 <div class="card shadow shadow-hover p-3 mb-5 rounded border-0">
-
-	<ol class="breadcrumb bg-white shadow-hover">
-	  <li class="breadcrumb-item"><a href="/">SodHjälp</a></li>
-	  <li class="breadcrumb-item active">Logga in</li>
-	</ol>
-
 	<h1 class="card-header bg-white">{% block title %}Logga in{% endblock %}</h1>
 	<div class="card-body">
 		<form method="post">
