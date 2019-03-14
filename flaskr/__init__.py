@@ -41,6 +41,20 @@ def create_app(test_config=None):
     from .admin import bp as admin_bp
     app.register_blueprint(admin_bp)
 
+    @bp.context_processor
+    def utility_processor_remove_news():
+        def remove_news(id):
+
+            if (g.user['is_admin']):
+
+                db = get_db
+                db.execute('DELETE FROM news WHERE id = ?', (id,))
+                db.commit()
+                flash('Removed news with id = {0}'.format(id))
+                return redirect(url_for('blog.index'))
+            flash('Failed to remove news with id = {0}'.format(id))
+        return dict(remove_news=remove_news)
+
     @app.errorhandler(404)
     def page_not_found(e):
         return render_template('error/404.html'), 404
