@@ -110,7 +110,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <li class="nav-item"><a class="nav-link" href="{{url_for('admin.index')}}"><i class="fas fa-tools"></i>&nbsp;&nbsp;Admin</a></li>
       {% endif %}
 
-      {% if g.user['is_admin'] %}
+      {% if g.user['is_teacher'] %}
         <li class="nav-item"><a class="nav-link" href="{{url_for('blog.news')}}"><i class="fas fa-newspaper"></i>&nbsp;&nbsp;Skapa nyhet</a></li>
       {% endif %}
     </ul>
