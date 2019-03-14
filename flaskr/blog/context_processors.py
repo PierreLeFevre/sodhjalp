@@ -3,7 +3,7 @@ import datetime
 from . import bp
 
 from flaskr.db import get_db
-from flask import g
+from flask import g, flash
 
 @bp.context_processor
 def utility_processor_spam():
