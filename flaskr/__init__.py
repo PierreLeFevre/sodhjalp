@@ -13,6 +13,11 @@ def create_app(test_config=None):
 
     CSRFProtect(app)
 
+    app.config['RECAPTCHA_USE_SSL'] = False
+    app.config['RECAPTCHA_PUBLIC_KEY'] = 'public'
+    app.config['RECAPTCHA_PRIVATE_KEY'] = 'private'
+    app.config['RECAPTCHA_OPTIONS'] = {'theme': 'white'}
+
     if test_config is None:
         app.config.from_pyfile("config.py", silent=True)
     else:

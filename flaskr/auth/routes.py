@@ -25,6 +25,7 @@ def logout():
     session.clear()
     return redirect(url_for('index'))
 
+
 @login_required
 @bp.route("/settings", methods=('GET', 'POST'))
 def settings():

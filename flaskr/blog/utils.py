@@ -6,6 +6,20 @@ from werkzeug.exceptions import abort
 
 from flaskr.db import get_db
 
+from flask_wtf import FlaskForm, RecaptchaField
+from wtforms import TextField
+
+#Kan finnas säkerhets problem
+def get_news():
+
+    news = get_db().execute(
+        'SELECT * FROM news'
+        ' ORDER BY created',
+        ()
+    ).fetchall()
+
+    return news
+
 def get_post(id, check_author=True):
     post = get_db().execute(
         'SELECT p.id, p.topic, title, body, created, author_id, username'
@@ -38,10 +52,6 @@ def get_comment(id, check_author=True):
         abort(403)
 
     return comment
-
-
-def generate_path(image):
-    pass
 
 def get_all_posts():
     db = get_db()

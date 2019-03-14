@@ -14,10 +14,46 @@ from .utils import (
     get_post,
     get_all_posts,
     search_posts,
-    get_comment
+    get_comment,
+    get_news
 )
 
 from . import bp
+
+@bp.route("/create_news", methods=('GET'¸ 'POST'))
+def news():
+
+    news = get_news()
+
+    if request.method == 'POST':
+
+        title = request.form['title']
+        body = request.form['body']
+
+        error = None
+
+        if len(title) > 50:
+            error = "Title needs to be less than 50 characters"
+        elif len(body) > 200:
+            error = "Body needs to be less than 200 characters"
+
+        if error is not None:
+            flash(error, "danger")
+        else:
+
+            db = get_db()
+            db.execute(
+                'INSERT INTO news (title, body, author_id)'
+                ' VALUES (?, ?, ?)',
+                (title, body, g.user['id'])
+            )
+
+            db.execute()
+            flash("News has been created", "success")
+            return redirect(url_for('blog.index'))
+
+    return render_template('blog/create_news.html', news=news)
+
 
 #@bp.route("/test/test")
 def test():
@@ -36,6 +72,7 @@ def test():
         return str((t.strftime("%H:%M:%S")) - int(time))
 
     return str(datetime.date.today())
+
 @bp.route("/")
 def index():
     posts = get_all_posts()
