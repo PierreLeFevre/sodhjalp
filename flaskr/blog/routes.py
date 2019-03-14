@@ -7,7 +7,11 @@ import time as t
 
 from werkzeug.exceptions import abort
 
-from flaskr.auth.utils import login_required
+from flaskr.auth.utils import (
+    login_required,
+    be_admin
+)
+
 from flaskr.db import get_db
 
 from .utils import (
@@ -21,6 +25,7 @@ from .utils import (
 from . import bp
 
 @bp.route("/create_news", methods=('GET'¸ 'POST'))
+@be_admin
 def news():
 
     news = get_news()
