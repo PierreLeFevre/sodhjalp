@@ -35,6 +35,7 @@ def news():
 
         title = request.form['title']
         body = request.form['body']
+        pic = request.form['pic']
 
         error = None
 
@@ -47,11 +48,14 @@ def news():
             flash(error, "danger")
         else:
 
+            if pic is None:
+                pic = "None"
+
             db = get_db()
             db.execute(
-                'INSERT INTO news (title, body, author_id)'
+                'INSERT INTO news (title, body, pic, author_id)'
                 ' VALUES (?, ?, ?)',
-                (title, body, g.user['id'])
+                (title, body, pic, g.user['id'])
             )
 
             db.execute()
