@@ -24,7 +24,7 @@ from .utils import (
 
 from . import bp
 
-@bp.route("/<int:id>/remove_news", methods=('POST'))
+@bp.route("/<int:id>/remove_news", methods=('POST',))
 @login_required
 @be_admin
 def remove_news(id):
