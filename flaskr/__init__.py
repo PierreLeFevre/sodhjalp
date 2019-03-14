@@ -41,7 +41,7 @@ def create_app(test_config=None):
     from .admin import bp as admin_bp
     app.register_blueprint(admin_bp)
 
-    @bp.context_processor
+    @app.context_processor
     def utility_processor_remove_news():
         def remove_news(id):
 
