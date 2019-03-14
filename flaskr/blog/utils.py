@@ -14,7 +14,7 @@ def get_news():
 
     news = get_db().execute(
         'SELECT * FROM news'
-        ' ORDER BY created'
+        ' ORDER BY created DESC'
     ).fetchall()
 
     return news
