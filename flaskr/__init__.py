@@ -1,7 +1,7 @@
 import os
 import re
 
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, flash
 from flask_wtf.csrf import CSRFProtect, CSRFError
 
 def create_app(test_config=None):
