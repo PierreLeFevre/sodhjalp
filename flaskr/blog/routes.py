@@ -25,6 +25,7 @@ from .utils import (
 from . import bp
 
 @bp.route("/create_news", methods=('GET'¸ 'POST'))
+@login_required
 @be_admin
 def news():
 
