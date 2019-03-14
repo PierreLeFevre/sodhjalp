@@ -53,7 +53,7 @@ def utility_processor_remove_news():
 
         if (g.user['is_admin']):
 
-            db = get_db
+            db = get_db()
             db.execute('DELETE FROM news WHERE id = ?', (id,))
             db.commit()
             flash('Removed news with id = {0}'.format(id))
