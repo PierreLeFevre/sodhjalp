@@ -69,7 +69,7 @@ def settings():
                 
             if len(password) < 1:
                 db.execute(
-                    'UPDATE user SET username = ?, personal_id = ?, dark_mode'
+                    'UPDATE user SET username = ?, personal_id = ?, dark_mode = ?'
                     ' WHERE id = ?', (username, personal_id, dark_mode, g.user['id'])
                 )
             else:
