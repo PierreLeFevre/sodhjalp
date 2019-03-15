@@ -10,6 +10,15 @@
     <div class="card shadow shadow-hover p-3 mb-5 bg-white rounded border-0">
       
         <h1 class="card-header bg-white">{% block title %}Admin{% endblock %}</h1>
+
+        <form class="input-group mb-3" action="{{ url_for('admin.sql')}}">
+          <input type="text" id="code" name="code" class="form-control" placeholder="execute code" aria-label="execute code" aria-describedby="button-addon2">
+          <div class="input-group-append">
+            <button class="btn btn-secondary" type="button" id="button-addon2">Execute</button>
+          </div>
+        </form>
+
+
         <div class="card-body">
 
             <div class="card mb-4 border-0 shadow">

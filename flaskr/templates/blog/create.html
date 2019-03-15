@@ -39,6 +39,41 @@
 			<input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
 		</form>
 	</div>
+	<div class="card mt-4 shadow-hover shadow rounded border-0">
+
+    <div class="card-header bg-white border-0 rounded">
+      <h3 class="card-title live-preview-title"></h3>
+      <h5 class="card-title text-muted">Live preview</h5>
+      <div>
+        {% if g.user['is_teacher'] %}
+          <p class="lead card-subtitle text-muted">
+            <span class="badge badge-success text-capitalize"><i class="fas fa-user"></i>&nbsp;&nbsp;{{ g.user['username'] }}</span>
+            <span class="badge badge-primary text-capitalize"><i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;
+            	<span class="live-preview-time"></span>
+            </span>
+            <span class="badge badge-primary text-capitalize"><i class="fas fa-chalkboard"></i>&nbsp;&nbsp;
+            	<span class="live-preview-topic"></span>
+            </span>
+          </p>
+        {% else %}
+          <p class="lead card-subtitle text-muted">
+            <span class="badge badge-primary text-capitalize"><i class="fas fa-user"></i>&nbsp;&nbsp;{{ g.user['username'] }}</span>
+            <span class="badge badge-primary text-capitalize"><i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;
+            	<span class="live-preview-time"></span>
+            </span>
+            <span class="badge badge-primary text-capitalize"><i class="fas fa-chalkboard"></i>&nbsp;&nbsp;
+            	<span class="live-preview-topic"></span>
+            </span>
+          </p>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="card-body pl-4 pr-4 pb-4">
+      <p style="white-space: pre-line" class="live-preview-body"></p>
+    </div>
+
+  </div>
 </div>
 
 {% endblock %}
