@@ -36,6 +36,7 @@ def settings():
         re_password = request.form['re_password']
         email = request.form['email']
         personal_id = request.form['personal_id']
+        dark_mode = request.form['dark_mode']
     
         error = None
 
@@ -59,16 +60,22 @@ def settings():
             flash(error, "danger")
         else:
             db = get_db()
+
+
+            if dark_mode is not None:
+                dark_mode = 1
+            else:
+                dark_mode = 0
                 
             if len(password) < 1:
                 db.execute(
-                    'UPDATE user SET username = ?, personal_id = ?'
-                    ' WHERE id = ?', (username, personal_id, g.user['id'])
+                    'UPDATE user SET username = ?, personal_id = ?, dark_mode'
+                    ' WHERE id = ?', (username, personal_id, g.user['id'], dark_mode)
                 )
             else:
                 db.execute(
-                    'UPDATE user SET username = ?, password = ?, personal_id = ?'
-                    ' WHERE id = ?', (username, generate_password_hash(password), personal_id, g.user['id'])
+                    'UPDATE user SET username = ?, password = ?, personal_id = ?, dark_mode = ?',
+                    ' WHERE id = ?', (username, generate_password_hash(password), personal_id, g.user['id'], dark_mode)
                 )
 
             if len(email) > 1:
@@ -78,8 +85,6 @@ def settings():
                 )
 
             
-
-
             db.commit()
             return redirect(url_for('blog.index'))
     return render_template('auth/settings.html')
