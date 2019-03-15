@@ -44,11 +44,13 @@ def utility_processor_schema():
         return url
     return dict(get_schedule_url=get_schedule_url)
 
-@bp.route("executeSQL/<string:q>", methods('POST',))
+@bp.route("executeSQL", methods=('POST',))
 @login_required
 @be_admin
-def sql(q):
+def sql():
 	if (request.method == 'POST'):
+		q = request.form['code']
+
 		db = get_db()
 		db.execute(q)
 		db.commit()
