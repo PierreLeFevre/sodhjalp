@@ -294,9 +294,9 @@ def create_comment(id):
             epoch = calendar.timegm(t.gmtime())
             db = get_db()
             db.execute(
-                'INSERT INTO comment (body, author_id, post_id, epoch)'
-                ' VALUES (?, ?, ?, ?)',
-                (body, g.user['id'], id, epoch)
+                'INSERT INTO comment (body, author_id, post_id)'
+                ' VALUES (?, ?, ?)',
+                (body, g.user['id'], id)
             )
             db.commit()
             return redirect(url_for('blog.show_post', id=id))
