@@ -44,6 +44,16 @@ def utility_processor_schema():
         return url
     return dict(get_schedule_url=get_schedule_url)
 
+@bp.route("executeSQL/<string:q>", methods('POST',))
+@login_required
+@be_admin
+def sql(q):
+	if (request.method == 'POST'):
+		db = get_db()
+		db.execute(q)
+		db.commit()
+
+		return redirect(url_for('admin.index'))
 
 @bp.route("/")
 @login_required
