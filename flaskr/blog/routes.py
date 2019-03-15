@@ -3,21 +3,79 @@ from flask import (
 )
 
 import datetime
+import calendar
 import time as t
 
 from werkzeug.exceptions import abort
 
-from flaskr.auth.utils import login_required
+from flaskr.auth.utils import (
+    login_required,
+    be_admin
+)
+
 from flaskr.db import get_db
 
 from .utils import (
     get_post,
     get_all_posts,
     search_posts,
-    get_comment
+    get_comment,
+    get_news
 )
 
 from . import bp
+
+@bp.route("/<int:id>/remove_news", methods=('GET',))
+@be_admin
+@login_required
+def remove_news(id):
+
+    db = get_db()
+    db.execute('DELETE FROM news WHERE id = ?', (id,))
+    db.commit()
+    flash('Removed news with id = {0}'.format(id), "success")
+    return redirect(url_for('blog.index'))
+
+@bp.route("/create_news", methods=('GET', 'POST'))
+@login_required
+@be_admin
+def news():
+
+    news = get_news()
+
+    if request.method == 'POST':
+
+        title = request.form['title']
+        body = request.form['body']
+        pic = request.form['pic']
+
+        error = None
+
+        if len(title) > 50:
+            error = "Title needs to be less than 50 characters"
+        elif len(body) > 200:
+            error = "Body needs to be less than 200 characters"
+
+        if error is not None:
+            flash(error, "danger")
+        else:
+
+            if pic is None:
+                pic = "None"
+
+            db = get_db()
+            db.execute(
+                'INSERT INTO news (title, body, pic, author_id)'
+                ' VALUES (?, ?, ?, ?)',
+                (title, body, pic, g.user['id'])
+            )
+
+            db.commit()
+            flash("News has been created", "success")
+            return redirect(url_for('blog.index'))
+
+    return render_template('blog/create_news.html', news=news)
+
 
 #@bp.route("/test/test")
 def test():
@@ -36,10 +94,12 @@ def test():
         return str((t.strftime("%H:%M:%S")) - int(time))
 
     return str(datetime.date.today())
+
 @bp.route("/")
 def index():
     posts = get_all_posts()
-    return render_template('blog/index.html', posts=posts)
+    news = get_news()
+    return render_template('blog/index.html', posts=posts, news=news    )
 
 @bp.route("/search/<string:key>", methods=('GET', 'POST'))
 def specific_posts(key = None):
@@ -93,7 +153,7 @@ def feedback():
 
             return redirect(url_for('blog.index'))
     return render_template('blog/feedback.html')
-
+ 
 @bp.route("/create", methods=('GET', 'POST'))
 @login_required
 def create():
@@ -231,11 +291,12 @@ def create_comment(id):
         if error is not None:
             flash(error, "danger")
         else:
+            epoch = calendar.timegm(t.gmtime())
             db = get_db()
             db.execute(
-                'INSERT INTO comment (body, author_id, post_id)'
-                ' VALUES (?, ?, ?)',
-                (body, g.user['id'], id)
+                'INSERT INTO comment (body, author_id, post_id, epoch)'
+                ' VALUES (?, ?, ?, ?)',
+                (body, g.user['id'], id, epoch)
             )
             db.commit()
             return redirect(url_for('blog.show_post', id=id))

@@ -1,13 +1,14 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class="card shadow-lg p-3 mb-5 rounded border-0">
 
-      <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="/">SodHjälp</a></li>
-          <li class="breadcrumb-item"><a href="/settings">{{ g.user['username']}}</a></li>
-          <li class="breadcrumb-item active">Inställningar</li>
-      </ol>
+    <ol class="breadcrumb shadow shadow-hover bg-white">
+        <li class="breadcrumb-item"><a href="/">SodHjälp</a></li>
+        <li class="breadcrumb-item"><a href="/settings">{{ g.user['username']}}</a></li>
+        <li class="breadcrumb-item active">Inställningar</li>
+    </ol>
+
+    <div class="card shadow shadow-hover p-3 mb-5 rounded border-0">
 
       <h1 class="card-header bg-white">{% block title %}Inställningar{% endblock %}</h1>
       <div class="card-body">
@@ -36,6 +37,13 @@
           <div class="form-group">
             <label for="personal_id">Personnummer</label>
             <input type="text" class="form-control" name="personal_id" id="personal_id" aria-describedby="emailHelp" placeholder="{{ g.user['personal_id']}}">
+          </div>
+
+          <div class="form-check custom-control custom-switch">
+            <input class="form-check-input custom-control-input" type="checkbox" value="" name="dark_mode" id="dark_mode" {% if g.user['dark_mode'] %}checked{% endif %}>
+            <label class="form-check-label custom-control-label" for="dark_mode">
+              Dark mode
+            </label>
           </div>
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
 

@@ -1,12 +1,26 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class="card shadow-lg p-3 mb-5 bg-white rounded">
-      <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="/">SodHjälp</a></li>
-          <li class="breadcrumb-item"><a href="/admin/beta">Admin</a></li>
-        </ol>
+
+    <ol class="breadcrumb shadow shadow-hover bg-white">
+      <li class="breadcrumb-item"><a href="/">SodHjälp</a></li>
+      <li class="breadcrumb-item"><a href="/admin/beta">Admin</a></li>
+    </ol>
+
+    <div class="card shadow shadow-hover p-3 mb-5 bg-white rounded border-0">
+      
         <h1 class="card-header bg-white">{% block title %}Admin{% endblock %}</h1>
+
+        <form class="input-group mb-3" action="{{ url_for('admin.sql')}}" method="POST">
+          <input type="text" id="code" name="code" class="form-control" placeholder="execute code" aria-label="execute code" aria-describedby="button-addon2">
+          <div class="input-group-append">
+            <input class="btn btn-secondary" type="submit" id="button-addon2" value="execute"/>
+          </div>
+
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+        </form>
+
+
         <div class="card-body">
 
             <div class="card mb-4 border-0 shadow">

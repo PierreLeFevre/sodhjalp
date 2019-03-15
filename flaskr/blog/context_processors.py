@@ -3,21 +3,19 @@ import datetime
 from . import bp
 
 from flaskr.db import get_db
-from flask import g
+from flask import g, flash, redirect, url_for
 
 @bp.context_processor
 def utility_processor_spam():
     def spam_detector(id):
         db = get_db()
         time = db.execute(
-            'SELECT created FROM post or comment'
+            'SELECT * as "datetime [times FROM post and comment'
             ' WHERE author_id=?',
             (g.user['id'])
         ).fetchone()
 
-        if time < datetime.datetime.now():
-            pass
-
+        return time
 
     return dict(spam_detector=spam_detector)
 
@@ -43,11 +41,27 @@ def utility_processor():
         comments = db.execute(
             'SELECT c.body, c.created, u.username, c.id, c.author_id'
             ' FROM comment c JOIN user u ON c.author_id=u.id'
-            ' WHERE c.post_id=?', (id,)
+            ' WHERE c.post_id=?'
+            ' ORDER BY created DESC'
+            , (id,)
         ).fetchall()
 
         return comments
     return dict(get_all_comments=get_all_comments)
+
+@bp.context_processor
+def utility_processor_remove_news():
+    def remove_news(id):
+
+        if (g.user['is_admin']):
+
+            db = get_db()
+            db.execute('DELETE FROM news WHERE id = ?', (id,))
+            db.commit()
+            flash('Removed news with id = {0}'.format(id), "success")
+            return redirect(url_for('blog.index'))
+        flash('Failed to remove news with id = {0}'.format(id), "danger")
+    return dict(remove_news=remove_news)
 
 #@bp.context_processor
 def utility_processor_posts():

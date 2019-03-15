@@ -25,6 +25,7 @@ def logout():
     session.clear()
     return redirect(url_for('index'))
 
+
 @login_required
 @bp.route("/settings", methods=('GET', 'POST'))
 def settings():
@@ -34,16 +35,17 @@ def settings():
         password = request.form['password']
         re_password = request.form['re_password']
         email = request.form['email']
-        personal_id = request.form['personal_id']
+        personal_id = request.form.get('personal_id')
+        dark_mode = request.form.get('dark_mode')
     
         error = None
 
         if username is None:
             error = "Username is required"
-        elif len(username) > 8:
-            error = "Username length needs to be less than 8 characters"
-        elif len(password) < 8 and len(password) > 0:
-            error = "Password length needs to be greater than 8 characters"
+        elif len(username) > 15:
+            error = "Username length needs to be less than 15 characters"
+        elif len(password) < 15 and len(password) > 0:
+            error = "Password length needs to be greater than 15 characters"
         elif password != re_password:
             error = "Passwords does not match"
 
@@ -58,16 +60,22 @@ def settings():
             flash(error, "danger")
         else:
             db = get_db()
+
+
+            if dark_mode is not None:
+                dark_mode = 1
+            else:
+                dark_mode = 0
                 
             if len(password) < 1:
                 db.execute(
-                    'UPDATE user SET username = ?, personal_id = ?'
-                    ' WHERE id = ?', (username, personal_id, g.user['id'])
+                    'UPDATE user SET username = ?, personal_id = ?, dark_mode = ?'
+                    ' WHERE id = ?', (username, personal_id, dark_mode, g.user['id'])
                 )
             else:
                 db.execute(
-                    'UPDATE user SET username = ?, password = ?, personal_id = ?'
-                    ' WHERE id = ?', (username, generate_password_hash(password), personal_id, g.user['id'])
+                    'UPDATE user SET username = ?, password = ?, personal_id = ?, dark_mode = ?',
+                    ' WHERE id = ?', (username, generate_password_hash(password), personal_id, dark_mode, g.user['id'])
                 )
 
             if len(email) > 1:
@@ -77,8 +85,6 @@ def settings():
                 )
 
             
-
-
             db.commit()
             return redirect(url_for('blog.index'))
     return render_template('auth/settings.html')
@@ -97,7 +103,7 @@ def register():
 
         if not username:
             error = "Username is required."
-        elif len(username) > 8:
+        elif len(username) > 15:
             error = "Username length has to be maximum 8 characters."
         elif not password:
             error = 'Password is required.'

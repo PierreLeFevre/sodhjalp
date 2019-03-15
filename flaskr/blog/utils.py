@@ -1,8 +1,23 @@
 from flask import g
 
+import datetime
+
 from werkzeug.exceptions import abort
 
 from flaskr.db import get_db
+
+from flask_wtf import FlaskForm, RecaptchaField
+from wtforms import TextField
+
+#Kan finnas säkerhets problem
+def get_news():
+
+    news = get_db().execute(
+        'SELECT * FROM news'
+        ' ORDER BY created DESC'
+    ).fetchall()
+
+    return news
 
 def get_post(id, check_author=True):
     post = get_db().execute(
@@ -32,14 +47,10 @@ def get_comment(id, check_author=True):
     if comment is None:
         abort(404, "Comment id {0} doesn't exist.".format(id))
 
-    if check_author and comment['author_id'] != g.user['id'] and g.user['is_teacher'] == 0:
+    if check_author and (comment['author_id'] != g.user['id'] or g.user['is_teacher'] == 0):
         abort(403)
 
     return comment
-
-
-def generate_path(image):
-    pass
 
 def get_all_posts():
     db = get_db()

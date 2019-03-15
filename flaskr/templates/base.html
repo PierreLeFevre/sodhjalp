@@ -34,7 +34,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <!-- END OF GOOGLE SHIT -->
 
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-<link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+
+{% if g.user['dark_mode'] %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='dark.min.css') }}">
+{% else %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+{% endif %}
+
 <!-- BASE BOOTSTRAP <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">-->
 
 <script
@@ -81,8 +87,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
-  <a class="navbar-brand" href="/">SodHjälp</a>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow shadow-hover">
+  <a class="navbar-brand" href="/">SodHjälp<small class="text-muted">BETA</small></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -100,12 +106,19 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.register') }}"><i class="fas fa-user-plus"></i>&nbsp;&nbsp;Skapa konto</a></li>
         <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.login') }}"><i class="fas fa-sign-in-alt"></i>&nbsp;&nbsp;Logga in</a></li>
       {% endif %}
-      <li class="nav-item"><a class="nav-link" href="http://sodschema.ga"><i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;Schema</a></li>
-      <li class="nav-item"><a class="nav-link" href="http://sodmat.ga"><i class="fas fa-utensils"></i>&nbsp;&nbsp;Skolmat</a></li>
+
+      {% if g.user and g.user['personal_id'] and g.user['personal_id']!= "None" %}
+        <li class="nav-item"><a class="nav-link" href="http://sodschema.ga"><i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;Schema</a></li>
+        <li class="nav-item"><a class="nav-link" href="http://sodmat.ga"><i class="fas fa-utensils"></i>&nbsp;&nbsp;Skolmat</a></li>
+      {% endif %}
+
       {% if g.user['is_admin'] %}
         <li class="nav-item"><a class="nav-link" href="{{url_for('admin.index')}}"><i class="fas fa-tools"></i>&nbsp;&nbsp;Admin</a></li>
       {% endif %}
 
+      {% if g.user['is_admin'] %}
+        <li class="nav-item"><a class="nav-link" href="{{url_for('blog.news')}}"><i class="fas fa-newspaper"></i>&nbsp;&nbsp;Skapa nyhet</a></li>
+      {% endif %}
     </ul>
 
     <form class="form-inline my-2 my-lg-0" method="POST" action="{{ url_for('blog.specific_posts', key='')}}">
@@ -124,7 +137,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="row align-items-start">
 
     <div class="col-lg-4 col-xl-2 order-6 order-xl-1">
-      <div class="card shadow border-0 ml-3 mr-3 mb-5 rounded p-0">
+      <div class="card shadow-sm border-0 ml-3 mr-3 mb-5 rounded p-0">
         <div class="list-group border-0 text-info">
           <a class="list-group-item border border-primary text-primary" href="/"><i class="fas fa-chalkboard"></i>&nbsp;&nbsp;Ämnen</a>
           <a class="text-primary border-left-0 border-right-0 border-bottom-0 border-top border-primary list-group-item" href="{{ url_for('blog.specific_posts', key="matematik") }}">Matematik</a>
@@ -141,10 +154,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
       </div>
     </div>
-      <div class="col-lg-1 col-xl-1 order-2 order-xl-5">
-      </div>
-    
-      <div class="col-lg-3 col-xl-5 order-1 order-xl-6">
+      <div class="col-lg-4 col-xl-6 order-1 order-xl-6">
 
       {% with messages = get_flashed_messages(with_categories=true) %}
 
@@ -168,14 +178,25 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
 
       <div class="col-lg-4 col-xl-4 order-12 order-xl-12">
-        {% if g.user and g.user['personal_id'] and g.user['personal_id']!= "None" %}
-          <div class="card shadow border-0 sticky-top mb-5">
-            <div class="card-body mx-auto">
-              <img src="{{ get_schedule_url() }}" class="img-fluid" alt="Schedule" id="schedule">
-            </div>
-          </div>
-        {% endif %}
 
+        {% if news %}
+          <div class="card shadow-hover border border-primary mb-4"><div class="card-body">
+            <i class="fas fa-newspaper"></i>&nbsp;&nbsp;Nyheter
+          </div></div>
+
+          {% for n in news %}
+            <div class="card mb-4 border-0 shadow-sm">
+              {% if n['pic'] != "None" and n['pic'] %}
+                <img src="{{n['pic']}}" class="card-img-top img-fluid" alt="news/ad image">
+              {% endif %}
+              <div class="card-body">
+                <h4 class="card-title">{{n['title']}}</h4>
+                <p class="card-text" style="white-space: pre-line">{{n['body']}}</p>
+                {% if g.user['is_admin'] %}<a class="btn btn-danger news-remove-button" href="{{url_for('blog.remove_news', id=n['id'])}}">Ta bort</a>{% endif %}
+              </div>
+            </div>
+          {% endfor %}
+        {% endif %}
       </div>
 
   </div>
