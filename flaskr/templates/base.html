@@ -34,7 +34,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <!-- END OF GOOGLE SHIT -->
 
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-<link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+
+{% if g.user[dark_mode] %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='dark.min.css') }}">
+{% else %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+{% endif %}
+
 <!-- BASE BOOTSTRAP <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">-->
 
 <script

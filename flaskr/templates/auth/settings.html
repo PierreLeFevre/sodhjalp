@@ -38,6 +38,13 @@
             <label for="personal_id">Personnummer</label>
             <input type="text" class="form-control" name="personal_id" id="personal_id" aria-describedby="emailHelp" placeholder="{{ g.user['personal_id']}}">
           </div>
+
+          <div class="form-check custom-control custom-switch">
+            <input class="form-check-input custom-control-input" type="checkbox" value="" name="dark_mode" id="dark_mode" {% if user['dark_mode'] %}checked{% endif %}>
+            <label class="form-check-label custom-control-label" for="dark_mode">
+              Dark mode
+            </label>
+          </div>
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
 
           <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i>&nbsp;&nbsp;Spara ändringar</button>
