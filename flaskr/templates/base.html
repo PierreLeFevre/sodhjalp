@@ -82,7 +82,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow shadow-hover">
-  <a class="navbar-brand" href="/">SodHjälp</a>
+  <a class="navbar-brand" href="/">SodHjälp<small class="text-muted">BETA</small></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -172,13 +172,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
 
       <div class="col-lg-4 col-xl-4 order-12 order-xl-12">
-        {% if g.user and g.user['personal_id'] and g.user['personal_id']!= "None" %}
-          <div class="card shadow border-0 sticky-top mb-5">
-            <div class="card-body mx-auto">
-              <img src="{{ get_schedule_url() }}" class="img-fluid" alt="Schedule" id="schedule">
-            </div>
-          </div>
-        {% endif %}
 
         {% if news %}
           <div class="card shadow-hover border border-primary mb-4"><div class="card-body">
