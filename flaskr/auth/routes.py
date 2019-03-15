@@ -35,8 +35,8 @@ def settings():
         password = request.form['password']
         re_password = request.form['re_password']
         email = request.form['email']
-        personal_id = request.form['personal_id']
-        dark_mode = request.form['dark_mode']
+        personal_id = request.form.get('personal_id')
+        dark_mode = request.form.get('dark_mode')
     
         error = None
 
