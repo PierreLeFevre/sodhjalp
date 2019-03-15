@@ -52,8 +52,12 @@ def sql():
 		q = request.form['code']
 
 		db = get_db()
-		db.execute(q)
-		db.commit()
+		try:
+			db.execute(q)
+			db.commit()
+			flash("Code executed.", "success")
+		except Exception as e:
+			flash(e, "danger")
 
 		return redirect(url_for('admin.index'))
 

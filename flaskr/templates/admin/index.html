@@ -11,11 +11,12 @@
       
         <h1 class="card-header bg-white">{% block title %}Admin{% endblock %}</h1>
 
-        <form class="input-group mb-3" action="{{ url_for('admin.sql')}}">
+        <form class="input-group mb-3" action="{{ url_for('admin.sql')}}" method="POST">
           <input type="text" id="code" name="code" class="form-control" placeholder="execute code" aria-label="execute code" aria-describedby="button-addon2">
           <div class="input-group-append">
-            <button class="btn btn-secondary" type="button" id="button-addon2">Execute</button>
-          </div>
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+
+            <input class="btn btn-secondary" type="submit" id="button-addon2" value="execute">
         </form>
 
 
