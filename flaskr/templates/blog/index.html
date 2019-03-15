@@ -5,7 +5,7 @@
 
 
 
-  <div class="card mb-5 rounded border-0">
+  <div class="card mb-5 rounded bg-transparent border-0">
     <div class="card-body pt-0">
         {% if g.user %}
           <a class="text-primary" href="{{ url_for('blog.create') }}">
@@ -24,7 +24,7 @@
         {% for post in posts if posts != None %}
           <div class="card mt-4 shadow-hover shadow rounded border-0" id="post_{{post['id']}}">
 
-            <div class="card-header bg-white border-0 rounded">
+            <div class="card-header {% if g.user['dark_mode'] %}bg-transparent{% else %}bg-white{% endif %} border-0 rounded">
               <h3 class="card-title">{{ post['title'] }}</h3>
               <div>
                 {% if get_user(post['author_id'])['is_teacher'] %}

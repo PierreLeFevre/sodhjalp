@@ -2,7 +2,7 @@
 
 {% block content %}
 
-    <ol class="breadcrumb shadow shadow-hover bg-white">
+    <ol class="breadcrumb shadow shadow-hover {% if g.user['dark_mode'] %}bg-transparent{% else %}bg-white{% endif %}">
         <li class="breadcrumb-item"><a href="/">SodHjälp</a></li>
         <li class="breadcrumb-item"><a href="/settings">{{ g.user['username']}}</a></li>
         <li class="breadcrumb-item active">Inställningar</li>
@@ -10,36 +10,36 @@
 
     <div class="card shadow shadow-hover p-3 mb-5 rounded border-0">
 
-      <h1 class="card-header bg-white">{% block title %}Inställningar{% endblock %}</h1>
+      <h1 class="card-header {% if g.user['dark_mode'] %}bg-transparent{% else %}bg-white{% endif %}">{% block title %}Inställningar{% endblock %}</h1>
       <div class="card-body">
 
         <form method="POST">
           <div class="form-group">
             <label for="username">Användarnamn</label>
-            <input type="text" class="form-control" name="username" id="username" aria-describedby="emailHelp" placeholder="Användarnamn" value="{{ g.user['username']}}" required>
+            <input type="text" class="form-control {% if g.user['dark_mode'] %}bg-light text-white{% endif %}" name="username" id="username" aria-describedby="emailHelp" placeholder="Användarnamn" value="{{ g.user['username']}}" required>
           </div>
 
           <div class="form-group">
             <label for="password">Nytt lösenord</label>
-            <input type="password" class="form-control" name="password" id="password" aria-describedby="emailHelp" placeholder="Nytt lösenord">
+            <input type="password" class="form-control {% if g.user['dark_mode'] %}bg-light text-white{% endif %}" name="password" id="password" aria-describedby="emailHelp" placeholder="Nytt lösenord">
           </div>
 
           <div class="form-group">
             <label for="password">Verifiera nytt lösenord</label>
-            <input type="password" class="form-control" name="re_password" id="re_password" aria-describedby="emailHelp" placeholder="Verifiera nytt lösenord">
+            <input type="password" class="form-control {% if g.user['dark_mode'] %}bg-light text-white{% endif %}" name="re_password" id="re_password" aria-describedby="emailHelp" placeholder="Verifiera nytt lösenord">
           </div>
 
           <div class="form-group">
             <label for="email">Email</label>
-            <input type="text" class="form-control" name="email" id="email" aria-describedby="emailHelp" placeholder="{{ g.user['email']}}">
+            <input type="text" class="form-control {% if g.user['dark_mode'] %}bg-light text-white{% endif %}" name="email" id="email" aria-describedby="emailHelp" placeholder="{{ g.user['email']}}">
           </div>
 
           <div class="form-group">
             <label for="personal_id">Personnummer</label>
-            <input type="text" class="form-control" name="personal_id" id="personal_id" aria-describedby="emailHelp" placeholder="{{ g.user['personal_id']}}">
+            <input type="text" class="form-control {% if g.user['dark_mode'] %}bg-light text-white{% endif %}" name="personal_id" id="personal_id" aria-describedby="emailHelp" placeholder="{{ g.user['personal_id']}}">
           </div>
 
-          <div class="form-check custom-control custom-switch">
+          <div class="form-check custom-control custom-switch mb-3">
             <input class="form-check-input custom-control-input" type="checkbox" value="" name="dark_mode" id="dark_mode" {% if g.user['dark_mode'] %}checked{% endif %}>
             <label class="form-check-label custom-control-label" for="dark_mode">
               Dark mode

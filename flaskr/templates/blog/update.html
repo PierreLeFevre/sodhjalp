@@ -15,11 +15,11 @@
     <form method="post">
       <div class="form-group">
         <label for="title">Titel</label>
-        <input type="text" class="form-control" name="title" id="title" aria-describedby="emailHelp" placeholder="Titel" value="{{ request.form['title'] or post['title'] }}" required>
+        <input type="text" class="form-control {% if g.user['dark_mode'] %}bg-light text-white{% endif %}" name="title" id="title" aria-describedby="emailHelp" placeholder="Titel" value="{{ request.form['title'] or post['title'] }}" required>
       </div>
       <div class="form-group">
         <label for="body">Innehåll</label>
-        <textarea name="body" class="form-control" id="body" rows="3" placeholder="Innehåll">{{ request.form['body'] or post['body'] }}</textarea>
+        <textarea name="body" class="form-control {% if g.user['dark_mode'] %}bg-light text-white{% endif %}" id="body" rows="3" placeholder="Innehåll">{{ request.form['body'] or post['body'] }}</textarea>
       </div>
       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
       <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i>&nbsp;&nbsp;Spara ändringar</button>
