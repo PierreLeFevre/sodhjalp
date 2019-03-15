@@ -35,7 +35,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 
-{% if g.user[dark_mode] %}
+{% if g.user['dark_mode'] %}
   <link rel="stylesheet" href="{{ url_for('static', filename='dark.min.css') }}">
 {% else %}
   <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
