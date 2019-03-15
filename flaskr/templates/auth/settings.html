@@ -40,7 +40,7 @@
           </div>
 
           <div class="form-check custom-control custom-switch">
-            <input class="form-check-input custom-control-input" type="checkbox" value="" name="dark_mode" id="dark_mode" {% if user['dark_mode'] %}checked{% endif %}>
+            <input class="form-check-input custom-control-input" type="checkbox" value="" name="dark_mode" id="dark_mode" {% if g.user['dark_mode'] %}checked{% endif %}>
             <label class="form-check-label custom-control-label" for="dark_mode">
               Dark mode
             </label>
