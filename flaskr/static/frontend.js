@@ -36,6 +36,10 @@ function livePreviewCreate(){
 }
 
 $(window).on("load", function(){
+	$(function () {
+	  $('[data-toggle="tooltip"]').tooltip()
+	})
+	
 	var url_for_search = $("#search").parent().attr("action");
 
 	$("#search").on("input", function(){
