@@ -70,12 +70,12 @@ def settings():
             if len(password) < 1:
                 db.execute(
                     'UPDATE user SET username = ?, personal_id = ?, dark_mode'
-                    ' WHERE id = ?', (username, personal_id, g.user['id'], dark_mode)
+                    ' WHERE id = ?', (username, personal_id, dark_mode, g.user['id'])
                 )
             else:
                 db.execute(
                     'UPDATE user SET username = ?, password = ?, personal_id = ?, dark_mode = ?',
-                    ' WHERE id = ?', (username, generate_password_hash(password), personal_id, g.user['id'], dark_mode)
+                    ' WHERE id = ?', (username, generate_password_hash(password), personal_id, dark_mode, g.user['id'])
                 )
 
             if len(email) > 1:
