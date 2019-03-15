@@ -14,9 +14,10 @@
         <form class="input-group mb-3" action="{{ url_for('admin.sql')}}" method="POST">
           <input type="text" id="code" name="code" class="form-control" placeholder="execute code" aria-label="execute code" aria-describedby="button-addon2">
           <div class="input-group-append">
-            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+            <input class="btn btn-secondary" type="submit" id="button-addon2" value="execute"/>
+          </div>
 
-            <input class="btn btn-secondary" type="submit" id="button-addon2" value="execute">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
         </form>
 
 
