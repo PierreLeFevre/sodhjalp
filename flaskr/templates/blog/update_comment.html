@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<ol class="breadcrumb shadow shadow-hover bg-white">
+<ol class="breadcrumb shadow shadow-hover {% if g.user['dark_mode'] %}bg-transparent{% else %}bg-white{% endif %}">
   <li class="breadcrumb-item"><a href="/">SodHjälp</a></li>
   <li class="breadcrumb-item active">Redigera kommentar</li>
 </ol>
 
 <div class="card shadow shadow-hover p-3 mb-5 rounded border-0">
 
-  <h1 class="card-header bg-white">{% block title %}Redigera kommentar{% endblock %}</h1>
+  <h1 class="card-header {% if g.user['dark_mode'] %}bg-transparent{% else %}bg-white{% endif %}">{% block title %}Redigera kommentar{% endblock %}</h1>
   <div class="card-body">
     <form method="post">
       <div class="form-group">

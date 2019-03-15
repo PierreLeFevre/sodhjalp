@@ -109,34 +109,96 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <ul class="navbar-nav mr-auto">
       {% if g.user %}
-        <li class="nav-item"><div class="nav-link disabled text-white"><i class="fas fa-user"></i>&nbsp;&nbsp;Välkommen, <span class="text-capitalize">{{ g.user['username'] }}</span></div></li>
-        <li class="nav-item"><a class="nav-link" href="{{ url_for('blog.create') }}"><i class="fas fa-plus"></i>&nbsp;&nbsp;Skapa inlägg</a></li>
-        <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.settings') }}"><i class="fas fa-cog"></i>&nbsp;&nbsp;Inställningar</a></li>
-        <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.logout') }}"><i class="fas fa-sign-out-alt"></i>&nbsp;&nbsp;Logga ut</a></li>
-        <li class="nav-item"><a class="nav-link" href="{{ url_for('blog.feedback') }}"><i class="fas fa-bug"></i>&nbsp;&nbsp;Rapportera buggar</a></li>
+        <li class="nav-item" data-toggle="tooltip" data-placement="bottom" title="Välkommen, {{ g.user['username'] }}">
+          <div class="nav-link disabled text-white">
+            <i class="fas fa-user"></i>
+            <span class="d-inline d-md-none">
+              <span>&nbsp;&nbsp;Välkommen,</span>
+              <span class="text-capitalize">{{ g.user['username'] }}</span>
+            </span>
+          </div>
+        </li>
+        <li class="nav-item" data-toggle="tooltip" data-placement="bottom" title="Skapa inlägg">
+          <a class="nav-link" href="{{ url_for('blog.create') }}">
+            <i class="fas fa-plus"></i>
+            <span class="d-inline d-md-none">&nbsp;&nbsp;Skapa inlägg</span>
+          </a>
+        </li>
+        <li class="nav-item" data-toggle="tooltip" data-placement="bottom" title="Inställningar">
+          <a class="nav-link" href="{{ url_for('auth.settings') }}">
+            <i class="fas fa-cog"></i>
+            <span class="d-inline d-md-none">&nbsp;&nbsp;Inställningar</span>
+          </a>
+        </li>
+        <li class="nav-item" data-toggle="tooltip" data-placement="bottom" title="Logga ut">
+          <a class="nav-link" href="{{ url_for('auth.logout') }}">
+            <i class="fas fa-sign-out-alt"></i>
+            <span class="d-inline d-md-none">&nbsp;&nbsp;Logga ut</span>
+          </a>
+        </li>
+        <li class="nav-item" data-toggle="tooltip" data-placement="bottom" title="Rapportera buggar">
+          <a class="nav-link" href="{{ url_for('blog.feedback') }}">
+            <i class="fas fa-bug"></i>
+            <span class="d-inline d-md-none">&nbsp;&nbsp;Rapportera buggar</span>
+          </a>
+        </li>
       {% else %}
-        <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.register') }}"><i class="fas fa-user-plus"></i>&nbsp;&nbsp;Skapa konto</a></li>
-        <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.login') }}"><i class="fas fa-sign-in-alt"></i>&nbsp;&nbsp;Logga in</a></li>
+        <li class="nav-item" data-toggle="tooltip" data-placement="bottom" title="Skapa konto">
+          <a class="nav-link" href="{{ url_for('auth.register') }}">
+            <i class="fas fa-user-plus"></i>
+            <span class="d-inline d-md-none">&nbsp;&nbsp;Skapa konto</span>
+          </a>
+        </li>
+        <li class="nav-item" data-toggle="tooltip" data-placement="bottom" title="Logga in">
+          <a class="nav-link" href="{{ url_for('auth.login') }}">
+            <i class="fas fa-sign-in-alt"></i>
+            <span class="d-inline d-md-none">&nbsp;&nbsp;Logga in</span>
+          </a>
+        </li>
       {% endif %}
 
       {% if g.user and g.user['personal_id'] and g.user['personal_id']!= "None" %}
-        <li class="nav-item"><a class="nav-link" href="http://sodschema.ga"><i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;Schema</a></li>
-        <li class="nav-item"><a class="nav-link" href="http://sodmat.ga"><i class="fas fa-utensils"></i>&nbsp;&nbsp;Skolmat</a></li>
+        <li class="nav-item" data-toggle="tooltip" data-placement="bottom" title="Schema">
+          <a class="nav-link" href="http://sodschema.ga">
+            <i class="fas fa-calendar-alt"></i>
+            <span class="d-inline d-md-none">&nbsp;&nbsp;Schema</span>
+          </a>
+        </li>
+        <li class="nav-item" data-toggle="tooltip" data-placement="bottom" title="Skolmat">
+          <a class="nav-link" href="http://sodmat.ga">
+            <i class="fas fa-utensils"></i>
+            <span class="d-inline d-md-none">&nbsp;&nbsp;Skolmat</span>
+          </a>
+        </li>
       {% endif %}
 
       {% if g.user['is_admin'] %}
-        <li class="nav-item"><a class="nav-link" href="{{url_for('admin.index')}}"><i class="fas fa-tools"></i>&nbsp;&nbsp;Admin</a></li>
+        <li class="nav-item" data-toggle="tooltip" data-placement="bottom" title="Admin">
+          <a class="nav-link" href="{{url_for('admin.index')}}">
+            <i class="fas fa-tools"></i>
+            <span class="d-inline d-md-none">&nbsp;&nbsp;Admin</span>
+          </a>
+        </li>
       {% endif %}
 
       {% if g.user['is_admin'] %}
-        <li class="nav-item"><a class="nav-link" href="{{url_for('blog.news')}}"><i class="fas fa-newspaper"></i>&nbsp;&nbsp;Skapa nyhet</a></li>
+        <li class="nav-item" data-toggle="tooltip" data-placement="bottom" title="Skapa nyhet">
+          <a class="nav-link" href="{{url_for('blog.news')}}">
+            <i class="fas fa-newspaper"></i>
+            <span class="d-inline d-md-none">&nbsp;&nbsp;Skapa nyhet</span>
+          </a>
+        </li>
       {% endif %}
     </ul>
 
     <form class="form-inline my-2 my-lg-0" method="POST" action="{{ url_for('blog.specific_posts', key='')}}">
-      <input class="form-control mr-sm-2" type="text" placeholder="Sök efter inlägg" name="search" id="search" aria-label="Sök">
-      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-      <button class="btn btn-success my-2 my-sm-0" type="submit"><i class="fas fa-search"></i>&nbsp;&nbsp;Sök</button>
+      <div class="input-group m-0">
+        <input class="form-control border-0 {% if g.user['dark_mode'] %}bg-light text-white{% endif %}" type="text" placeholder="Sök efter inlägg" name="search" id="search" aria-label="Sök">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+        <div class="input-group-append">
+          <button class="btn btn-success" type="submit"><i class="fas fa-search"></i></button>
+        </div>
+      </div>
     </form>
 
   </div>

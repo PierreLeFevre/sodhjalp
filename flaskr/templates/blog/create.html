@@ -1,18 +1,18 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<ol class="breadcrumb shadow shadow-hover bg-white">
+<ol class="breadcrumb shadow shadow-hover {% if g.user['dark_mode'] %}bg-transparent{% else %}bg-white{% endif %}">
   <li class="breadcrumb-item"><a href="/">SodHjälp</a></li>
   <li class="breadcrumb-item active">Skapa inlägg</li>
 </ol>
 
 <div class="card shadow shadow-hover p-3 mb-5 rounded border-0">
-	<h1 class="card-header bg-white">{% block title %}Skapa inlägg{% endblock %}</h1>
+	<h1 class="card-header {% if g.user['dark_mode'] %}bg-black{% else %}bg-transparent{% endif %}">{% block title %}Skapa inlägg{% endblock %}</h1>
 	<div class="card-body">
 		<form method="post">
 			<div class="form-group">
 				<label for="title">Ämne</label>
-				<select class="custom-select live-input-topic" id="class" name="class">
+				<select class="custom-select live-input-topic {% if g.user['dark_mode'] %}bg-light text-white{% endif %}" id="class" name="class">
 					<option selected>Välj...</option>
 					<option value="matematik">Matematik</option>
 					<option value="kemi">Kemi</option>
@@ -29,11 +29,11 @@
 			</div>
 			<div class="form-group">
 				<label for="title">Titel</label>
-				<input type="text" class="form-control live-input-title" name="title" id="title" aria-describedby="emailHelp" placeholder="Titel">
+				<input type="text" class="form-control live-input-title {% if g.user['dark_mode'] %}bg-light text-white{% endif %}" name="title" id="title" aria-describedby="emailHelp" placeholder="Titel">
 			</div>
 			<div class="form-group">
 				<label for="body">Innehåll</label>
-				<textarea name="body" class="form-control live-input-body" id="body" rows="3" placeholder="Innehåll"></textarea>
+				<textarea name="body" class="form-control live-input-body {% if g.user['dark_mode'] %}bg-light text-white{% endif %}" id="body" rows="3" placeholder="Innehåll"></textarea>
 			</div>
 			<button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i>&nbsp;&nbsp;Skapa inlägg</button>
 			<input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
@@ -41,7 +41,7 @@
 	</div>
 	<div class="card mt-4 shadow-hover shadow rounded border-0">
 
-    <div class="card-header bg-white border-0 rounded">
+    <div class="card-header {% if g.user['dark_mode'] %}bg-transparent{% else %}bg-white{% endif %} border-0 rounded">
       <h3 class="card-title live-preview-title"></h3>
       <h5 class="card-title text-muted">Live preview</h5>
       <div>
