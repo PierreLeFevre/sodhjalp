@@ -18,6 +18,23 @@ function showHideComments(element){
 	}
 }
 
+function livePreviewCreate(){
+	var title = $(".live-input-title").val();
+	var body = $(".live-input-body").val();
+	var topic = $(".live-input-topic").val();
+	var date = new Date;
+	var time = date.now;
+
+	console.log("hej");
+
+	//setting values
+
+	$(".live-preview-title").text(title);
+	$(".live-preview-body").text(body);
+	$(".live-preview-topic").text(topic);
+
+}
+
 $(window).on("load", function(){
 	var url_for_search = $("#search").parent().attr("action");
 
@@ -44,4 +61,33 @@ $(window).on("load", function(){
 			$(this).removeClass("shadow").addClass("shadow-lg");			
 		}
 	});
+
+	$(".live-input-body").on("input", function(){
+		livePreviewCreate()
+	});
+
+	$(".live-input-topic").on("input", function(){
+		livePreviewCreate()
+	});
+
+	$(".live-input-title").on("input", function(){
+		livePreviewCreate()
+	});
+
+
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

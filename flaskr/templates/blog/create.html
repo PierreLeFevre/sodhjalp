@@ -12,7 +12,7 @@
 		<form method="post">
 			<div class="form-group">
 				<label for="title">Ämne</label>
-				<select class="custom-select" id="class" name="class">
+				<select class="custom-select live-input-topic" id="class" name="class">
 					<option selected>Välj...</option>
 					<option value="matematik">Matematik</option>
 					<option value="kemi">Kemi</option>
@@ -29,11 +29,11 @@
 			</div>
 			<div class="form-group">
 				<label for="title">Titel</label>
-				<input type="text" class="form-control" name="title" id="title" aria-describedby="emailHelp" placeholder="Titel">
+				<input type="text" class="form-control live-input-title" name="title" id="title" aria-describedby="emailHelp" placeholder="Titel">
 			</div>
 			<div class="form-group">
 				<label for="body">Innehåll</label>
-				<textarea name="body" class="form-control" id="body" rows="3" placeholder="Innehåll"></textarea>
+				<textarea name="body" class="form-control live-input-body" id="body" rows="3" placeholder="Innehåll"></textarea>
 			</div>
 			<button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i>&nbsp;&nbsp;Skapa inlägg</button>
 			<input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
@@ -48,9 +48,6 @@
         {% if g.user['is_teacher'] %}
           <p class="lead card-subtitle text-muted">
             <span class="badge badge-success text-capitalize"><i class="fas fa-user"></i>&nbsp;&nbsp;{{ g.user['username'] }}</span>
-            <span class="badge badge-primary text-capitalize"><i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;
-            	<span class="live-preview-time"></span>
-            </span>
             <span class="badge badge-primary text-capitalize"><i class="fas fa-chalkboard"></i>&nbsp;&nbsp;
             	<span class="live-preview-topic"></span>
             </span>
@@ -58,9 +55,6 @@
         {% else %}
           <p class="lead card-subtitle text-muted">
             <span class="badge badge-primary text-capitalize"><i class="fas fa-user"></i>&nbsp;&nbsp;{{ g.user['username'] }}</span>
-            <span class="badge badge-primary text-capitalize"><i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;
-            	<span class="live-preview-time"></span>
-            </span>
             <span class="badge badge-primary text-capitalize"><i class="fas fa-chalkboard"></i>&nbsp;&nbsp;
             	<span class="live-preview-topic"></span>
             </span>
