@@ -41,7 +41,9 @@ def utility_processor():
         comments = db.execute(
             'SELECT c.body, c.created, u.username, c.id, c.author_id'
             ' FROM comment c JOIN user u ON c.author_id=u.id'
-            ' WHERE c.post_id=?', (id,)
+            ' WHERE c.post_id=?'
+            ' ORDER BY created DESC'
+            , (id,)
         ).fetchall()
 
         return comments
