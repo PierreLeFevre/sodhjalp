@@ -56,7 +56,7 @@ def sql():
 			data = db.execute(q).fetchall()
 			display_data = ""
 			for row in data:
-				display_data += {0}.format("".join(['{}'.format(col) for in row])) + "\n"
+				display_data += {0}.format("".join(['{}'.format(col) for col in row])) + "\n"
 
 			display_data += "\n"
 
