@@ -65,7 +65,7 @@ def sql():
 		except Exception as e:
 			flash(e, "danger")
 
-		return redirect(url_for('admin.index', data=display_data)
+		return redirect(url_for('admin.index', data=display_data))
 
 @bp.route("/")
 @login_required
