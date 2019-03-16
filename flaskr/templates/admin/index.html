@@ -13,7 +13,9 @@
 
 
         <textarea name="command_window" class="form-control {% if g.user['dark_mode'] %}bg-light text-white{% endif %}" id="command_window" rows="10" readonly autofocus style="font-family: monospace; overflow: auto;" wrap="off">
-          {{data}}
+          {% for row in data %}
+            {{row}}
+          {% endfor %}
         </textarea>
 
         <form class="input-group mb-3" action="{{ url_for('admin.sql')}}" method="POST">
