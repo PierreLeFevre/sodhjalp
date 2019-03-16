@@ -53,13 +53,13 @@ def sql():
 
 		db = get_db()
 		try:
-			db.execute(q)
+			data = db.execute(q).fetchall()
 			db.commit()
 			flash("Code executed.", "success")
 		except Exception as e:
 			flash(e, "danger")
 
-		return redirect(url_for('admin.index'))
+		return redirect(url_for('admin.index', data=data))
 
 @bp.route("/")
 @login_required

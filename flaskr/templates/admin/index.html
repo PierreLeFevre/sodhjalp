@@ -12,13 +12,9 @@
         <h1 class="card-header {% if g.user['dark_mode'] %}bg-transparent{% else %}bg-white{% endif %}">{% block title %}Admin{% endblock %}</h1>
 
 
-        <textarea name="command_window" class="form-control {% if g.user['dark_mode'] %}bg-light text-white{% endif %}" id="command_window" rows="10" readonly autofocus style="font-family: monospace; overflow: auto;" wrap="off">C:\Users\admin\Desktop\sodhjalp>python app.py
- * Serving Flask app "flaskr" (lazy loading)
- * Environment: production
-   WARNING: Do not use the development server in a production environment.
-   Use a production WSGI server instead.
- * Debug mode: off
- * Running on http://0.0.0.0:80/ (Press CTRL+C to quit)</textarea>
+        <textarea name="command_window" class="form-control {% if g.user['dark_mode'] %}bg-light text-white{% endif %}" id="command_window" rows="10" readonly autofocus style="font-family: monospace; overflow: auto;" wrap="off">
+          {{data}}
+        </textarea>
 
         <form class="input-group mb-3" action="{{ url_for('admin.sql')}}" method="POST">
           <input type="text" id="code" name="code" class="form-control {% if g.user['dark_mode'] %}bg-light text-white{% endif %}" placeholder="execute code" aria-label="execute code" aria-describedby="button-addon2">
