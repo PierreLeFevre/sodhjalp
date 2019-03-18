@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<ol class="breadcrumb shadow shadow-hover bg-white">
+<ol class="breadcrumb shadow shadow-hover {% if g.user['dark_mode'] %}bg-transparent{% else %}bg-white{% endif %}">
   <li class="breadcrumb-item"><a href="/">SodHjälp</a></li>
   <li class="breadcrumb-item text-capitalize"><a href="/search/{{ post['topic'] }}">{{ post['topic']}}</a></li>
   <li class="breadcrumb-item"><a href="/#post_{{post['id']}}">{{ post['title'] }}</a></li>
@@ -10,16 +10,16 @@
 
 <div class="card shadow shadow-hover p-3 mb-5 rounded border-0">
 
-  <h1 class="card-header bg-white">{% block title %}Redigera inlägg{% endblock %}</h1>
+  <h1 class="card-header {% if g.user['dark_mode'] %}bg-transparent{% else %}bg-white{% endif %}">{% block title %}Redigera inlägg{% endblock %}</h1>
   <div class="card-body">
     <form method="post">
       <div class="form-group">
         <label for="title">Titel</label>
-        <input type="text" class="form-control" name="title" id="title" aria-describedby="emailHelp" placeholder="Titel" value="{{ request.form['title'] or post['title'] }}" required>
+        <input type="text" class="form-control {% if g.user['dark_mode'] %}bg-light text-white{% endif %}" name="title" id="title" aria-describedby="emailHelp" placeholder="Titel" value="{{ request.form['title'] or post['title'] }}" required>
       </div>
       <div class="form-group">
         <label for="body">Innehåll</label>
-        <textarea name="body" class="form-control" id="body" rows="3" placeholder="Innehåll">{{ request.form['body'] or post['body'] }}</textarea>
+        <textarea name="body" class="form-control {% if g.user['dark_mode'] %}bg-light text-white{% endif %}" id="body" rows="3" placeholder="Innehåll">{{ request.form['body'] or post['body'] }}</textarea>
       </div>
       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
       <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i>&nbsp;&nbsp;Spara ändringar</button>

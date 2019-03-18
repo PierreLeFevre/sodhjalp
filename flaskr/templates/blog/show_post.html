@@ -4,8 +4,8 @@
 
 
 
-	<div class="card p-3 mb-5 rounded border-0">
-		<ol class="breadcrumb shadow-hover shadow bg-white">
+	<div class="card p-3 mb-5 rounded border-0 bg-transparent">
+		<ol class="breadcrumb shadow-hover shadow {% if g.user['dark_mode'] %}bg-transparent{% else %}bg-white{% endif %}">
 		  <li class="breadcrumb-item"><a href="/">SodHjälp</a></li>
 		  <li class="breadcrumb-item text-capitalize"><a href="/search/{{ post['topic'] }}">{{ post['topic']}}</a></li>
 		  <li class="breadcrumb-item"><a href="/#post_{{post['id']}}">{{ post['title'] }}</a></li>
@@ -14,7 +14,7 @@
 
       <div class="card mt-4 p-2 shadow-lg rounded border-0">
 
-        <div class="card-header bg-white border-0 rounded">
+        <div class="card-header {% if g.user['dark_mode'] %}bg-transparent{% else %}bg-white{% endif %} border-0 rounded">
           <h3 class="card-title">{{ post['title'] }}</h3>
           <div>
             {% if get_user(post['author_id'])['is_teacher'] %}
@@ -59,7 +59,7 @@
 							<label for="body">Kommentera som <span class="badge  badge-primary text-capitalize"><i class="fas fa-user"></i>&nbsp;&nbsp;{{ g.user['username'] }}</span></label>
 						{% endif %}
 
-						<textarea name="body" class="form-control" id="body" rows="3" placeholder="Kommentar">{{ request.form['body'] }}</textarea>
+						<textarea name="body" class="form-control {% if g.user['dark_mode'] %}bg-light text-white{% endif %}" id="body" rows="3" placeholder="Kommentar">{{ request.form['body'] }}</textarea>
 					</div>
 					<button type="submit" class="btn btn-primary"><i class="fas fa-comment"></i>&nbsp;&nbsp;Kommentera</button>
 				    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
