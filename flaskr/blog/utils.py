@@ -22,18 +22,15 @@ def get_news():
 def get_posts(username, check_author=True):
 
     posts = get_db().execute(
-        'SELECT p.id, p.topic, p.title, p.body, p.created, p.author_id u.username'
+        'SELECT p.id, p.topic, p.title, p.body, p.created, p.author_id, u.username'
         ' FROM post p JOIN user u ON p.author_id = u.id'
-        ' WHERE LOWER(p.username) = ?'
+        ' WHERE LOWER(u.username) = ?'
         ' ORDER BY created',
         (username.lower(),)
     ).fetchall()
 
     if posts is None:
         abort(404, "Nothing was found")
-
-    if check_author and (post['author_id'] != g.user['id'] or g.user['is_teacher'] or g.user['is_admin']):
-        abort(403)
 
     return posts
 
