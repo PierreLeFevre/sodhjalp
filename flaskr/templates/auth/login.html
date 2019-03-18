@@ -11,13 +11,13 @@
 	<div class="card-body">
 		<form method="post">
 		  <div class="form-group">
-		    <label for="username">Användarnamn</label>
+		    <label for="username" value="{{request.form['username']}}">Användarnamn</label>
 		    <input type="text" class="form-control" name="username" id="username" aria-describedby="emailHelp" placeholder="Användarnamn">
 		    <small id="emailHelp" class="form-text text-muted">Använd gärna personnummer eller epost-adress för att logga in!</small>
 		  </div>
 		  <div class="form-group">
 		    <label for="password">Lösenord</label>
-		    <input type="password" class="form-control" name="password" id="password" placeholder="••••••••••••">
+		    <input type="password" class="form-control" name="password" id="password" placeholder="Password" value="{{request.form['password']}}">
 		  </div>
 		        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
 

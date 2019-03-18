@@ -19,6 +19,24 @@ def get_news():
 
     return news
 
+def get_posts(username, check_author=True):
+
+    posts = get_db().execute(
+        'SELECT p.id, p.topic, p.title, p.body, p.created, p.author_id u.username'
+        ' FROM post p JOIN user u ON p.author_id = u.id'
+        ' WHERE LOWER(p.username) = ?'
+        ' ORDER BY created',
+        (username.lower(),)
+    ).fetchall()
+
+    if posts is None:
+        abort(404, "Nothing was found")
+
+    if check_author and (post['author_id'] != g.user['id'] or g.user['is_teacher'] or g.user['is_admin']):
+        abort(403)
+
+    return posts
+
 def get_post(id, check_author=True):
     post = get_db().execute(
         'SELECT p.id, p.topic, title, body, created, author_id, username'
@@ -31,7 +49,7 @@ def get_post(id, check_author=True):
     if post is None:
         abort(404, "Post id {0} doesn't exist.".format(id))
 
-    if check_author and post['author_id'] != g.user['id'] and g.user['is_teacher'] == 0:
+    if check_author and (post['author_id'] != g.user['id'] or g.user['is_teacher'] == 0):
         abort(403)
 
     return post
