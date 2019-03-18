@@ -40,10 +40,10 @@ $(window).on("load", function(){
 	  $('[data-toggle="tooltip"]').tooltip()
 	})
 	
-	var url_for_search = $("#search").parent().attr("action");
+	var url_for_search = $("#search").parent().parent().attr("action");
 
 	$("#search").on("input", function(){
-		$(this).parent().attr("action", (url_for_search + $(this).val()));
+		$(this).parent().parent().attr("action", (url_for_search + $(this).val()));
 	});
 
 	$(".post-clickable-pills").on("click", function(){
