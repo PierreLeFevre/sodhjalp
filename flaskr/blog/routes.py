@@ -20,7 +20,8 @@ from .utils import (
     get_all_posts,
     search_posts,
     get_comment,
-    get_news
+    get_news,
+    get_posts
 )
 
 from . import bp
@@ -215,6 +216,14 @@ def update(id):
             db.commit()
             return redirect(url_for('blog.index'))
     return render_template('blog/update.html', post=post)
+
+@bp.route("/<string:username>/profile", methods=('GET', 'POST'))
+@login_required
+def profile(username):
+
+    posts = get_posts(username)
+
+    return render_template('blog/profile.html', posts=posts)
 
 @bp.route("/<int:id>/update_comment", methods=('GET', 'POST'))
 @login_required
