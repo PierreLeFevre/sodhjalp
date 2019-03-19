@@ -50,7 +50,7 @@
         </div>
 
         {% if g.user %}
-	        <div class="card shadow-hover m-3 border-0"><div class="card-body">
+	        <div class="card shadow shadow-hover m-3 border-0"><div class="card-body">
 			 	<form method="post" action="{{ url_for('blog.create_comment', id=post['id']) }}">
 					<div class="form-group"> 
 						{% if g.user['is_teacher'] %}
@@ -71,12 +71,12 @@
 		{% for comment in get_all_comments(post['id']) if get_all_comments(post['id']) != None %}
 
 		{% if get_user(comment['author_id'])['is_teacher'] %}
-		  <div class="card shadow-hover m-2 border-0 comments-box"><div class="card-body">
+		  <div class="card shadow shadow-hover m-3 border-0 comments-box"><div class="card-body">
 		    <h5 class="card-title text-muted"><span class="badge  badge-success text-capitalize"><i class="fas fa-user"></i>&nbsp;&nbsp;{{ comment['username'] }}</span> den {{ comment['created'].strftime('%d-%m-%Y') }}</h5>
 		    <p class="body">{{ comment['body'] }}</p>
 		  </div></div>
 		{% else %}
-		  <div class="card shadow-hover m-2 border-0 comments-box"><div class="card-body">
+		  <div class="card shadow shadow-hover m-3 border-0 comments-box"><div class="card-body">
 		    <h5 class="card-title text-muted"><span class="badge  badge-primary text-capitalize"><i class="fas fa-user"></i>&nbsp;&nbsp;{{ comment['username'] }}</span> den {{ comment['created'].strftime('%d-%m-%Y') }}</h5>
 		    <p class="body">{{ comment['body'] }}</p>
 		  </div></div>

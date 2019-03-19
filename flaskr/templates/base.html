@@ -99,7 +99,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow shadow-hover">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
   <a class="navbar-brand" href="/">SodHjälp<small class="text-muted">BETA</small></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -217,7 +217,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="row align-items-start">
 
     <div class="col-lg-4 col-xl-2 order-6 order-xl-1">
-      <div class="card shadow-sm border-0 ml-3 mr-3 mb-5 rounded p-0">
+      <div class="card shadow border-0 ml-3 mr-3 mb-5 rounded p-0">
         <div class="list-group border-0 text-info">
           <a class="list-group-item border border-primary text-primary" href="/"><i class="fas fa-chalkboard"></i>&nbsp;&nbsp;Ämnen</a>
           <a class="text-primary border-left-0 border-right-0 border-bottom-0 border-top border-primary list-group-item" href="{{ url_for('blog.specific_posts', key="matematik") }}">Matematik</a>
@@ -260,12 +260,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="col-lg-4 col-xl-4 order-12 order-xl-12">
 
         {% if news %}
-          <div class="card shadow-hover border border-primary mb-4"><div class="card-body">
+          <div class="card shadow border border-primary mb-4"><div class="card-body">
             <i class="fas fa-newspaper"></i>&nbsp;&nbsp;Nyheter
           </div></div>
 
           {% for n in news %}
-            <div class="card mb-4 border-0 shadow-sm">
+            <div class="card mb-4 border-0 shadow">
               {% if n['pic'] != "None" and n['pic'] %}
                 <img src="{{n['pic']}}" class="card-img-top img-fluid" alt="news/ad image">
               {% endif %}
