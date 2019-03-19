@@ -9,13 +9,13 @@
     <div class="card-body pt-0">
         {% if g.user %}
           <a class="text-primary" href="{{ url_for('blog.create') }}">
-          <div class="card shadow-hover border border-primary"><div class="card-body">
+          <div class="card shadow shadow-hover border border-primary"><div class="card-body">
             <i class="fas fa-plus"></i>&nbsp;&nbsp;
             Skapa nytt inlägg
           </div></div></a>
         {% else %}
           <a class="text-primary" href="/auth/register">
-          <div class="card shadow-hover border border-primary"><div class="card-body">
+          <div class="card shadow shadow-hover border border-primary"><div class="card-body">
             <i class="fas fa-user-plus"></i>&nbsp;&nbsp;Skapa ett konto nu för att skapa och kommentera på inlägg!
           </div></div></a>
         {% endif %}
