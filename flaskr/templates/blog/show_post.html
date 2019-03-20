@@ -54,9 +54,9 @@
 			 	<form method="post" action="{{ url_for('blog.create_comment', id=post['id']) }}">
 					<div class="form-group"> 
 						{% if g.user['is_teacher'] %}
-							<label for="body">Kommentera som <a class="badge badge-success text-capitalize" href="{{ url_for('blog.profile', username=post['username']) }}"><i class="fas fa-user"></i>&nbsp;&nbsp;{{ post['username'] }}</a></label>
+							<label for="body">Kommentera som <a class="badge badge-success text-capitalize" href="{{ url_for('blog.profile', username=post['username']) }}"><i class="fas fa-user"></i>&nbsp;&nbsp;{{ g.user['username'] }}</a></label>
 						{% else %}
-							<label for="body">Kommentera som <a class="badge badge-primary text-capitalize" href="{{ url_for('blog.profile', username=post['username']) }}"><i class="fas fa-user"></i>&nbsp;&nbsp;{{ post['username'] }}</a></label>
+							<label for="body">Kommentera som <a class="badge badge-primary text-capitalize" href="{{ url_for('blog.profile', username=post['username']) }}"><i class="fas fa-user"></i>&nbsp;&nbsp;{{ g.user['username'] }}</a></label>
 						{% endif %}
 
 						<textarea name="body" class="form-control {% if g.user['dark_mode'] %}bg-light text-white{% endif %}" id="body" rows="3" placeholder="Kommentar">{{ request.form['body'] }}</textarea>
@@ -72,12 +72,12 @@
 
 		{% if get_user(comment['author_id'])['is_teacher'] %}
 		  <div class="card shadow shadow-hover m-3 border-0 comments-box"><div class="card-body">
-		    <h5 class="card-title text-muted"><a class="badge badge-success text-capitalize" href="{{ url_for('blog.profile', username=post['username']) }}"><i class="fas fa-user"></i>&nbsp;&nbsp;{{ post['username'] }}</a> den {{ comment['created'].strftime('%d-%m-%Y') }}</h5>
+		    <h5 class="card-title text-muted"><a class="badge badge-success text-capitalize" href="{{ url_for('blog.profile', username=post['username']) }}"><i class="fas fa-user"></i>&nbsp;&nbsp;{{ comment['username'] }}</a> den {{ comment['created'].strftime('%d-%m-%Y') }}</h5>
 		    <p class="body">{{ comment['body'] }}</p>
 		  </div></div>
 		{% else %}
 		  <div class="card shadow shadow-hover m-3 border-0 comments-box"><div class="card-body">
-		    <h5 class="card-title text-muted"><a class="badge badge-primary text-capitalize" href="{{ url_for('blog.profile', username=post['username']) }}"><i class="fas fa-user"></i>&nbsp;&nbsp;{{ post['username'] }}</a> den {{ comment['created'].strftime('%d-%m-%Y') }}</h5>
+		    <h5 class="card-title text-muted"><a class="badge badge-primary text-capitalize" href="{{ url_for('blog.profile', username=post['username']) }}"><i class="fas fa-user"></i>&nbsp;&nbsp;{{ comment['username'] }}</a> den {{ comment['created'].strftime('%d-%m-%Y') }}</h5>
 		    <p class="body">{{ comment['body'] }}</p>
 		  </div></div>
 		{% endif %}
