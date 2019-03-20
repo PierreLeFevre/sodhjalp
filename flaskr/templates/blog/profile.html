@@ -1,25 +1,17 @@
 {% extends 'base.html' %}
 
-{% block title %}Inlägg{% endblock %}
+{% block title %}{{posts[0]['username'].capitalize()}}{% endblock %}
 {% block content %}
 
 
 
   <div class="card mb-5 rounded bg-transparent border-0">
     <div class="card-body pt-0">
-        {% if g.user %}
-          <a class="text-primary" href="{{ url_for('blog.create') }}">
-          <div class="card shadow shadow-hover border border-primary"><div class="card-body">
-            <i class="fas fa-plus"></i>&nbsp;&nbsp;
-            Skapa nytt inlägg
-          </div></div></a>
-        {% else %}
-          <a class="text-primary" href="/auth/register">
-          <div class="card shadow shadow-hover border border-primary"><div class="card-body">
-            <i class="fas fa-user-plus"></i>&nbsp;&nbsp;Skapa ett konto nu för att skapa och kommentera på inlägg!
-          </div></div></a>
-        {% endif %}
-
+        
+        <div class="card shadow-hover border border-primary"><div class="card-body">
+          <i class="fas fa-user"></i>&nbsp;&nbsp;
+          {{posts[0]['username'].capitalize()}}s inlägg
+        </div></div>
         
         {% for post in posts if posts != None %}
           <div class="card mt-4 shadow-hover shadow rounded border-0" id="post_{{post['id']}}">
@@ -29,13 +21,11 @@
               <div>
                 {% if get_user(post['author_id'])['is_teacher'] %}
                   <p class="lead card-subtitle text-muted">
-                    <span class="badge badge-success text-capitalize"><i class="fas fa-user"></i>&nbsp;&nbsp;{{ post['username'] }}</span>
                     <span class="badge badge-primary text-capitalize"><i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;{{ post['created'].strftime('%d/%m %Y') }}</span>
                     <span class="badge badge-primary text-capitalize"><i class="fas fa-chalkboard"></i>&nbsp;&nbsp;{{ post['topic']}}</span>
                   </p>
                 {% else %}
                   <p class="lead card-subtitle text-muted">
-                    <span class="badge badge-primary text-capitalize"><i class="fas fa-user"></i>&nbsp;&nbsp;{{ post['username'] }}</span>
                     <span class="badge badge-primary text-capitalize"><i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;{{ post['created'].strftime('%d/%m %Y') }}</span>
                     <span class="badge badge-primary text-capitalize"><i class="fas fa-chalkboard"></i>&nbsp;&nbsp;{{ post['topic']}}</span>
                   </p>

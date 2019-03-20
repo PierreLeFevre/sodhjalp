@@ -20,7 +20,8 @@ from .utils import (
     get_all_posts,
     search_posts,
     get_comment,
-    get_news
+    get_news,
+    get_posts
 )
 
 from . import bp
