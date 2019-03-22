@@ -221,7 +221,7 @@ def update(id):
 @login_required
 def profile(username):
 
-    posts = get_posts(username)
+    posts = get_posts(username, check_author=False)
 
     return render_template('blog/profile.html', posts=posts)
 
